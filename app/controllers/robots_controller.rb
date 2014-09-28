@@ -26,6 +26,9 @@ class RobotsController < ApplicationController
   # POST /robots.json
   def create
     @robot = Robot.new(robot_params)
+    health_value = @robot.code_name.max_health
+    health = Health.new(current:health_value,maximum:health_value)
+    @robot.health = health
     respond_to do |format|
       if @robot.save
         format.html { redirect_to @robot, notice: 'Robot was successfully created.' }
@@ -71,6 +74,6 @@ class RobotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def robot_params
-      params.require(:robot).permit(:code_name_id, health_attributes:[:current,:maximum], robot_weapons_attributes:[:weapon_id,health_attributes:[:current,:maximum]])
+      params.require(:robot).permit(:code_name_id, robot_weapons_attributes:[:weapon_id,health_attributes:[:current,:maximum]])
     end
 end

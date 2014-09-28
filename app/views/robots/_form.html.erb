@@ -16,8 +16,6 @@
     <%= f.number_field :code_name_id %>
   </div>
   
-  <%= render "application/shared/health_form", f: f %>
-
   <%= f.fields_for :robot_weapons do |robot_weapon_form| %>
     <%= render "application/shared/robot_weapon_form", f: robot_weapon_form %>
   <% end %>

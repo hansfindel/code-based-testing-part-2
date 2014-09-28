@@ -8,5 +8,6 @@ class CodeName < ActiveRecord::Base
     validates :info_reference, format: { with: /wiki/ }#, message: "It has to have a wiki reference"
 
     validates :damage, numericality: { greater_than: 0 }
+    validates :max_health, numericality: { greater_than: 0 }
 
 end
