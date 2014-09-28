@@ -11,7 +11,6 @@ class Robot < ActiveRecord::Base
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
 
-    #accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
 
     delegate :damage, to: :code_name
