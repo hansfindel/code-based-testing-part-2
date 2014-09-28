@@ -1,5 +1,5 @@
 class RobotWeapon < ActiveRecord::Base
-    belongs_to :robot 
+    belongs_to :robot, inverse_of: :robot_weapons
     belongs_to :weapon 
 
     has_one :health, as: :machine 
