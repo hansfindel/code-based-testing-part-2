@@ -52,12 +52,14 @@ RSpec.describe Robot, :type => :model do
       # should be a number ... in the future might accept 0
     end
 
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
-      # mock valid_and_heavier_weapon?
-      robot = FactoryGirl.create(:robot)
-      robot.should_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
-    end
+    #probably modifiy this test
+    pending "should use valid_and_heavier_weapon? method when it has at least one weapon"
+    # it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
+    #   # mock valid_and_heavier_weapon?
+    #   robot = FactoryGirl.create(:robot)
+    #   robot.should_receive(:valid_and_heavier_weapon?)
+    #   expect(robot.calculate_damage).to be > 0 
+    # end
 
     it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
       # mock valid_and_heavier_weapon?
