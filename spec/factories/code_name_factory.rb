@@ -28,11 +28,12 @@ FactoryGirl.define do
         max_health 120
     end
 
-    factory :min_code do
-        name "min_health"
+    factory :default_code, class: CodeName do
+        name "default_code"
         damage 5
         info_reference "wiki"
-        max_health 1
+        max_health 100
     end
+
 
 end

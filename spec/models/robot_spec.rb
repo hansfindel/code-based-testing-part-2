@@ -107,4 +107,42 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "Default health" do
+
+    robot = Robot.new
+    codename = FactoryGirl.create(:default_code) #max_health is 100
+    robot.code_name = codename
+
+    it "should be valid if current and maximum health are equal to codename max_health" do
+      health = FactoryGirl.create(:default_health) #current and maximum are 100
+      robot.health = health
+      expect(robot.valid?).to be true
+    end
+
+    it "should be invalid if current health < codename max_health" do
+      health = Health.new(current:10, maximum: 100)
+      robot.health = health
+      expect(robot.valid?).to be false
+    end
+
+    it "should be invalid if maximum health < codename max_health" do
+      health = Health.new(current:100, maximum: 10) 
+      robot.health = health
+      expect(robot.valid?).to be false
+    end
+
+    it "should be invalid if current health > codename max_health" do
+      health = Health.new(current:101, maximum: 100)
+      robot.health = health
+      expect(robot.valid?).to be false
+    end
+
+    it "should be invalid if maximum health > codename max_health" do
+      health = Health.new(current:100, maximum: 101) 
+      robot.health = health
+      expect(robot.valid?).to be false
+    end
+
+  end
+
 end
