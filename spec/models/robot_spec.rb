@@ -9,6 +9,8 @@ RSpec.describe Robot, :type => :model do
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6
+      @robot.code_name = FactoryGirl.create(:code_name)
+      @robot.health = FactoryGirl.create(:health)
       @gun      = FactoryGirl.create(:gun)
       
       @gun_i    = @gun.robot_weapons.build 
@@ -76,15 +78,18 @@ RSpec.describe Robot, :type => :model do
         expect(robot.calculate_damage).to be >= robot.damage
       end
 
-      it "#should be equal if weapon is worse than the machines one" do 
-        robot = FactoryGirl.create(:robot_with_bad_weapon)
-        expect(robot.calculate_damage).to be robot.damage
-      end
+      pending "should be equal if weapon is worse than the machines one"
+      pending "should be higher if weapon is better than the machines one"
 
-      it "#should be higher if weapon is better than the machines one" do 
-        robot = FactoryGirl.create(:robot_with_slightly_better_weapon)
-        expect(robot.calculate_damage).to be > robot.damage     
-      end
+      #it "#should be equal if weapon is worse than the machines one" do 
+        #robot = FactoryGirl.create(:robot_with_bad_weapon)
+        #expect(robot.calculate_damage).to be robot.damage
+      #end
+
+      #it "#should be higher if weapon is better than the machines one" do 
+        #robot = FactoryGirl.create(:robot_with_slightly_better_weapon)
+        #expect(robot.calculate_damage).to be > robot.damage     
+      #end
 
     end
   end
