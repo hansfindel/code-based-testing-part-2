@@ -10,6 +10,7 @@ class Robot < ActiveRecord::Base
 
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
+    validate :initial_health_by_default
 
     accepts_nested_attributes_for :robot_weapons
 
@@ -52,6 +53,18 @@ class Robot < ActiveRecord::Base
             "2" => "L", 
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
+    end
+
+    private
+
+    def initial_health_by_default
+        default_health = self.code_name.max_health
+        if self.health.current != default_health
+            errors.add(:health, 'Invalid health, current health must have default value')
+        end
+        if self.health.maximum != default_health
+            errors.add(:health, 'Invalid health, maximum health must have default value')
+        end
     end
 
 end
