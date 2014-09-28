@@ -21,6 +21,7 @@ class RobotWeapon < ActiveRecord::Base
     end
 
     delegate :damage, to: :weapon
+    delegate :recoil_damage, to: :weapon
 
     def stable?
         self.health.current > 0
@@ -29,5 +30,10 @@ class RobotWeapon < ActiveRecord::Base
     def play_dead
         @old_health = health.current if @old_health.blank? or health.current > 0
         health.current = 0
+    end
+
+    #Applies recoil effect
+    def recoil_effect
+        self.robot.take_damage self.recoil_damage
     end
 end
