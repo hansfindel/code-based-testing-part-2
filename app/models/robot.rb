@@ -55,4 +55,14 @@ class Robot < ActiveRecord::Base
         }[ ((@status+=1)-1).to_s ]
     end
 
+    def regenerate
+        if remaining_health == self.health.maximum
+            false
+        elsif remaining_health == 0
+            false
+        else
+            self.health.current += 1
+        end 
+    end
+
 end
