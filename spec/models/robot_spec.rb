@@ -9,12 +9,11 @@ RSpec.describe Robot, :type => :model do
   context "#regenerate" do 
     before(:all) do 
       @robot1 = FactoryGirl.create(:t_1000)
-      @robot2 = FactoryGirl.create(:t_x)
     end
 
     it "should return true if regenerated" do 
-      @robot1.health.current -= 1
-      expect(@robot1.regenerate).to be @robot1.health.maximum
+      @robot1.take_damage 1
+      expect(@robot1.regenerate).to be true
     end
 
     it "should return false if health is full" do 
@@ -25,6 +24,15 @@ RSpec.describe Robot, :type => :model do
       @robot1.health.current = 0
       expect(@robot1.regenerate).to be false
     end
+
+    it "should regenerate to maximum health" do 
+      @robot2 = FactoryGirl.create(:t_x)
+      @robot2.take_damage 1
+      @robot2.regenerate 2
+      expect(@robot2.remaining_health).to be @robot2.health.maximum
+    end
+
+
   end
 
   context "#valid_and_heavier_weapon?" do 
