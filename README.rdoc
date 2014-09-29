@@ -1,28 +1,13 @@
-== README
+== Tarea 1 de Testing 1-2014
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Tareas a realizar:
 
-Things you may want to cover:
+Actualizar el modelo CodeName para que la Factory funcione como un singleton por el atributo name
 
-* Ruby version
+Agregar Humanos como luchadores (TimeTraveler aka 'Kyle Reese') 
 
-* System dependencies
+Encuentros de conjuntos de robots (pueden haber distintas cantidades por lado, los enfrentamientos son secuenciales de a 1 por lado) - 
 
-* Configuration
+Mover el manejo de health de robot y robot_weapon a un módulo en un concern - Realizar los tests correspondientes
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Simular servicio externo (vía HTTP) para inicializar o entregar instancias (Mocks) - CodeName
