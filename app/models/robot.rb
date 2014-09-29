@@ -14,6 +14,7 @@ class Robot < ActiveRecord::Base
     validate :current_health_by_default, on: :create
 
     accepts_nested_attributes_for :robot_weapons
+    accepts_nested_attributes_for :code_name
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
