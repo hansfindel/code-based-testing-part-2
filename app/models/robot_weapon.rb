@@ -36,4 +36,9 @@ class RobotWeapon < ActiveRecord::Base
     def recoil_effect
         self.robot.take_damage self.recoil_damage
     end
+
+    #Attacks the target
+    def attack(target)
+        target.take_damage self.damage
+    end
 end

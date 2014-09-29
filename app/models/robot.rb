@@ -78,4 +78,11 @@ class Robot < ActiveRecord::Base
             errors.add(:health, 'Invalid health, current health must have default value')
         end
     end
+
+
+    def use_weapon(weapon, target)
+        weapon.attack(target)
+        weapon.recoil_effect
+    end
+
 end
