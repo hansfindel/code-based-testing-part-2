@@ -39,5 +39,7 @@ class ContestSimulator
         from_1 = contender1.calculate_damage # contender2.remaining_health
 
         contender2.take_damage from_1
+
+        contender1.regenerate
     end
 end
