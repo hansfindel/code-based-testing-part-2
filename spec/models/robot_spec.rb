@@ -6,6 +6,27 @@ RSpec.describe Robot, :type => :model do
     pending "add some examples to (or delete) #{__FILE__}"
   end
 
+  context "#regenerate" do 
+    before(:all) do 
+      @robot1 = FactoryGirl.create(:t_1000)
+      @robot2 = FactoryGirl.create(:t_x)
+    end
+
+    it "should return true if regenerated" do 
+      @robot1.health.current -= 1
+      expect(@robot1.regenerate).to be @robot1.health.maximum
+    end
+
+    it "should return false if health is full" do 
+      expect(@robot1.regenerate).to be false
+    end
+
+    it "should return false if health is 0" do 
+      @robot1.health.current = 0
+      expect(@robot1.regenerate).to be false
+    end
+  end
+
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6
