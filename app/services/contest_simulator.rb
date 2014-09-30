@@ -36,6 +36,12 @@ class ContestSimulator
     end
 
     def self.attack(contender1, contender2)
+        #dlarrain
+        #attacker check for remaining weapons or create a new one.
+        if !contender1.remaining_weapons? 
+            contender1.create_weapon
+        end
+        
         from_1 = contender1.calculate_damage # contender2.remaining_health
 
         contender2.take_damage from_1
