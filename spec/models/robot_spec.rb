@@ -31,8 +31,37 @@ RSpec.describe Robot, :type => :model do
       @robot2.regenerate 2
       expect(@robot2.remaining_health).to be @robot2.health.maximum
     end
+  end
 
+  #dlarrain
+  #new weapons
+  context "#remaining_weapons?" do
+      it "should return false when a weaponless robot calls the method #remaining_weapons?" do
+        @robot1 = FactoryGirl.create(:unarmed_robot)
+        expect(@robot1.remaining_weapons?).to be false
+      end
 
+      it "should return false when all weapons are spent and calls the method #remaining_weapons?" do
+        @robot1 = FactoryGirl.create(:t_800)
+        @robot1.robot_weapons[0].health.current = 0
+        expect(@robot1.remaining_weapons?).to be false
+      end
+
+      it "should return true when a robot that have weapons calls the method #remaining_weapons?" do
+        @robot1 = FactoryGirl.create(:t_800)
+        expect(@robot1.remaining_weapons?).to be true
+      end
+    end
+    
+  #dlarrain
+  #new weapons
+  context "create new weapon when weapons empty" do 
+    it "should create a new weapon when #create_new_weapon is called" do
+      @robot1 = FactoryGirl.create(:unarmed_robot)
+      expect(@robot1.weapons.count).to be(0)
+      @robot1.create_new_weapon
+      expect(@robot1.weapons.count).to be(1)
+    end
   end
 
   context "#valid_and_heavier_weapon?" do 
