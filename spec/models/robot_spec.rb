@@ -32,6 +32,13 @@ RSpec.describe Robot, :type => :model do
       expect(@robot2.remaining_health).to be @robot2.health.maximum
     end
 
+    it "should return false if regenerate value is <=0" do 
+      @robot2 = FactoryGirl.create(:t_x)
+      @robot2.take_damage 1
+      expect(@robot2.regenerate(0)).to be false
+      expect(@robot2.regenerate(-1)).to be false
+    end
+
 
   end
 
