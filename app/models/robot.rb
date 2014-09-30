@@ -71,4 +71,21 @@ class Robot < ActiveRecord::Base
             end
         end 
     end
+
+    def create_new_weapon 
+        weapon = Weapon.create(name: "gun", damage: 3)
+        self.weapons << weapon
+    end
+
+
+    def remaining_weapons?
+        if self.robot_weapons.count == 0
+            false
+        else
+            self.robot_weapons.each do |rw|
+                return true if rw.stable?
+            end
+            false
+        end
+    end
 end
