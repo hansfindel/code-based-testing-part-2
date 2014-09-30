@@ -55,10 +55,10 @@ class Robot < ActiveRecord::Base
         }[ ((@status+=1)-1).to_s ]
     end
 
+    #dlarrain
+    #metodo con el cual el robot se regenera
     def regenerate (value=1) 
-        if remaining_health == self.health.maximum
-            false
-        elsif remaining_health == 0
+        if remaining_health == self.health.maximum || remaining_health == 0 || value <=0
             false
         else #En este caso el robot si se regenera
             diff = self.health.maximum - remaining_health

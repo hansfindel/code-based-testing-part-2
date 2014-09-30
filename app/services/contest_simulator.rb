@@ -46,6 +46,8 @@ class ContestSimulator
 
         contender2.take_damage from_1
 
+        #dlarrain
+        #llamada del atacador para regenerarse una vez finalizado su ataque
         contender1.regenerate
     end
 end

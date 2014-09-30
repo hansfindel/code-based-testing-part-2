@@ -31,28 +31,35 @@ RSpec.describe Robot, :type => :model do
       @robot2.regenerate 2
       expect(@robot2.remaining_health).to be @robot2.health.maximum
     end
+
+    it "should return false if regenerate value is <=0" do 
+      @robot2 = FactoryGirl.create(:t_x)
+      @robot2.take_damage 1
+      expect(@robot2.regenerate(0)).to be false
+      expect(@robot2.regenerate(-1)).to be false
+    end
   end
 
   #dlarrain
   #new weapons
   context "#remaining_weapons?" do
-      it "should return false when a weaponless robot calls the method #remaining_weapons?" do
-        @robot1 = FactoryGirl.create(:unarmed_robot)
-        expect(@robot1.remaining_weapons?).to be false
-      end
-
-      it "should return false when all weapons are spent and calls the method #remaining_weapons?" do
-        @robot1 = FactoryGirl.create(:t_800)
-        @robot1.robot_weapons[0].health.current = 0
-        expect(@robot1.remaining_weapons?).to be false
-      end
-
-      it "should return true when a robot that have weapons calls the method #remaining_weapons?" do
-        @robot1 = FactoryGirl.create(:t_800)
-        expect(@robot1.remaining_weapons?).to be true
-      end
+    it "should return false when a weaponless robot calls the method #remaining_weapons?" do
+      @robot1 = FactoryGirl.create(:unarmed_robot)
+      expect(@robot1.remaining_weapons?).to be false
     end
-    
+
+    it "should return false when all weapons are spent and calls the method #remaining_weapons?" do
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot1.robot_weapons[0].health.current = 0
+      expect(@robot1.remaining_weapons?).to be false
+    end
+
+    it "should return true when a robot that have weapons calls the method #remaining_weapons?" do
+      @robot1 = FactoryGirl.create(:t_800)
+      expect(@robot1.remaining_weapons?).to be true
+    end
+  end
+  
   #dlarrain
   #new weapons
   context "create new weapon when weapons empty" do 
