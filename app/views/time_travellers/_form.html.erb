@@ -1,0 +1,25 @@
+<%= form_for(@time_traveller) do |f| %>
+  <% if @time_traveller.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@time_traveller.errors.count, "error") %> prohibited this time_traveller from being saved:</h2>
+
+      <ul>
+      <% @time_traveller.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :damage %><br>
+    <%= f.number_field :damage %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

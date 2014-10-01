@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :humen
+  resources :time_travellers
 
   get 'welcome/index'
 

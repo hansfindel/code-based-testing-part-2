@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141001170623) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -52,6 +52,23 @@ ActiveRecord::Schema.define(version: 20140909235653) do
   end
 
   add_index "robots", ["code_name_id"], name: "index_robots_on_code_name_id"
+
+  create_table "time_traveller_weapons", force: true do |t|
+    t.integer  "time_traveller_id"
+    t.integer  "weapon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "time_traveller_weapons", ["time_traveller_id"], name: "index_time_traveller_weapons_on_time_traveller_id"
+  add_index "time_traveller_weapons", ["weapon_id"], name: "index_time_traveller_weapons_on_weapon_id"
+
+  create_table "time_travellers", force: true do |t|
+    t.string   "name"
+    t.integer  "damage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "weapons", force: true do |t|
     t.string   "name"

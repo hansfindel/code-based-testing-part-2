@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @time_traveller.name %>
+</p>
+
+<p>
+  <strong>Damage:</strong>
+  <%= @time_traveller.damage %>
+</p>
+
+<%= link_to 'Edit', edit_time_traveller_path(@time_traveller) %> |
+<%= link_to 'Back', time_travellers_path %>
