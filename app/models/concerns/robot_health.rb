@@ -1,4 +1,4 @@
-module ManagesHealth
+module RobotHealth
   extend ActiveSupport::Concern
 
   included do

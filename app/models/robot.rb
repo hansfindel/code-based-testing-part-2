@@ -1,6 +1,6 @@
 class Robot < ActiveRecord::Base
     include AutoPresentable
-    include ManagesHealth
+    include RobotHealth
 
     belongs_to :code_name
 
