@@ -88,4 +88,16 @@ class Robot < ActiveRecord::Base
             false
         end
     end
+
+    #dlarrain
+    #retorna true o false con probabilidad 1/2
+    def freeze?(var = rand(2))
+        if var == 1
+            true
+        elsif var == 0
+            false
+        else
+            self.freeze?
+        end
+    end
 end
