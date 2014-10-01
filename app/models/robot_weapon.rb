@@ -15,9 +15,7 @@ class RobotWeapon < ActiveRecord::Base
     after_initialize :check_attrs
 
     delegate :damage, to: :weapon
+    delegate :can_freeze, to: :weapon
 
-    def can_freeze
-      self.weapon.can_freeze
-    end
 
 end
