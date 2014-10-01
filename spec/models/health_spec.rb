@@ -29,6 +29,12 @@ RSpec.describe Health, :type => :model do
       health.save  # health.valid? 
       expect(health.errors).to be_empty
     end
+
+    it ":health_no_current" do
+      health = FactoryGirl.create(:health_no_current)
+      expect(health.current).to be >= 0
+    end
+
   end
 
   context "#methods" do 
@@ -54,6 +60,13 @@ RSpec.describe Health, :type => :model do
       puts health.errors.messages.to_s
       expect(health.errors.has_key?(:current)).to be true
     end
+
+    it "should set current to maximum when not given" do
+      health = FactoryGirl.create(:health_no_current)
+      health.valid?
+      expect(health.current).to eq health.maximum
+    end
+
   end
 
 end
