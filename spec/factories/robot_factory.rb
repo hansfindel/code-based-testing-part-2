@@ -77,6 +77,28 @@ FactoryGirl.define do
         end
     end
 
+    factory :robot_without_health, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:health_10)
+            roboto.save 
+        end
+    end
+
+    factory :robot_with_health_100_and_code_name_health_10, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:health_10)
+            roboto.save 
+        end
+    end
+
+    factory :empty_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:T_1000)
+            roboto.save 
+        end
+    end
+
 end
 
 # helper 
