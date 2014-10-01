@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TimeTraveller, :type => :model do
  
   context "Factories" do 
-    pending "add some examples to (or delete) #{__FILE__}"
+    # pending "add some examples to (or delete) #{__FILE__}"
   end
 
   context "#valid_and_heavier_weapon?" do 
@@ -15,8 +15,6 @@ RSpec.describe TimeTraveller, :type => :model do
       @gun_i.health.current   = 1
       @gun_i.health.maximum   = 1
       
-      # @damage_t = @robot.damage    # 6
-      # @damage_g = @gun_i.damage    # 5
     end
     
     it "should return true if gun is undamaged and has heavier damage" do 
@@ -44,7 +42,7 @@ RSpec.describe TimeTraveller, :type => :model do
     it "should return a number" do 
       # stub valid_and_heavier_weapon?
       traveller = FactoryGirl.create(:time_traveller)
-      # robot.unstub
+      # traveller.unstub
       traveller.stub(:valid_and_heavier_weapon?)
       expect(traveller.calculate_damage).to be > 0 
       # should be a number ... in the future might accept 0
@@ -67,6 +65,28 @@ RSpec.describe TimeTraveller, :type => :model do
     it "should return a number" do 
       traveller = FactoryGirl.create(:time_traveller)
       expect(traveller.calculate_damage).to be > 0 
+    end
+
+    it "should use the heavier weapon available" do
+      traveller = FactoryGirl.create(:kyle_reese)
+      #Best damage bazook => 70
+      expect(traveller.calculate_damage).to be 70
+      traveller.time_traveller_weapons.last.destroy
+      traveller.reload
+      #Best damage machinegun => 20
+      expect(traveller.calculate_damage).to be 20
+      traveller.time_traveller_weapons.last.destroy
+      traveller.reload
+      #Best damage rifle =>10
+      expect(traveller.calculate_damage).to be 10
+      traveller.time_traveller_weapons.last.destroy
+      traveller.reload
+      #Best damage gun => 5
+      expect(traveller.calculate_damage).to be 5
+      traveller.time_traveller_weapons.last.destroy
+      traveller.reload
+      #Best damage no weapon => 5
+      expect(traveller.calculate_damage).to be 5
     end
 
     context "with recoil" do

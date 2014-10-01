@@ -15,10 +15,17 @@ FactoryGirl.define do
         after(:build) do |t_traveller, evaluator|
             t_traveller.name = "Kyle Reese"
             t_traveller.damage = 5
-            gun              = FactoryGirl.create(:rifle) # could be affected 
             t_traveller.health    = FactoryGirl.create(:health)
-            t_traveller.save 
+            gun           = FactoryGirl.create(:gun) # could be affected 
+            rifle         = FactoryGirl.create(:rifle) # could be affected 
+            machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
+            bazuka        = FactoryGirl.create(:bazuka) # could be affected 
+            # roboto.weapons = [gun, rifle, machine_gun, bazuka]
             attach_to_traveller_weapon_with_health_value(t_traveller, gun, 10)
+            attach_to_traveller_weapon_with_health_value(t_traveller, rifle, 15)
+            attach_to_traveller_weapon_with_health_value(t_traveller, machine_gun, 20)
+            attach_to_traveller_weapon_with_health_value(t_traveller, bazuka, 3)
+            t_traveller.save 
         end
     end
 

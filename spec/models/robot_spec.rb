@@ -57,7 +57,7 @@ RSpec.describe Robot, :type => :model do
       expect(robot.calculate_damage).to be > 0 
     end
 
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
+    it "should use valid_and_heavier_weapon? method when it has no weapon" do 
       # mock valid_and_heavier_weapon?
       robot = FactoryGirl.create(:unarmed_robot)
       robot.should_not_receive(:valid_and_heavier_weapon?)
@@ -67,6 +67,28 @@ RSpec.describe Robot, :type => :model do
     it "should return a number" do 
       robot = FactoryGirl.create(:robot)
       expect(robot.calculate_damage).to be > 0 
+    end
+
+    it "should use the heavier weapon available" do
+      robot = FactoryGirl.create(:t_x)
+      #Best damage bazook => 70
+      expect(robot.calculate_damage).to be 70
+      robot.robot_weapons.last.destroy
+      robot.reload
+      #Best damage machinegun => 20
+      expect(robot.calculate_damage).to be 20
+      robot.robot_weapons.last.destroy
+      robot.reload
+      #Best damage no weapon => 15 > rifle =>10
+      expect(robot.calculate_damage).to be 15
+      robot.robot_weapons.last.destroy
+      robot.reload
+      #Best damage no weapon => 15 > gun => 5
+      expect(robot.calculate_damage).to be 15
+      robot.robot_weapons.last.destroy
+      robot.reload
+      #Best damage no weapon => 15 > no weapons left
+      expect(robot.calculate_damage).to be 15
     end
 
     context "with recoil" do

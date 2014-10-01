@@ -28,7 +28,6 @@ class RobotWeapon < ActiveRecord::Base
     def check_tech_level
         if robot and weapon
             if robot.tech_level < weapon.tech_level
-                puts("---------")
                 errors.add(:weapon, "Weapon's tech level is to high for this robot to use.")
             end
         end
