@@ -117,4 +117,16 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "#attack_weapon_freezes?" do
+    it "should be true when weapon used to attack can freeze" do
+      robot = FactoryGirl.create(:freeze_robot)
+      expect(robot.attack_weapon_freezes?).to be true
+    end
+
+    it "should be true when weapon used to attack can't freeze" do
+      robot = FactoryGirl.create(:robot)
+      expect(robot.attack_weapon_freezes?).to be false
+    end
+  end
+
 end

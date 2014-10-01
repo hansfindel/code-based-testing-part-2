@@ -5,6 +5,12 @@ FactoryGirl.define do
         damage 5
     end
 
+    factory :freeze_gun, class: Weapon do
+      name "Freeze Gun"
+      damage 100
+      can_freeze true
+    end
+
     factory :rifle, class: Weapon do
         name "Rifle"
         damage 10

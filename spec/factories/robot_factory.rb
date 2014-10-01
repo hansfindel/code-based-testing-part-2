@@ -9,6 +9,19 @@ FactoryGirl.define do
         end
     end
 
+    factory :freeze_robot, class: Robot do
+      after(:build) do |roboto, evaluator|
+        roboto.code_name = FactoryGirl.create(:code_name)
+        gun = FactoryGirl.create(:freeze_gun)
+        if gun.can_freeze
+          puts "freeze gun can freeze"
+        end
+        roboto.health = FactoryGirl.build(:health)
+        roboto.save
+        attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+      end
+    end
+
     factory :t_800, class: Robot do
         after(:build) do |roboto, evaluator|
             roboto.code_name = FactoryGirl.create(:T_800)

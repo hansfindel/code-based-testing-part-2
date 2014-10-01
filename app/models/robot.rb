@@ -32,6 +32,16 @@ class Robot < ActiveRecord::Base
       max_damage
   end
 
+  # returns true if the weapon the robot is fighting with freezes oponent
+  def attack_weapon_freezes?
+    freezes = false
+    max_damage = self.damage
+    robot_weapons.each do |weapon|
+        freezes = weapon.can_freeze if valid_and_heavier_weapon?(max_damage, weapon)
+    end
+    freezes
+  end
+
   # pending test - then change it to work with an array instead of a hash
   def get_instance_state_message
       @status ||= 0
