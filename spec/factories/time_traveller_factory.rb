@@ -52,6 +52,17 @@ FactoryGirl.define do
         end
     end
 
+    factory :shooter_with_recoil, class: TimeTraveller do 
+        after(:build) do |t_traveller, evaluator|
+            t_traveller.name = "Allan Backfire"
+            t_traveller.damage = 1
+            t_traveller.health    = FactoryGirl.build(:health)
+            gun              = FactoryGirl.create(:with_recoil) # could be affected 
+            attach_to_traveller_weapon_with_health_value(t_traveller, gun, 15)
+            t_traveller.save 
+        end
+    end
+
 end
 
 # helper 

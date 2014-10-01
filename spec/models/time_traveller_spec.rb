@@ -69,6 +69,17 @@ RSpec.describe TimeTraveller, :type => :model do
       expect(traveller.calculate_damage).to be > 0 
     end
 
+    context "with recoil" do
+      
+      it "#should take damage from weapon with recoil" do
+        traveller = FactoryGirl.create(:shooter_with_recoil)
+        prev_health = traveller.health.current
+        traveller.calculate_damage
+        expect(traveller.health.current).to be < prev_health 
+      end
+      
+    end
+
     context "should return a higher number if possible" do 
       it "#should be at least this value" do 
         # currently is the highest one

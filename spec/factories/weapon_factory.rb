@@ -20,4 +20,10 @@ FactoryGirl.define do
         damage 70
     end
 
+    factory :with_recoil, class: Weapon do
+        name "BackFiring Gun"
+        damage 100
+        recoil 10
+    end
+
 end

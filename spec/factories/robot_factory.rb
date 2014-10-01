@@ -77,6 +77,16 @@ FactoryGirl.define do
         end
     end
 
+    factory :robot_with_recoil, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:code_name)
+            roboto.health    = FactoryGirl.build(:health)
+            gun              = FactoryGirl.create(:with_recoil) # could be affected 
+            attach_to_robot_weapon_with_health_value(roboto, gun, 15)
+            roboto.save 
+        end
+    end
+
 end
 
 # helper 

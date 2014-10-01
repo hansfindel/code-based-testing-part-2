@@ -21,6 +21,7 @@ class TimeTravellerWeapon < ActiveRecord::Base
     end
 
     delegate :damage, to: :weapon
+    delegate :recoil, to: :weapon
 
     def stable?
         self.health.current > 0

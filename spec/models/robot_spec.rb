@@ -69,6 +69,17 @@ RSpec.describe Robot, :type => :model do
       expect(robot.calculate_damage).to be > 0 
     end
 
+    context "with recoil" do
+      
+      it "#should take damage from weapon with recoil" do
+        robot = FactoryGirl.create(:robot_with_recoil)
+        prev_health = robot.health.current
+        robot.calculate_damage
+        expect(robot.health.current).to be < prev_health 
+      end
+      
+    end
+
     context "should return a higher number if possible" do 
       it "#should be at least this value" do 
         # currently is the highest one
