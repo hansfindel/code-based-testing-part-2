@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141001201823) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -45,19 +45,10 @@ ActiveRecord::Schema.define(version: 20140909235653) do
   add_index "robot_weapons", ["robot_id"], name: "index_robot_weapons_on_robot_id"
   add_index "robot_weapons", ["weapon_id"], name: "index_robot_weapons_on_weapon_id"
 
-  create_table "robots", force: true do |t|
-    t.integer  "code_name_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "robots" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
-  add_index "robots", ["code_name_id"], name: "index_robots_on_code_name_id"
-
-  create_table "weapons", force: true do |t|
-    t.string   "name"
-    t.integer  "damage"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "weapons" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
 end
