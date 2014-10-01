@@ -150,7 +150,8 @@ RSpec.describe Robot, :type => :model do
       #current is set to 0
       it "should lose health proportional to nanites" do
         robot = FactoryGirl.create(:t_1000)
-        robot.nanites = 5
+        robot.nanites = 2
+        robot.health.current = robot.health.maximum
         current = robot.health.current
         change = robot.nanites*Robot::NANITE_DAMAGE_AMOUNT
         expect { robot.take_nanite_damage }.to change { robot.health.current }.from(current).to(current-change)

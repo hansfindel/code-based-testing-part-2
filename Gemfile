@@ -41,6 +41,7 @@ gem 'spring',        group: :development
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl'
+  #gem 'factory_girl_rails' #Allows to use factories in the console isn't compatible with the before gem
   gem 'capybara'
   gem 'database_cleaner'
 end

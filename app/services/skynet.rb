@@ -1,23 +1,19 @@
 class Skynet
   #Its a class to communicate with our central
-  def self.get_result(contender1, contender2)
-    if contender1.alive? and contender2.alive?
-      puts "Tie"
-      raise ImpossibleError
-    elsif contender1.alive?
-      puts "Contender 1"
-      [contender1]
-    elsif contender2.alive?
-      puts "Contender 2"
-      [contender2]
-    else
-      puts "Tragic Tie"
-      []
-    end
-  end
 
-  #In a future it will let fetch new codenames
-  def update_database
+  #In a future it will let fetch new codenames returning a valid array with new codenames
+  def self.get_central_updates
     "Pending..."
+    return [CodeName.new,CodeName.new]
+  end
+  def self.update_database
+    new_codenames=get_central_updates
+    new_codenames do |cn|
+      if CodeName.find_by_name(:cn.name).nil?
+        CodeName.create(name: cn[:name],info_reference: cn[:info_reference],damage: cn[:damage])
+      else
+        raise SkynetIsdesynchronizedWithUs
+      end
+    end
   end
 end
