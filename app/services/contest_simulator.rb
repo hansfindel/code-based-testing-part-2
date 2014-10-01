@@ -20,12 +20,6 @@ class ContestSimulator
             []
         end 
     end
-    # test with:
-    # begin
-    #   ContestSimulator.get_result r1, r2
-    # rescue Exception => e
-    #   puts "Error: #{e} - #{e.get_message}"
-    # end
 
     private
     def self.synchronous_test(contender1, contender2)
@@ -36,7 +30,6 @@ class ContestSimulator
             if !contender1.alive? or !contender2.alive?
               break
             end
-            puts "HOOOOLA"
             puts contender1
             puts contender2
             attack(contender1, contender2)
@@ -48,9 +41,7 @@ class ContestSimulator
     end
 
     def self.attack(contender1, contender2)
-      puts "DANOOOOO"
         from_1 = contender1.calculate_damage # contender2.remaining_health
         contender2.take_damage from_1
-      puts "DANOOOOO es #{from_1}"
     end
 end
