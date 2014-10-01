@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :humen
+
   get 'welcome/index'
 
   resources :weapons

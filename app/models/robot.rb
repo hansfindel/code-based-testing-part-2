@@ -6,7 +6,7 @@ class Robot < ActiveRecord::Base
     has_many :robot_weapons
     has_many :weapons, through: :robot_weapons
 
-    has_one :health, as: :machine 
+    has_one :health, as: :healthy 
 
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"

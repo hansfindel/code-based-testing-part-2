@@ -3,12 +3,12 @@ class CreateHealths < ActiveRecord::Migration
     create_table :healths do |t|
       t.integer :current
       t.integer :maximum
-      t.integer :machine_id
-      t.string :machine_type
+      t.integer :healthy_id
+      t.string :healthy_type
 
       t.timestamps
     end
-    add_index :healths, :machine_id
-    add_index :healths, :machine_type
+    add_index :healths, :healthy_id
+    add_index :healths, :healthy_type
   end
 end

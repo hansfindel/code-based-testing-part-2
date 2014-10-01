@@ -1,5 +1,5 @@
 class Health < ActiveRecord::Base
-    belongs_to :machine, polymorphic: true 
+    belongs_to :healthy, polymorphic: true 
 
     validates :current, numericality: { greater_than_or_equal_to: 0 }
     validates :maximum, numericality: { greater_than: 0 }

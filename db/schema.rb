@@ -26,14 +26,14 @@ ActiveRecord::Schema.define(version: 20140909235653) do
   create_table "healths", force: true do |t|
     t.integer  "current"
     t.integer  "maximum"
-    t.integer  "machine_id"
-    t.string   "machine_type"
+    t.integer  "healthy_id"
+    t.string   "healthy_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
-  add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
+  add_index "healths", ["healthy_id"], name: "index_healths_on_healthy_id"
+  add_index "healths", ["healthy_type"], name: "index_healths_on_healthy_type"
 
   create_table "robot_weapons", force: true do |t|
     t.integer  "robot_id"

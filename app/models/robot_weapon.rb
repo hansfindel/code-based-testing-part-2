@@ -2,7 +2,7 @@ class RobotWeapon < ActiveRecord::Base
     belongs_to :robot 
     belongs_to :weapon 
 
-    has_one :health, as: :machine 
+    has_one :health, as: :healthy 
 
     validates :robot, presence: true
     validates :weapon, presence: true
