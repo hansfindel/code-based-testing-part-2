@@ -2,8 +2,35 @@ require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do
  
-  context "Factories" do 
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "Factories" do
+    context "Default robot" do
+      before(:all) do
+        @robot = FactoryGirl.create(:robot)
+      end
+      it "has health>0" do
+        expect(@robot.health.current).to be >0
+      end
+      it "has a valid weapon with damage>0" do
+        expect(@robot.calculate_damage).to be >0
+      end
+      it "doesn't have a regenerating attack" do
+        expect(@robot.regenerating_attack).to be false
+      end
+      it "doesn't have any nanite" do
+        expect(@robot.nanites).to be 0
+      end
+    end
+    context "Robots with regenerating attack" do
+      it "t_1000 should have regenerating attack" do
+        @robot = FactoryGirl.create(:t_1000)
+        expect(@robot.regenerating_attack).to be true
+      end
+      it "t_x should have regenerating attack" do
+        @robot = FactoryGirl.create(:t_x)
+        expect(@robot.regenerating_attack).to be true
+      end
+    end
+
   end
 
   context "#valid_and_heavier_weapon?" do 
@@ -102,4 +129,38 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "Contest Effects" do
+    describe "Regenerating attack" do
+      #current should be always <=Maximum but that behaviour is leave to Health class to do a validation that in that case
+      #current is set to maximum
+      it "should regenerate a constant value" do
+        robot = FactoryGirl.create(:t_1000)
+        current = robot.health.current = 1
+        change = robot.health.maximum*Robot::REGENERATING_ATTACK_PERCENTAGE
+        expect { robot.regenerate_after_attack }.to change { robot.health.current }.from(current).to(current+change)
+      end
+      it "should not regenarate health for robots without regenerating attack" do
+        robot = FactoryGirl.create(:robot)
+        expect { robot.regenerate_after_attack }.to change { robot.health.current }.by(0)
+      end
+    end
+
+    describe "Nanite damage" do
+      #current should be always >=0 but that behaviour is leave to Health class to do a validation that in that case
+      #current is set to 0
+      it "should lose health proportional to nanites" do
+        robot = FactoryGirl.create(:t_1000)
+        robot.nanites = 5
+        current = robot.health.current
+        change = robot.nanites*Robot::NANITE_DAMAGE_AMOUNT
+        expect { robot.take_nanite_damage }.to change { robot.health.current }.from(current).to(current-change)
+      end
+
+      it "should not lose health without nanites" do
+        robot = FactoryGirl.create(:t_1000)
+        expect { robot.take_nanite_damage }.to change { robot.health.current }.by(0)
+      end
+    end
+
+  end
 end

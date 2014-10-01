@@ -30,14 +30,27 @@ class ContestSimulator
     private
     def self.synchronous_test(contender1, contender2)
         while contender1.alive? and contender2.alive?
+            contender1.take_nanite_damage
+            contender2.take_nanite_damage
+            #Nanite damage could had killed them
+            if !contender1.alive? or !contender2.alive?
+              break
+            end
+            puts "HOOOOLA"
+            puts contender1
+            puts contender2
             attack(contender1, contender2)
             attack(contender2, contender1)
+
+            contender1.regenerate_after_attack
+            contender2.regenerate_after_attack
         end
     end
 
     def self.attack(contender1, contender2)
+      puts "DANOOOOO"
         from_1 = contender1.calculate_damage # contender2.remaining_health
-
         contender2.take_damage from_1
+      puts "DANOOOOO es #{from_1}"
     end
 end

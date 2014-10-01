@@ -1,15 +1,18 @@
 class Robot < ActiveRecord::Base
-    include AutoPresentable 
+    include AutoPresentable
+    REGENERATING_ATTACK_PERCENTAGE=0.1
+    NANITE_DAMAGE_AMOUNT=10
 
     belongs_to :code_name 
 
     has_many :robot_weapons
     has_many :weapons, through: :robot_weapons
 
-    has_one :health, as: :machine 
+    has_one :health, as: :machine
 
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
+    validates :nanites, :numericality => { :greater_than_or_equal_to => 0 }
 
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
@@ -43,6 +46,22 @@ class Robot < ActiveRecord::Base
         weapon_instance.stable? and max_damage < weapon_instance.damage
     end
 
+    def regenerate_after_attack
+      if regenerating_attack
+        self.health.current += REGENERATING_ATTACK_PERCENTAGE*self.health.maximum
+      end
+    end
+
+    def take_nanite_damage
+      if self.nanites>0
+        self.health.current -= NANITE_DAMAGE_AMOUNT*self.nanites
+      end
+    end
+
+    def add_nanites(nanites=1)
+      self.nanites+=nanites
+    end
+
     # pending test - then change it to work with an array instead of a hash
     def get_instance_state_message
         @status ||= 0
@@ -54,5 +73,7 @@ class Robot < ActiveRecord::Base
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
     end
+
+
 
 end
