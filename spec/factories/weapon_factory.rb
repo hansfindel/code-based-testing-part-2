@@ -26,4 +26,10 @@ FactoryGirl.define do
         recoil 10
     end
 
+    factory :high_tech, class: Weapon do
+        name "Raygun"
+        damage 99
+        tech_level 10
+    end
+
 end

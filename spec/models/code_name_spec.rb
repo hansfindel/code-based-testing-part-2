@@ -29,6 +29,11 @@ RSpec.describe CodeName, :type => :model do
       expect(code_name.id).to be > 0
     end
 
+    it ":advanced_code_name" do 
+      code_name = FactoryGirl.create(:advanced_code_name)
+      expect(code_name.tech_level).to eq 10
+    end
+
     it "should not create two different code_names for the same (defined) machine" do 
       # code_name1 = FactoryGirl.create(:T_X)
       # code_name2 = FactoryGirl.create(:T_X)

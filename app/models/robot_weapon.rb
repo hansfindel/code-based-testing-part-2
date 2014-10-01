@@ -23,6 +23,17 @@ class RobotWeapon < ActiveRecord::Base
     delegate :damage, to: :weapon
     delegate :recoil, to: :weapon
 
+    validate :check_tech_level
+
+    def check_tech_level
+        if robot and weapon
+            if robot.tech_level < weapon.tech_level
+                puts("---------")
+                errors.add(:weapon, "Weapon's tech level is to high for this robot to use.")
+            end
+        end
+    end
+
     def stable?
         self.health.current > 0
     end

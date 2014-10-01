@@ -16,6 +16,7 @@ class Robot < ActiveRecord::Base
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
+    delegate :tech_level, to: :code_name
 
     def alive?
         remaining_health > 0

@@ -24,4 +24,11 @@ FactoryGirl.define do
         info_reference "http://en.wikipedia.org/wiki/T-X"
     end
 
+    factory :advanced_code_name, class: CodeName do
+        name "Robotina"
+        damage 15
+        tech_level 10
+        info_reference "http://en.wikipedia.org/wiki/T-X"
+    end
+
 end
