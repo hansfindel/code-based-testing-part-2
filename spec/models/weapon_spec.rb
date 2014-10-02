@@ -31,4 +31,24 @@ RSpec.describe Weapon, :type => :model do
     end
   end
 
+  context "Secondary effect" do
+    it "Should have effect" do
+      sword = FactoryGirl.create(:ice_sword)
+      expect(sword.effect) != nil
+    end
+
+    it "Should freeze the opponent" do
+      r1 = FactoryGirl.create(:robot_with_ice_sword)
+      r2 = FactoryGirl.create(:robot)
+
+      # Hago que el robot con la espada ataque al otro
+      begin
+        ContestSimulator.attack r1, r2
+      rescue Exception => e
+        puts "Error: #{e} - #{e.get_message}"
+      end
+
+      expect(r2.status == 'Frozen').to be true
+    end
+  end
 end

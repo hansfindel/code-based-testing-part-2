@@ -17,6 +17,8 @@ class Robot < ActiveRecord::Base
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
 
+    attr_accessor :status
+
     def alive?
         remaining_health > 0
     end
@@ -30,6 +32,12 @@ class Robot < ActiveRecord::Base
         self.health.current -= damage
     end
 
+    def take_effect effect
+        if effect == 'Freeze'
+            self.status = 'Frozen'
+        end
+    end
+
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
@@ -37,6 +45,18 @@ class Robot < ActiveRecord::Base
             max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
         end
         max_damage
+    end
+
+    def get_effect
+        effect = 'No effect'
+        max_damage = self.damage
+        robot_weapons.each do |weapon|
+            if valid_and_heavier_weapon?(max_damage, weapon)
+                max_damage = weapon.damage 
+                effect = weapon.effect if weapon.effect
+            end
+        end
+        effect
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
@@ -54,5 +74,4 @@ class Robot < ActiveRecord::Base
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
     end
-
 end

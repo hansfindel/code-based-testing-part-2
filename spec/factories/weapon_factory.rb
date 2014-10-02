@@ -20,4 +20,10 @@ FactoryGirl.define do
         damage 70
     end
 
+    factory :ice_sword, class: Weapon do
+        name "Ice Sword"
+        damage 20
+        effect "Freeze"
+    end
+
 end

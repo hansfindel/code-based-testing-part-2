@@ -27,17 +27,26 @@ class ContestSimulator
     #   puts "Error: #{e} - #{e.get_message}"
     # end
 
+    # Desprivatice el metodo para poder testearlo facilmente
+    def self.attack(contender1, contender2)
+        from_1 = contender1.calculate_damage # contender2.remaining_health
+
+        if contender1.status != 'Frozen'
+            contender2.take_damage from_1
+
+            if contender1.get_effect != 'No effect'
+                contender2.take_effect( contender1.get_effect )
+            end
+        else
+            contender1.status = 'Healthy'    
+        end
+    end
+
     private
     def self.synchronous_test(contender1, contender2)
         while contender1.alive? and contender2.alive?
             attack(contender1, contender2)
-            attack(contender2, contender1)
+            attack(contender2, contender1)    
         end
-    end
-
-    def self.attack(contender1, contender2)
-        from_1 = contender1.calculate_damage # contender2.remaining_health
-
-        contender2.take_damage from_1
     end
 end
