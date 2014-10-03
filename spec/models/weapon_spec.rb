@@ -31,4 +31,37 @@ RSpec.describe Weapon, :type => :model do
     end
   end
 
+  context "Tarea 1" do
+    it "should not receive damage and do damage" do 
+      robot1 = FactoryGirl.create(:no_recoil_robot)
+      robot2 = FactoryGirl.create(:full_recoil_robot)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 100
+      robot1.attack(robot2)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 0
+    end
+
+    it "should not receive damage and do default damage" do 
+      robot1 = FactoryGirl.create(:full_recoil_robot)
+      robot2 = FactoryGirl.create(:no_recoil_robot)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 100
+      robot1.attack(robot2)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 95
+    end
+
+    it "should receive damage and do damage" do 
+      robot1 = FactoryGirl.create(:mid_recoil_robot)
+      robot2 = FactoryGirl.create(:full_recoil_robot)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 100
+      robot1.attack(robot2)
+      expect(robot1.health.current).to be == 50
+      expect(robot2.health.current).to be == 50
+    end
+
+  end
+
 end
