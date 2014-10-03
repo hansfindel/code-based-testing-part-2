@@ -10,10 +10,10 @@ class ContestSimulator
             puts "Tie"
             raise ImpossibleError 
         elsif contender1.alive?
-            puts "Contender 1"
+            puts "Won Contender 1"
             [contender1]
         elsif contender2.alive?
-            puts "Contender 2"
+            puts "Won Contender 2"
             [contender2]
         else
             puts "Tragic Tie"

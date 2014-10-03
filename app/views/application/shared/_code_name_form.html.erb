@@ -1,0 +1,14 @@
+<%= f.fields_for :code_name do |h| %>
+	<div class="field">
+    <%= h.label :name %><br>
+    <%= h.text_field :name %>
+  </div>
+  <div class="field">
+    <%= h.label :info_reference %><br>
+    <%= h.text_field :info_reference %>
+  </div>
+  <div class="field">
+    <%= h.label :damage %><br>
+    <%= h.number_field :damage %>
+  </div>
+<% end %>
