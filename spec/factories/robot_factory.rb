@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
     factory :robot do
         after(:build) do |roboto, evaluator|
             roboto.code_name = FactoryGirl.create(:code_name)
@@ -13,9 +14,6 @@ FactoryGirl.define do
       after(:build) do |roboto, evaluator|
         roboto.code_name = FactoryGirl.create(:code_name)
         gun = FactoryGirl.create(:freeze_gun)
-        if gun.can_freeze
-          puts "freeze gun can freeze"
-        end
         roboto.health = FactoryGirl.build(:health)
         roboto.save
         attach_to_robot_weapon_with_health_value(roboto, gun, 10)
@@ -70,6 +68,7 @@ FactoryGirl.define do
             roboto.code_name.save
         end
     end
+
     factory :robot_with_bad_weapon, class: Robot do 
         after(:build) do |roboto, evaluator|
             roboto.health    = FactoryGirl.build(:health_1000)

@@ -1,10 +1,10 @@
 class RobotWeapon < ActiveRecord::Base
     include RobotWeaponHealth
 
-    belongs_to :robot 
-    belongs_to :weapon 
+    belongs_to :robot
+    belongs_to :weapon
 
-    has_one :health, as: :machine 
+    has_one :health, as: :machine
 
     validates :robot, presence: true
     validates :weapon, presence: true
@@ -15,7 +15,6 @@ class RobotWeapon < ActiveRecord::Base
     after_initialize :check_attrs
 
     delegate :damage, to: :weapon
-    delegate :can_freeze, to: :weapon
-
+    delegate :side_effect, to: :weapon
 
 end

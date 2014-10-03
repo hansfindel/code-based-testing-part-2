@@ -1,8 +1,6 @@
 class Weapon < ActiveRecord::Base
-    has_many :robot_weapons 
+    has_many :robot_weapons
     has_many :robots, through: :robot_weapons
-
-    attr_accessor :can_freeze
 
     # should be uniq by name - 
     # if created with the same name as one previously saved should return that one 

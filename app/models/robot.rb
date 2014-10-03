@@ -37,7 +37,11 @@ class Robot < ActiveRecord::Base
     freezes = false
     max_damage = self.damage
     robot_weapons.each do |weapon|
-        freezes = weapon.can_freeze if valid_and_heavier_weapon?(max_damage, weapon)
+      if valid_and_heavier_weapon?(max_damage, weapon)
+        if weapon.weapon.side_effect == "freezes"
+          freezes = true
+        end
+      end
     end
     freezes
   end

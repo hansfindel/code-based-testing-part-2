@@ -8,7 +8,7 @@ FactoryGirl.define do
     factory :freeze_gun, class: Weapon do
       name "Freeze Gun"
       damage 100
-      can_freeze true
+      side_effect "freezes"
     end
 
     factory :rifle, class: Weapon do

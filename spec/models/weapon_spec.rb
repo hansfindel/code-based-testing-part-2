@@ -4,23 +4,34 @@ RSpec.describe Weapon, :type => :model do
   # pending "add some examples to (or delete) #{__FILE__}"
 
   context "Factories" do 
+    it ":freeze" do
+      gun = FactoryGirl.create(:freeze_gun)
+      puts gun.name
+      puts gun.side_effect
+      expect(gun.id).to be > 0
+    end
+
     it ":health" do 
       gun = FactoryGirl.create(:gun)
+      puts gun.side_effect
       expect(gun.id).to be > 0
     end
 
     it ":health_800" do 
       gun = FactoryGirl.create(:rifle)
+      puts gun.side_effect
       expect(gun.id).to be > 0
     end
 
     it ":health_1000" do 
       gun = FactoryGirl.create(:machine_gun)
+      puts gun.side_effect
       expect(gun.id).to be > 0
     end
 
     it ":health_x" do 
       gun = FactoryGirl.create(:bazuka)
+      puts gun.side_effect
       expect(gun.id).to be > 0
     end
 
