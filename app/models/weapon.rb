@@ -12,7 +12,4 @@ class Weapon < ActiveRecord::Base
     	# return the existing object if any, otherwise return true
     end
 
-    def use
-    	self.damage *= 0.9
-    end
 end

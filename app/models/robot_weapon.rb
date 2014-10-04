@@ -30,4 +30,8 @@ class RobotWeapon < ActiveRecord::Base
         @old_health = health.current if @old_health.blank? or health.current > 0
         health.current = 0
     end
+
+    def use
+        self.health.current *= 0.9
+    end
 end

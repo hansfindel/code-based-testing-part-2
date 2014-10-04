@@ -31,19 +31,4 @@ RSpec.describe Weapon, :type => :model do
     end
   end
 
-  context "#use" do
-    before(:all) do 
-      @gun = FactoryGirl.create(:gun)
-    end
-
-    it "should return a number" do
-      expect(@gun.use).to be > 0
-    end
-
-    it "should be smaller than the initial value" do
-      initial_value = @gun.damage
-      expect(@gun.use).to be < initial_value 
-    end
-  end
-
 end
