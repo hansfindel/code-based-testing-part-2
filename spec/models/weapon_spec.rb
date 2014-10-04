@@ -41,6 +41,17 @@ RSpec.describe Weapon, :type => :model do
       gun2 = FactoryGirl.create(:bazuka)
       # expect(gun1.id == gun2.id).to be true
     end
+
+    it "should have a min_tech value" do
+      gun = FactoryGirl.create(:gun)
+      expect(gun.min_tech).not_to be(nil)
+    end
+
+    it "should have a min_tech value greater than or equal to 0" do
+      gun = FactoryGirl.create(:gun)
+      expect(gun.min_tech).to be >= 0
+    end
+
   end
 
 end
