@@ -18,6 +18,10 @@
 
   <div id="code_name"><%= render "application/shared/code_name_form", f: f %></div>
 
+  <div class="field">
+    <%= f.label :delay %><br>
+    <%= f.number_field :delay %>
+  </div>
   
   <%= render "application/shared/health_form", f: f %>
 
