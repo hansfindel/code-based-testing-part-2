@@ -43,6 +43,7 @@ group :development, :test do
   gem 'factory_girl'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'pry-byebug', '~> 2.0.0'
 end
 
 

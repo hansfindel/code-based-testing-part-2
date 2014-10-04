@@ -34,6 +34,13 @@ RSpec.describe CodeName, :type => :model do
       # code_name2 = FactoryGirl.create(:T_X)
       # expect(code_name1.id == code_name2.id).to be true
     end
+
+    it "should be the same instance if created with the same name" do
+      code_name1 = FactoryGirl.create :code_name, name: "ABC"
+      binding.pry
+      code_name2 = FactoryGirl.create :code_name, name: "ABC"
+      expect(code_name2).to eq(code_name1)
+    end
   end
 
   # pending "add some examples to (or delete) #{__FILE__}"
