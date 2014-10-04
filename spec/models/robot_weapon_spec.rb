@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: robot_weapons
+#
+#  id         :integer          not null, primary key
+#  robot_id   :integer
+#  weapon_id  :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'rails_helper'
 
 RSpec.describe RobotWeapon, :type => :model do

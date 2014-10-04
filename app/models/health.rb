@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: healths
+#
+#  id           :integer          not null, primary key
+#  current      :integer
+#  maximum      :integer
+#  machine_id   :integer
+#  machine_type :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
 class Health < ActiveRecord::Base
     belongs_to :machine, polymorphic: true 
 

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: robots
+#
+#  id                :integer          not null, primary key
+#  code_name_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  regeneration_rate :integer          default(0), not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do

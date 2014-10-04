@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: robots
+#
+#  id                :integer          not null, primary key
+#  code_name_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  regeneration_rate :integer          default(0), not null
+#
+
 class Robot < ActiveRecord::Base
     include AutoPresentable 
 
@@ -28,6 +39,10 @@ class Robot < ActiveRecord::Base
     def take_damage damage 
         # should not get lower than 0
         self.health.current -= damage
+    end
+
+    def regenerate
+        [ self.health.maximum, self.health.current + self.regeneration_rate ].max
     end
 
     def calculate_damage(total_health=1)
