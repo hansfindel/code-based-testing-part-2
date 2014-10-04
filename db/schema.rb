@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006224737) do
+ActiveRecord::Schema.define(version: 20141006225627) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141006224737) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "technology_level"
+    t.integer  "tech",           default: 0
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"

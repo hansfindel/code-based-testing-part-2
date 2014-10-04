@@ -2,13 +2,13 @@
 #
 # Table name: code_names
 #
-#  id               :integer          not null, primary key
-#  name             :string(255)
-#  info_reference   :string(255)
-#  damage           :integer
-#  created_at       :datetime
-#  updated_at       :datetime
-#  technology_level :integer
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  info_reference :string(255)
+#  damage         :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  tech           :integer          default(0)
 #
 
 require 'rails_helper'
@@ -50,9 +50,18 @@ RSpec.describe CodeName, :type => :model do
 
     it "should be the same instance if created with the same name" do
       code_name1 = FactoryGirl.create :code_name, name: "ABC"
-      binding.pry
       code_name2 = FactoryGirl.create :code_name, name: "ABC"
       expect(code_name2).to eq(code_name1)
+    end
+
+    it "should have a tech value" do
+      code_name = FactoryGirl.create(:code_name)
+      expect(code_name.tech).not_to be(nil)
+    end
+
+    it "should have a tech value greater than or equal to 0" do
+      code_name = FactoryGirl.create(:code_name)
+      expect(code_name.tech).to be >= 0
     end
   end
 

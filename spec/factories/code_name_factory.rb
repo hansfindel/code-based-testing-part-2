@@ -2,13 +2,13 @@
 #
 # Table name: code_names
 #
-#  id               :integer          not null, primary key
-#  name             :string(255)
-#  info_reference   :string(255)
-#  damage           :integer
-#  created_at       :datetime
-#  updated_at       :datetime
-#  technology_level :integer
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  info_reference :string(255)
+#  damage         :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  tech           :integer          default(0)
 #
 
 FactoryGirl.define do
