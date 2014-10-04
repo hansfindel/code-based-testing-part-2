@@ -37,7 +37,7 @@ class ContestSimulator
 
     def self.attack(contender1, contender2)
         from_1 = contender1.calculate_damage # contender2.remaining_health
-
+        contender1.regenerate
         contender2.take_damage from_1
     end
 end
