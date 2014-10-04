@@ -40,6 +40,35 @@ RSpec.describe Robot, :type => :model do
     end
      
   end
+
+  context "#regenerate" do
+    before(:all) do 
+      @r1   = FactoryGirl.create(:t_1000)
+      @r2   = FactoryGirl.create(:t_x)
+    end
+    it "should return a number" do 
+      expect(@r1.regenerate).to be > 0 
+    end
+
+    it "should be equal to maximum when it's initially equal" do
+      expect(@r1.regenerate).to be @r1.health.maximum
+    end
+    it "should be equal to maximum when it's initially a bit lower" do
+      @r1.take_damage 1
+      expect(@r1.regenerate).to be @r1.health.maximum
+    end
+    it "shouldn't be more than maximum when it's initially much lower" do
+      @r1.take_damage 90
+      expect(@r1.regenerate).to be <= @r1.health.maximum
+    end
+    it "should be bigger than the initial value if initially is lower than maximum" do
+      @r2.take_damage 100
+      initial_value = @r2.remaining_health
+      expect(@r2.regenerate).to be > initial_value
+    end
+
+  end
+
   context "#calculate_damage" do 
     it "should return a number" do 
       # stub valid_and_heavier_weapon?

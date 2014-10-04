@@ -42,6 +42,11 @@ class Robot < ActiveRecord::Base
         max_damage
     end
 
+    def regenerate
+        new_health = remaining_health*1.3
+        self.health.current = [new_health, self.health.maximum].min
+    end
+
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
         weapon_instance.stable? and max_damage < weapon_instance.damage
     end
