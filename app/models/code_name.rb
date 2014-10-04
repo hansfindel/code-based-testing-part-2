@@ -27,19 +27,28 @@ class CodeName < ActiveRecord::Base
     validates :damage, numericality: { greater_than: 0 }
 
 
-    def save
-        if @@instance.nil?
-            code_name = CodeName.find_by name: self.name
-            if code_name.nil?
-                super
-            else
-                @@instance = code_name
-                true
-            end
-        else
-            true
-        end
+    def self.create(attributes = nil, &block)
+        super
     end
+
+    def self.create!(attributes = nil, &block)
+        super
+    end
+
+    # def save
+    #     raise Exception
+    #     if @@instance.nil?
+    #         code_name = CodeName.find_by name: self.name
+    #         if code_name.nil?
+    #             super
+    #         else
+    #             @@instance = code_name
+    #             true
+    #         end
+    #     else
+    #         true
+    #     end
+    # end
 
     def save!
         if @@instance.nil?

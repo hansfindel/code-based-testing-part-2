@@ -42,7 +42,14 @@ class Robot < ActiveRecord::Base
     end
 
     def regenerate
-        [ self.health.maximum, self.health.current + self.regeneration_rate ].max
+        self.health.current =
+        [ self.health.maximum, self.health.current + self.regeneration_rate ].min
+    end
+
+    def attack(enemy)
+        damage = calculate_damage
+        enemy.take_damage damage
+        self.regenerate
     end
 
     def calculate_damage(total_health=1)

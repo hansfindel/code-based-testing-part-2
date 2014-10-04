@@ -12,7 +12,7 @@
 require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do
- 
+
   context "Factories" do 
     pending "add some examples to (or delete) #{__FILE__}"
   end
@@ -49,7 +49,7 @@ RSpec.describe Robot, :type => :model do
       @gun_i.play_dead
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
     end
-     
+
   end
   context "#calculate_damage" do 
     it "should return a number" do 
@@ -110,6 +110,28 @@ RSpec.describe Robot, :type => :model do
     it "should return false if not healthy" do 
       wall_e.should_receive(:remaining_health).and_return(0)
       expect(wall_e.alive?).to be false
+    end
+  end
+
+  context "Attacking" do
+    let(:t_800) { FactoryGirl.create :t_800 }
+    let(:t_x) { FactoryGirl.create :t_x }
+
+    it "should have a regeneration_rate greater >= 0" do
+      robot = FactoryGirl.create :robot
+      expect(robot.regeneration_rate).to_not be(nil)
+      expect(robot.regeneration_rate).to be >= 0
+    end
+
+    it "should regenerate after attacking" do
+      t_x.health.current = 10
+      t_x.attack(t_800)
+      expect(t_x.health.current).to eq(10 + t_x.regeneration_rate)
+    end
+
+    it "should not regenerate more than its maximum health" do
+      t_x.attack(t_800)
+      expect(t_x.health.current).to eq(t_x.health.maximum)
     end
   end
 
