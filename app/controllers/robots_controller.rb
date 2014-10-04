@@ -15,7 +15,8 @@ class RobotsController < ApplicationController
   # GET /robots/new
   def new
     @robot = Robot.new()
-    @robot.health = Health.new 
+    @robot.health = Health.new
+    @robot.code_name = CodeName.new
   end
 
   # GET /robots/1/edit
@@ -26,6 +27,8 @@ class RobotsController < ApplicationController
   # POST /robots.json
   def create
     @robot = Robot.new(robot_params)
+    puts robot_params
+    puts @robot.code_name
     respond_to do |format|
       if @robot.save
         format.html { redirect_to @robot, notice: 'Robot was successfully created.' }
@@ -73,6 +76,7 @@ class RobotsController < ApplicationController
     def robot_params
       params.require(:robot).permit(:code_name_id, 
         health_attributes:[:id, :current,:maximum], 
-        robot_weapons_attributes:[:id,:weapon_id])
+        robot_weapons_attributes:[:id,:weapon_id],
+        code_name_attributes:[:id, :name, :info_reference, :damage])
     end
 end
