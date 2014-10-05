@@ -27,8 +27,6 @@ class RobotsController < ApplicationController
   # POST /robots.json
   def create
     @robot = Robot.new(robot_params)
-    puts robot_params
-    puts @robot.code_name
     respond_to do |format|
       if @robot.save
         format.html { redirect_to @robot, notice: 'Robot was successfully created.' }

@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :code_name_id %><br>
-    <%= f.select(:code_name_id,  CodeName.all.collect {|c| [ c.name, c.id ] }<< ["Add",-1])  %> 
+    <%= f.select(:code_name_id,  CodeName.all.collect {|c| [ c.name, c.id ] } << (["Add",-1] if @robot.new_record?))  %>
   </div>
 
   <div id="code_name"><%= render "application/shared/code_name_form", f: f %></div>
