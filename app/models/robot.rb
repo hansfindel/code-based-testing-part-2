@@ -13,6 +13,7 @@ class Robot < ActiveRecord::Base
 
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
+    accepts_nested_attributes_for :code_name, :reject_if => :all_blank, :allow_destroy => true
 
     delegate :damage,:technology, to: :code_name
 
