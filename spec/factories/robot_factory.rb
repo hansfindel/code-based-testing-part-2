@@ -1,4 +1,7 @@
 FactoryGirl.define do
+
+    Robot.create
+
     factory :robot do
         after(:build) do |roboto, evaluator|
             roboto.code_name = FactoryGirl.create(:code_name)
@@ -44,6 +47,17 @@ FactoryGirl.define do
             attach_to_robot_weapon_with_health_value(roboto, bazuka, 3)
             roboto.save 
         end
+    end
+
+    factory :robot_with_frozen_weapon, class: Robot do
+      after(:build) do |roboto|
+        roboto.code_name = FactoryGirl.create(:frozen)
+        freeze_gun       = FactoryGirl.create(:freeze_gun) # could be affected
+        # roboto.weapons = [gun, rifle, machine_gun, bazuka]
+        roboto.health = FactoryGirl.build(:health_x)
+        attach_to_robot_weapon_with_health_value(roboto, freeze_gun, 10)
+        roboto.save
+      end
     end
 
     factory :robot_with_slightly_better_weapon, class: Robot do 

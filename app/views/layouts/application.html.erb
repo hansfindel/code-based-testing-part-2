@@ -22,8 +22,8 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="<%= is_current(root_path) %>"><%= link_to "Home", root_path %></li>
-            <li class="<%= is_current(robots_path) %>"><%= link_to "Robots", robots_path %></li>
-            <li class="<%= is_current(weapons_path) %>"><%= link_to "Weapons", weapons_path %></li>
+            <li class="<%= is_current(robots_path, 'robots') %>"><%= link_to "Robots", robots_path %></li>
+            <li class="<%= is_current(weapons_path, 'weapons') %>"><%= link_to "Weapons", weapons_path %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           </ul>

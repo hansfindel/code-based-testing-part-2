@@ -24,4 +24,10 @@ FactoryGirl.define do
         info_reference "http://en.wikipedia.org/wiki/T-X"
     end
 
+  factory :frozen, class: CodeName do
+    name "FROZEN"
+    damage 20
+    info_reference "http://en.wikipedia.org/wiki/Frozen"
+  end
+
 end

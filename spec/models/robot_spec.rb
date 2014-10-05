@@ -45,45 +45,32 @@ RSpec.describe Robot, :type => :model do
       # stub valid_and_heavier_weapon?
       robot = FactoryGirl.create(:robot)
       # robot.unstub
-      robot.stub(:valid_and_heavier_weapon?)
+      #robot.stub(:valid_and_heavier_weapon?)
       expect(robot.calculate_damage).to be > 0 
       # should be a number ... in the future might accept 0
     end
 
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
-      # mock valid_and_heavier_weapon?
-      robot = FactoryGirl.create(:robot)
-      robot.should_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
-    end
-
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
-      # mock valid_and_heavier_weapon?
-      robot = FactoryGirl.create(:unarmed_robot)
-      robot.should_not_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
-    end
-
-    it "should return a number" do 
+    it "should return a number" do
       robot = FactoryGirl.create(:robot)
       expect(robot.calculate_damage).to be > 0 
     end
 
-    context "should return a higher number if possible" do 
-      it "#should be at least this value" do 
-        # currently is the highest one
-        robot = FactoryGirl.create(:robot)
-        expect(robot.calculate_damage).to be >= robot.damage
+    context "should be optimized" do
+
+      it "Should return robot damage if the total_health is equal to the robot damage" do
+        robot = FactoryGirl.create(:t_x)
+
+        expect(robot.calculate_damage(robot.damage)).to eq(robot.damage)
       end
 
-      it "#should be equal if weapon is worse than the machines one" do 
-        robot = FactoryGirl.create(:robot_with_bad_weapon)
-        expect(robot.calculate_damage).to be robot.damage
-      end
+      it "Should return a weapon damage if the total_health is equal to a weapon damage" do
+        robot = FactoryGirl.create(:t_x)
+        damages = robot.weapons.pluck(:damage)
 
-      it "#should be higher if weapon is better than the machines one" do 
-        robot = FactoryGirl.create(:robot_with_slightly_better_weapon)
-        expect(robot.calculate_damage).to be > robot.damage     
+        damages.each do |damage|
+          expect(robot.calculate_damage(damage)).to eq(damage)
+        end
+
       end
 
     end
@@ -100,6 +87,23 @@ RSpec.describe Robot, :type => :model do
       wall_e.should_receive(:remaining_health).and_return(0)
       expect(wall_e.alive?).to be false
     end
+  end
+
+  context '#frozen ability' do
+
+    it "Should be created with is_frozen false" do
+      robot = Robot.new
+      expect(robot.is_frozen).to eq false
+    end
+
+    it "Should freeze if the weapon used has freeze ability" do
+      robot = FactoryGirl.create(:robot_with_frozen_weapon)
+      expect(robot.used_freeze?).to eq false
+      expect(robot.calculate_damage(3)).to eq(3)
+      expect(robot.used_freeze?).to eq true
+      expect(robot.used_freeze?).to eq false
+    end
+
   end
 
 end

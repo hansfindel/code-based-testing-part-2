@@ -1,0 +1,20 @@
+<%= f.fields_for :code_name do |h| %>
+
+    <div class="field">
+      <%= h.label :id, 'CodeName id' %><br>
+      <%= h.text_field :id, id: 'code_name_id' %>
+    </div>
+
+    <div class="field">
+      <%= h.label :name, 'CodeName name' %><br>
+      <%= h.text_field :name, id: 'code_name_name' %>
+    </div>
+    <div class="field">
+      <%= h.label :info_reference, 'CodeName info reference' %><br>
+      <%= h.text_field :info_reference, id: 'code_name_info_reference' %>
+    </div>
+    <div class="field">
+      <%= h.label :damage, 'CodeName damage' %><br>
+      <%= h.number_field :damage %>
+    </div>
+<% end %>
