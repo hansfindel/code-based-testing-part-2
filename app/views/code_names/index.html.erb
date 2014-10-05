@@ -5,6 +5,8 @@
     <tr>
       <th>Name</th>
       <th>Info reference</th>
+      <th>Damage</th>
+      <th>Technology</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,6 +16,8 @@
       <tr>
         <td><%= code_name.name %></td>
         <td><%= code_name.info_reference %></td>
+        <td><%= code_name.damage %></td>
+        <td><%= code_name.technology %></td>
         <td><%= link_to 'Show', code_name %></td>
         <td><%= link_to 'Edit', edit_code_name_path(code_name) %></td>
         <td><%= link_to 'Destroy', code_name, method: :delete, data: { confirm: 'Are you sure?' } %></td>

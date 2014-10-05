@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141004151016) do
+ActiveRecord::Schema.define(version: 20141005003128) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20141004151016) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "technology"
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 20141004151016) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "technology"
   end
 
 end

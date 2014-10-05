@@ -6,37 +6,60 @@ RSpec.describe Robot, :type => :model do
     pending "add some examples to (or delete) #{__FILE__}"
   end
 
-  context "#valid_and_heavier_weapon?" do 
+  context "#valid_and_heavier_and_technology_weapon?" do 
     before(:all) do 
-      @robot    = Robot.new # damage: 6
+      @robot    = FactoryGirl.create(:robot) # damage: 6, technology: 6
       @gun      = FactoryGirl.create(:gun)
+      @rifle    = FactoryGirl.create(:rifle)
       
-      @gun_i    = @gun.robot_weapons.build 
+      @gun_i    = @gun.robot_weapons.build # damage: 5, technology: 5
       @gun_i.health.current   = 1
-      @gun_i.health.maximum   = 1
+      @gun_i.health.maximum   = 1 
+
+      @rifle_i    = @rifle.robot_weapons.build # damage:10, technology: 10
+      @rifle_i.health.current   = 1
+      @rifle_i.health.maximum   = 1 
       
-      # @damage_t = @robot.damage    # 6
-      # @damage_g = @gun_i.damage    # 5
     end
     
-    it "should return true if gun is undamaged and has heavier damage" do 
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
+    it "should return true if gun is undamaged and has heavier damage and has required technology level" do 
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@gun_i.damage - 1, @gun_i)).to be true
     end
 
-    it "should return false if gun is undamaged but has not a heavier damage" do 
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
+     it "should return false if gun is undamaged and has heavier damage and has not required technology level" do 
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@rifle_i.damage - 6, @rifle_i)).to be false
     end
 
-    it "should return same if gun is damaged - w/heavier damage" do 
+    it "should return false if gun is undamaged but has not a heavier damage and has required technology level" do 
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@gun_i.damage + 1, @gun_i)).to be false
+    end
+
+    it "should return false if gun is undamaged but has not a heavier damage and has not required technology level" do 
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@rifle_i.damage , @rifle_i)).to be false
+    end
+
+    it "should return same if gun is damaged - w/heavier damage and has required technology level" do 
       # @gun_i.health.current = 0
       @gun_i.play_dead
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be false
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@gun_i.damage - 1, @gun_i)).to be false
     end
 
-    it "should return same if gun is damaged - w/lower damage" do 
+    it "should return same if gun is damaged - w/heavier damage and has not required technology level" do 
+      # @gun_i.health.current = 0
+      @rifle_i.play_dead
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@rifle_i.damage - 6, @rifle_i)).to be false
+    end
+
+    it "should return same if gun is damaged - w/lower damage and has required technology level" do 
       # @gun_i.health.current = 0
       @gun_i.play_dead
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@gun_i.damage + 1, @gun_i)).to be false
+    end
+
+    it "should return same if gun is damaged - w/lower damage and has required technology level" do 
+      # @gun_i.health.current = 0
+      @rifle_i.play_dead
+      expect(@robot.valid_and_heavier_and_technology_weapon?(@rifle_i.damage, @rifle_i)).to be false
     end
      
   end
@@ -71,7 +94,7 @@ RSpec.describe Robot, :type => :model do
 
   context "#calculate_damage" do 
     it "should return a number" do 
-      # stub valid_and_heavier_weapon?
+      # stub valid_and_heavier_and_technology_weapon?
       robot = FactoryGirl.create(:robot)
       # robot.unstub
       robot.stub(:valid_and_heavier_weapon?)
@@ -79,15 +102,15 @@ RSpec.describe Robot, :type => :model do
       # should be a number ... in the future might accept 0
     end
 
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
-      # mock valid_and_heavier_weapon?
+    it "should use valid_and_heavier_and_technology_weapon? method when it has at least one weapon" do 
+      # mock valid_and_heavier_and_technology_weapon?
       robot = FactoryGirl.create(:robot)
       robot.should_receive(:valid_and_heavier_weapon?)
       expect(robot.calculate_damage).to be > 0 
     end
 
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
-      # mock valid_and_heavier_weapon?
+    it "should use valid_and_heavier_and_technology_weapon? method when it has at least one weapon" do 
+      # mock valid_and_heavier_and_technology_weapon?
       robot = FactoryGirl.create(:unarmed_robot)
       robot.should_not_receive(:valid_and_heavier_weapon?)
       expect(robot.calculate_damage).to be > 0 
