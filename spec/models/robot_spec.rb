@@ -102,4 +102,25 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "Tarea 1" do
+    it "should return code_name's health if robot is initialized without health" do
+      robot = FactoryGirl.create(:robot_without_health)
+      expect(robot.health.current).to be robot.default_health
+      expect(robot.health.maximum).to be robot.default_health
+    end
+
+    it "should return robot health if robot is initialized with health" do
+      robot = FactoryGirl.create(:robot_with_health_100_and_code_name_health_10)
+      expect(robot.health.current).to be 100
+      expect(robot.health.maximum).to be 100
+    end
+
+    it "should return robot health equal to 5 if robot is initialized without health and code_name's health" do
+      robot = FactoryGirl.create(:empty_robot)
+      expect(robot.health.current).to be 5
+      expect(robot.health.maximum).to be 5
+    end
+
+  end
+
 end

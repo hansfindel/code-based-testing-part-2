@@ -8,8 +8,11 @@ class Robot < ActiveRecord::Base
 
     has_one :health, as: :machine 
 
+    before_validation :ensure_robot_has_a_health
+
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
+    
 
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
@@ -17,8 +20,22 @@ class Robot < ActiveRecord::Base
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
 
+    def ensure_robot_has_a_health
+      if not self.health
+        self.health = Health.assing_health(default_health)
+      end
+    end
+
     def alive?
         remaining_health > 0
+    end
+
+    def default_health
+        if self.code_name and self.code_name.health
+            self.code_name.health
+        else
+            5
+        end
     end
 
     def remaining_health

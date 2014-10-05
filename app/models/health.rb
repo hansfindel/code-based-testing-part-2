@@ -14,4 +14,11 @@ class Health < ActiveRecord::Base
         end
     end
 
+    def self.assing_health(number)
+        health = Health.new
+        health.current = number
+        health.maximum = number
+        return health
+    end
+
 end
