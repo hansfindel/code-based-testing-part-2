@@ -72,12 +72,13 @@ class Robot < ActiveRecord::Base
         end 
     end
 
+    #el robot crea un arma nueva (el arma se crea por default)
     def create_new_weapon 
         weapon = Weapon.create(name: "gun", damage: 3)
         self.weapons << weapon
     end
 
-
+    #Calcula cuantas armas quedan al robot
     def remaining_weapons?
         if self.robot_weapons.count == 0
             false
