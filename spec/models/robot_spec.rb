@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do
- 
-  context "Factories" do 
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
 
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 

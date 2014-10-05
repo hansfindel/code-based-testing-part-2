@@ -1,21 +1,11 @@
 class Robot < ActiveRecord::Base
-    include AutoPresentable 
-
-    belongs_to :code_name 
+    include AutoPresentable
+    include HasFighterAbilities
 
     has_many :robot_weapons
     has_many :weapons, through: :robot_weapons
 
-    has_one :health, as: :machine 
-
-    validates :code_name, presence: true #, message: "Needs to be a registered robot"
-    validates :health, presence: true #, message: "Needs to be initialized with a health status"
-
-    accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
-
-    delegate :damage, to: :code_name
-    delegate :name, to: :code_name
 
     def alive?
         remaining_health > 0
@@ -25,7 +15,7 @@ class Robot < ActiveRecord::Base
         self.health.current
     end
 
-    def take_damage damage 
+    def take_damage damage
         # should not get lower than 0
         self.health.current -= damage
     end
@@ -48,9 +38,9 @@ class Robot < ActiveRecord::Base
         @status ||= 0
         @status %= 4
         {
-            "0" => "H", 
-            "1" => "O",  
-            "2" => "L", 
+            "0" => "H",
+            "1" => "O",
+            "2" => "L",
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
     end

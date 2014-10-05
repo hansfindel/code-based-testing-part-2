@@ -1,7 +1,7 @@
 module AutoPresentable
 	extend ActiveSupport::Concern
 	included do 
-		puts "hi"
+		# puts "hi"
 		# has_many ...
 	end
 
