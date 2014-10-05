@@ -29,21 +29,18 @@ class Robot < ActiveRecord::Base
 
     def take_damage damage 
         # should not get lower than 0
-        self.health.current -= damage
+        if self.health.current >= damage
+            self.health.current -= damage
+        else
+            self.health.current = 0
+        end
     end
 
     def calculate_damage(total_health=1)
-        #Have to calculate weapons to be used
-        to_be_used = []
-
-        #It consideres that the robot always use its basal power
         max_damage = self.damage
-
-        to_be_used.each do |weapon|
-            max_damage += weapon.damage if weapon_instance.stable?
-            weapon.recoil_effect
+        robot_weapons.each do |weapon|
+            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
         end
-
         max_damage
     end
 
@@ -81,8 +78,7 @@ class Robot < ActiveRecord::Base
 
 
     def use_weapon(weapon, target)
-        weapon.attack(target)
-        weapon.recoil_effect
+        weapon.use(target)
     end
 
 end

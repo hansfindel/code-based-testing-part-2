@@ -37,8 +37,11 @@ class RobotWeapon < ActiveRecord::Base
         self.robot.take_damage self.recoil_damage
     end
 
-    #Attacks the target
-    def attack(target)
-        target.take_damage self.damage
+    #Attacks the target. When no target, it only applies recoil effect.
+    def use(target=nil)
+        if target
+            target.take_damage self.damage
+        end
+        self.recoil_effect
     end
 end

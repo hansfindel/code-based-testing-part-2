@@ -16,6 +16,9 @@ RSpec.describe "weapons/new", :type => :view do
       assert_select "input#weapon_name[name=?]", "weapon[name]"
 
       assert_select "input#weapon_damage[name=?]", "weapon[damage]"
+
+      assert_select "input#weapon_recoil_damage[name=?]", "weapon[recoil_damage]"
+
     end
   end
 end
