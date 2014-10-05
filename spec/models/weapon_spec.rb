@@ -24,11 +24,20 @@ RSpec.describe Weapon, :type => :model do
       expect(gun.id).to be > 0
     end
 
-    it "should not create two different instances for the same (defined) Weapon" do 
+  end
+  context "Tarea 1" do
+    it "should not create two different instances for the same defined weapon" do 
       gun1 = FactoryGirl.create(:bazuka)
       gun2 = FactoryGirl.create(:bazuka)
-      # expect(gun1.id == gun2.id).to be true
+      expect(gun1.id == gun2.id).to be true
     end
+
+    it "should create two different instances for the different weapons" do 
+      gun1 = FactoryGirl.create(:bazuka)
+      gun2 = FactoryGirl.create(:machine_gun)
+      expect(gun1.id != gun2.id).to be true
+    end
+
   end
 
 end
