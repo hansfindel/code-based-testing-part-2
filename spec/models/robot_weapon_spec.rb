@@ -14,4 +14,15 @@ RSpec.describe RobotWeapon, :type => :model do
     end
   end
 
+#neew
+  context "damage" do
+    it "should receive damage when shots" do
+      @gun      = FactoryGirl.create(:gun)
+      @gun_i    = @gun.robot_weapons.build 
+      @gun_i.health.current   = 1
+      @gun_i.health.maximum   = 1
+      expect(@gun_i.spent_bullet).to be 0
+    end
+  end
+
 end

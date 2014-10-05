@@ -26,6 +26,24 @@ class RobotWeapon < ActiveRecord::Base
         self.health.current > 0
     end
 
+    def can_use?
+        self.robot.tech >= self.weapon.tech_need
+    end
+
+    def recoil
+        self.weapon.recoil
+    end
+
+    def spent_bullet
+        self.health.take_damage 1
+        self.health.current
+    end
+
+    def take_damage damage 
+        # should not get lower than 0
+        self.health.take_damage damage
+    end
+
     def play_dead
         @old_health = health.current if @old_health.blank? or health.current > 0
         health.current = 0

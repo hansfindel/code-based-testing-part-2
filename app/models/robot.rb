@@ -16,6 +16,7 @@ class Robot < ActiveRecord::Base
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
+    delegate :tech, to: :code_name
 
     def alive?
         remaining_health > 0
@@ -27,20 +28,30 @@ class Robot < ActiveRecord::Base
 
     def take_damage damage 
         # should not get lower than 0
-        self.health.current -= damage
+        self.health.take_damage damage
     end
 
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
+        best_weapon = nil
         robot_weapons.each do |weapon|
             max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            best_weapon = weapon
+        end
+        if best_weapon
+            # weapon health
+            best_weapon.spent_bullet
+            
+            # Damage
+            self.take_damage best_weapon.recoil
+            self.save
         end
         max_damage
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
-        weapon_instance.stable? and max_damage < weapon_instance.damage
+        weapon_instance.can_use? and weapon_instance.stable? and max_damage < weapon_instance.damage
     end
 
     # pending test - then change it to work with an array instead of a hash

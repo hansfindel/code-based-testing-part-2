@@ -8,10 +8,11 @@ RSpec.describe Robot, :type => :model do
 
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
-      @robot    = Robot.new # damage: 6
+      @robot    = FactoryGirl.create(:robot)
       @gun      = FactoryGirl.create(:gun)
       
       @gun_i    = @gun.robot_weapons.build 
+      @gun_i.robot            = @robot
       @gun_i.health.current   = 1
       @gun_i.health.maximum   = 1
       
@@ -20,24 +21,51 @@ RSpec.describe Robot, :type => :model do
     end
     
     it "should return true if gun is undamaged and has heavier damage" do 
+      @robot.code_name.tech = @gun.tech_need
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
     end
 
     it "should return false if gun is undamaged but has not a heavier damage" do 
+      @robot.code_name.tech = @gun.tech_need
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
     end
 
     it "should return same if gun is damaged - w/heavier damage" do 
+      @robot.code_name.tech = @gun.tech_need
       # @gun_i.health.current = 0
       @gun_i.play_dead
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be false
     end
 
     it "should return same if gun is damaged - w/lower damage" do 
+      @robot.code_name.tech = @gun.tech_need
       # @gun_i.health.current = 0
       @gun_i.play_dead
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
     end
+
+    ## NUEVOS - TECH ##
+    it "should return false if robot don't have enough tech " do 
+      @gun_i.health.current   = 1
+      @robot.code_name.tech = @gun.tech_need - 1
+      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1 , @gun_i)).to be false
+    end
+    it "should return true if robot have enough tech " do 
+      @robot.code_name.tech = @gun.tech_need
+      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
+    end
+    ## TECH ##
+
+    it "should choose second weapon when the best does not have any health " do 
+      robot1      = FactoryGirl.create(:two_weapons_two_bullets_robot)
+      gun           = FactoryGirl.create(:gun) 
+      rifle         = FactoryGirl.create(:rifle)
+      expect(robot1.calculate_damage).to be rifle.damage
+      expect(robot1.calculate_damage).to be gun.damage
+    end
+
+
+
      
   end
   context "#calculate_damage" do 
@@ -84,6 +112,17 @@ RSpec.describe Robot, :type => :model do
       it "#should be higher if weapon is better than the machines one" do 
         robot = FactoryGirl.create(:robot_with_slightly_better_weapon)
         expect(robot.calculate_damage).to be > robot.damage     
+      end
+
+    end
+
+    ### recoil
+    context "recoil" do 
+      it "#should be affected by recoil" do 
+        robot = FactoryGirl.create(:t_x)
+        health = robot.remaining_health
+        robot.calculate_damage
+        expect(robot.remaining_health).to be < health    
       end
 
     end

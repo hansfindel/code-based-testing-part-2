@@ -20,4 +20,17 @@ FactoryGirl.define do
         maximum 120
     end
 
+    factory :health_human, class: Health do
+        current 20
+        maximum 20
+    end
+    factory :health_super_human, class: Health do
+        current 40
+        maximum 40
+    end
+    factory :health_saya, class: Health do
+        current 4000
+        maximum 4000
+    end
+
 end
