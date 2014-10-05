@@ -27,13 +27,20 @@ class ContestSimulator
     #   puts "Error: #{e} - #{e.get_message}"
     # end
 
-    private
+    #private
     def self.synchronous_test(contender1, contender2)
+        time = 0
         while contender1.alive? and contender2.alive?
-            attack(contender1, contender2)
-            attack(contender2, contender1)
+            attack(contender1, contender2) and puts "#{contender1.id} attacks." if attack_time(contender1,time)
+            attack(contender2, contender1) and puts "#{contender2.id} attacks." if attack_time(contender2,time)
+            time = time + 1
         end
     end
+
+    def self.attack_time(contender,time)
+        time % contender.delay == 0 and time != 0
+    end
+
 
     def self.attack(contender1, contender2)
         from_1 = contender1.calculate_damage # contender2.remaining_health
