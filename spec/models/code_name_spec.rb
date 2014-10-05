@@ -50,9 +50,10 @@ RSpec.describe CodeName, :type => :model do
 
     it "should be the same instance if created with the same name" do
       code_name1 = FactoryGirl.create :code_name, name: "ABC"
-      binding.pry
       code_name2 = FactoryGirl.create :code_name, name: "ABC"
       expect(code_name2).to eq(code_name1)
+      code_name3 = CodeName.create! name: "ABC"
+      expect(code_name3).to eq(code_name1)
     end
 
     it "should have a tech value" do

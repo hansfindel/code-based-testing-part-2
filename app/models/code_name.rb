@@ -13,8 +13,6 @@
 
 class CodeName < ActiveRecord::Base
 
-    @@instance = nil
-
     has_many :robots
 
     validates :tech, numericality: { greater_than_or_equal_to: 0 }
@@ -27,46 +25,35 @@ class CodeName < ActiveRecord::Base
     validates :damage, numericality: { greater_than: 0 }
 
 
-    def self.create(attributes = nil, &block)
-        super
-    end
-
     def self.create!(attributes = nil, &block)
-        super
-    end
-
-    # def save
-    #     raise Exception
-    #     if @@instance.nil?
-    #         code_name = CodeName.find_by name: self.name
-    #         if code_name.nil?
-    #             super
-    #         else
-    #             @@instance = code_name
-    #             true
-    #         end
-    #     else
-    #         true
-    #     end
-    # end
-
-    def instance_by_name(name)
-        CodeName.find_by name: name
+        create(attributes, &block) || raise(RecordInvalid)
     end
     
-
-    def save!
-        if @@instance.nil?
+    def self.create(attributes = nil, &block)
+        if attributes[:name]
             code_name = CodeName.find_by name: self.name
             if code_name.nil?
-                super
+                super(attributes, &block)
             else
-                @@instance = code_name
-                true
+                code_name
             end
         else
+            super(attributes, &block)
+        end
+    end
+
+    def save
+        code_name = CodeName.find_by name: self.name
+        if code_name.nil?
+            super
+        else
+            self.assign_attributes(code_name.attributes)
             true
         end
+    end
+
+    def save!
+        save || raise(RecordNotSaved)
     end
 
 
