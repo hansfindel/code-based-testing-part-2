@@ -102,4 +102,34 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "take damage" do
+    before(:each) do
+      @robot = FactoryGirl.create(:unarmed_robot);
+    end
+    it "should take 5 damage" do
+      damage = 5
+      current_health = @robot.health.current
+      @robot.take_damage(damage)
+      expect(@robot.health.current).to be (current_health - damage)
+    end
+
+    it "should not get under 0 health by taking damage" do
+      current_health = @robot.health.current
+      @robot.take_damage(current_health + 1)
+      expect(@robot.health.current).to be 0
+    end
+
+  end
+  context "get_instance_state_message" do
+    before(:each) do
+      @robot = FactoryGirl.create(:unarmed_robot);
+    end
+    it "should say HOLA" do
+      expect(@robot.get_instance_state_message).to be 'HOLA'
+    end
+    it "should be an array" do
+
+    end
+  end
+
 end

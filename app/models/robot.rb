@@ -27,7 +27,13 @@ class Robot < ActiveRecord::Base
 
     def take_damage damage 
         # should not get lower than 0
-        self.health.current -= damage
+        updated_health = health.current - damage
+        updated_health >= 0 ? health.current = updated_health : health.current = 0
+        if updated_health >= 0
+          self.health.current = updated_health
+        else
+          self.health.current = 0
+        end
     end
 
     def calculate_damage(total_health=1)
