@@ -17,6 +17,8 @@ RSpec.describe "code_names/new", :type => :view do
       assert_select "input#code_name_info_reference[name=?]", "code_name[info_reference]"
 
       assert_select "input#code_name_damage[name=?]", "code_name[damage]"
+
+      assert_select "input#code_name_max_health[name=?]", "code_name[max_health]"
     end
   end
 
@@ -29,6 +31,7 @@ RSpec.describe "code_names/new", :type => :view do
       fill_in 'Name', :with => email
       fill_in 'Info reference', :with => 'password-wiki-password'
       fill_in 'Damage', :with => '42'
+      fill_in 'Maximum Health', with: '50'
     end
     click_button 'Create Code name'
     expect(page).to have_content email
