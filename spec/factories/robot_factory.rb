@@ -129,6 +129,26 @@ FactoryGirl.define do
         end
     end
 
+    factory :mrFreeze_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:frozen_gun)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
+    factory :no_mrFreeze_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:bazuka)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
 end
 
 # helper 

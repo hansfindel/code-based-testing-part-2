@@ -3,6 +3,8 @@ class Weapon < ActiveRecord::Base
     has_many :robots, through: :robot_weapons
 
     validates :name, uniqueness: true
+
+    before_save :default_values
     
     def save!
 		# If this is new record, check for existing and update that instead:
@@ -15,4 +17,9 @@ class Weapon < ActiveRecord::Base
 			super
 	    end   	
     end
+
+    def default_values
+    	self.freezer ||= false
+    	self.recoil ||= 0
+	end
 end

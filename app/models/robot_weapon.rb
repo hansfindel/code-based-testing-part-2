@@ -22,6 +22,7 @@ class RobotWeapon < ActiveRecord::Base
 
     delegate :damage, to: :weapon
     delegate :recoil, to: :weapon
+    delegate :freezer, to: :weapon
 
     def stable?
         self.health.current > 0
