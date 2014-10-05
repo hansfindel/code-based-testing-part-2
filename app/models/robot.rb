@@ -34,15 +34,15 @@ class Robot < ActiveRecord::Base
         max_damage = self.damage
         max_damage_weapon = nil
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            max_damage = weapon.damage if valid_and_heavier_and_technology_weapon?(max_damage, weapon)
             max_damage_weapon = weapon
         end
         max_damage_weapon.use if max_damage_weapon
         max_damage
     end
 
-    def valid_and_heavier_weapon?(max_damage, weapon_instance)
-        weapon_instance.stable? and max_damage < weapon_instance.damage
+    def valid_and_heavier_and_technology_weapon?(max_damage, weapon_instance)
+        weapon_instance.stable? and max_damage < weapon_instance.damage and weapon_instance.weapon.technology <= technology
     end
 
     # pending test - then change it to work with an array instead of a hash
