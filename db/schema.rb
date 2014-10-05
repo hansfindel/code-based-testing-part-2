@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20140929220145) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -34,6 +34,25 @@ ActiveRecord::Schema.define(version: 20140909235653) do
 
   add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
   add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
+
+  create_table "power_ranger_weapons", force: true do |t|
+    t.integer  "power_ranger_id"
+    t.integer  "weapon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "power_ranger_weapons", ["power_ranger_id"], name: "index_power_ranger_weapons_on_power_ranger_id"
+  add_index "power_ranger_weapons", ["weapon_id"], name: "index_power_ranger_weapons_on_weapon_id"
+
+  create_table "power_rangers", force: true do |t|
+    t.integer  "code_name_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "power_rangers", ["code_name_id"], name: "index_power_rangers_on_code_name_id"
 
   create_table "robot_weapons", force: true do |t|
     t.integer  "robot_id"
