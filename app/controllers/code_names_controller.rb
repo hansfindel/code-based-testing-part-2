@@ -69,6 +69,6 @@ class CodeNamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def code_name_params
-      params.require(:code_name).permit(:name, :info_reference, :damage)
+      params.require(:code_name).permit(:name, :info_reference, :damage, :technology)
     end
 end

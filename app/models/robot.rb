@@ -14,8 +14,7 @@ class Robot < ActiveRecord::Base
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
 
-    delegate :damage, to: :code_name
-    delegate :name, to: :code_name
+    delegate :damage,:technology, to: :code_name
 
     def alive?
         remaining_health > 0
