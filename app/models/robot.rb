@@ -90,14 +90,14 @@ class Robot < ActiveRecord::Base
     end
 
     #dlarrain
-    #retorna true o false con probabilidad 1/2
-    def freeze?(var = rand(2))
-        if var == 1
-            true
-        elsif var == 0
-            false
-        else
-            self.freeze?
-        end
+    #setea variable freeze en false (al inicio del combate le robot no esta congelado)
+    def set_freeze (var=false)
+        @freeze = var
+    end
+
+    #dlarrain
+    #retorna true si el oponente debe perder el turno
+    def freeze?
+        @freeze
     end
 end

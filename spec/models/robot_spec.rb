@@ -71,6 +71,32 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  #dlarrain 
+  #freeze_weapon_effect
+  context "skip attack if freeze effect is activated" do
+    it "should attack when freeze is not active" do
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot1.set_freeze(false)
+      expect(@robot1.freeze?).to be false
+    end
+    it "should not attack when freeze is active" do
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot1.set_freeze(true)
+      expect(@robot1.freeze?).to be true
+    end
+    it "should change freeze state after loosing one turn" do
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot1.set_freeze(true)
+      expect(@robot1.freeze?).to be true
+      if @robot1.freeze
+        @robot1.set_freeze(false)
+      end
+      expect(@robot1.freeze?).to be false
+    end
+  end 
+
+
+
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6

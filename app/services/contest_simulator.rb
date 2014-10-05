@@ -30,21 +30,21 @@ class ContestSimulator
     private
     def self.synchronous_test(contender1, contender2)
         #dlarrain
-        #inicializamos las dos variable en true dado que ningun robot esta "congelado"
-        var1 = true
-        var2 = true
+        #inicializamos las dos variable en false dado que ningun robot esta "congelado"
+        contender1.set_freeze(false)
+        contender2.set_freeze(false)
         while contender1.alive? and contender2.alive?
             #dlarrain
             #verifica que el robot no haya sufrido las conseciencias de freeze antes de que pueda atacar
-            if var1
-                var2 = attack?(contender1, contender2)
+            if contender1.freeze? == false
+                attack?(contender1, contender2)
             else
-                var1 = true
+                contender1.setFreeze(false)
             end
-            if var2 
-                var1 = attack?(contender2, contender1)
+            if contender2.freeze? == false
+                attack?(contender2, contender1)
             else
-                var2 = true
+                contender2.setFreeze(false)
             end
         end
     end
@@ -65,8 +65,9 @@ class ContestSimulator
         contender1.regenerate   
 
         #dlarrain
-        #verifica si el siguiente robot sufre consecuencias secundarias de freeze, 
-        #lo cual ocurre con probabilidad 1/2
-        contender2.freeze?
+        #con probabilidad 1/3 el proximo robot no atacará
+        if rand(3) == 1
+            contender2.set_freeze(true)
+        end
     end
 end
