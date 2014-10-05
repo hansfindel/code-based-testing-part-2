@@ -29,15 +29,21 @@ class ContestSimulator
 
     private
     def self.synchronous_test(contender1, contender2)
-        while contender1.alive? and contender2.alive?
-            attack(contender1, contender2)
-            attack(contender2, contender1)
-        end
+      while contender1.alive? and contender2.alive?
+        attack(contender1, contender2)
+        attack(contender2, contender1)
+      end
     end
 
     def self.attack(contender1, contender2)
+      if contender1.is_frozen
+        contender1.is_frozen = false
+      else
         from_1 = contender1.calculate_damage # contender2.remaining_health
+        will_freeze_oponent = contender1.attack_weapon_freezes?
 
         contender2.take_damage from_1
+        contender2.is_frozen = will_freeze_oponent
+      end
     end
 end
