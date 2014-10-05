@@ -12,4 +12,14 @@ class Weapon < ActiveRecord::Base
     	# return the existing object if any, otherwise return true
     end
 
+
+    def save!
+
+      weapon = Weapon.find_by_name(self.name)
+      if !weapon
+        super
+      end
+
+    end
+
 end
