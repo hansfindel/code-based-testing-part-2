@@ -20,6 +20,7 @@ class Weapon < ActiveRecord::Base
         super
       end
 
+
     end
 
 end

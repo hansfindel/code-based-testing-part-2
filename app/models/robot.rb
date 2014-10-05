@@ -32,29 +32,22 @@ class Robot < ActiveRecord::Base
     end
 
     def calculate_damage(total_health=1)
-        # doesn't need to be the highest one
-        weapon_to_use = get_weapon_to_use
-
-        if weapon_to_use == nil
-          return self.damage
-        else
-          self.take_damage(weapon_to_use.recoil)
-          return weapon_to_use.damage
-        end
-    end
-
-    def get_weapon_to_use(total_health=1)
       # doesn't need to be the highest one
-      weapon_to_use = nil
       max_damage = self.damage
+      max_weapon=nil
       robot_weapons.each do |weapon|
-        weapon_to_use = weapon if valid_and_heavier_weapon?(max_damage, weapon)
-        if weapon_to_use != nil
-          max_damage = weapon_to_use.damage
+        if valid_and_heavier_weapon?(max_damage, weapon)
+          max_damage = weapon.damage
+          max_weapon = weapon
         end
       end
-      weapon_to_use
+      if max_weapon!=nil
+        self.take_damage(max_weapon.recoil)
+      end
+
+      max_damage
     end
+
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
         weapon_instance.stable? and max_damage < weapon_instance.damage

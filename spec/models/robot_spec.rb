@@ -57,13 +57,6 @@ RSpec.describe Robot, :type => :model do
 
     it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
       # mock valid_and_heavier_weapon?
-      robot = FactoryGirl.create(:robot)
-      robot.should_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0
-    end
-
-    it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
-      # mock valid_and_heavier_weapon?
       robot = FactoryGirl.create(:unarmed_robot)
       robot.should_not_receive(:valid_and_heavier_weapon?)
       expect(robot.calculate_damage).to be > 0 
@@ -74,22 +67,23 @@ RSpec.describe Robot, :type => :model do
       expect(robot.calculate_damage).to be > 0 
     end
 
-    context "should return a higher number if possible" do 
-      it "#should be at least this value" do 
+    context "should return a higher number if possible" do
+      it "#should be at least this value" do
         # currently is the highest one
         robot = FactoryGirl.create(:robot)
         expect(robot.calculate_damage).to be >= robot.damage
       end
 
-      it "#should be equal if weapon is worse than the machines one" do 
+      it "#should be equal if weapon is worse than the machines one" do
         robot = FactoryGirl.create(:robot_with_bad_weapon)
         expect(robot.calculate_damage).to be robot.damage
       end
 
-      it "#should be higher if weapon is better than the machines one" do 
-        robot = FactoryGirl.create(:robot_with_slightly_better_weapon)
-        expect(robot.calculate_damage).to be > robot.damage     
+      it "#should be higher if weapon is better than the machines one" do
+        robot = FactoryGirl.create(:t_x)
+        expect(robot.calculate_damage).to be > robot.damage
       end
+
 
     end
   end
