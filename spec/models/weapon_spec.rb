@@ -25,6 +25,7 @@ RSpec.describe Weapon, :type => :model do
     end
 
   end
+
   context "Tarea 1" do
     it "should not create two different instances for the same defined weapon" do 
       gun1 = FactoryGirl.create(:bazuka)
@@ -38,14 +39,9 @@ RSpec.describe Weapon, :type => :model do
       expect(gun1.id != gun2.id).to be true
     end
 
-  end
-
-  context "Tarea 1" do
     it "should not receive damage and do damage" do 
       robot1 = FactoryGirl.create(:no_recoil_robot)
       robot2 = FactoryGirl.create(:full_recoil_robot)
-      expect(robot1.health.current).to be == 100
-      expect(robot2.health.current).to be == 100
       robot1.attack(robot2)
       expect(robot1.health.current).to be == 100
       expect(robot2.health.current).to be == 0
@@ -54,8 +50,6 @@ RSpec.describe Weapon, :type => :model do
     it "should not receive damage and do default damage" do 
       robot1 = FactoryGirl.create(:full_recoil_robot)
       robot2 = FactoryGirl.create(:no_recoil_robot)
-      expect(robot1.health.current).to be == 100
-      expect(robot2.health.current).to be == 100
       robot1.attack(robot2)
       expect(robot1.health.current).to be == 100
       expect(robot2.health.current).to be == 95
@@ -64,11 +58,31 @@ RSpec.describe Weapon, :type => :model do
     it "should receive damage and do damage" do 
       robot1 = FactoryGirl.create(:mid_recoil_robot)
       robot2 = FactoryGirl.create(:full_recoil_robot)
-      expect(robot1.health.current).to be == 100
-      expect(robot2.health.current).to be == 100
       robot1.attack(robot2)
       expect(robot1.health.current).to be == 50
       expect(robot2.health.current).to be == 50
+    end
+
+    it "should freeze enemy and therefor not receive damage" do 
+      robot1 = FactoryGirl.create(:mrFreeze_robot)
+      robot2 = FactoryGirl.create(:no_mrFreeze_robot)
+      robot1.attack(robot2)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 50
+      robot2.attack(robot1)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 50
+    end
+
+    it "should not freeze enemy and therefor receive damage" do 
+      robot1 = FactoryGirl.create(:no_mrFreeze_robot)
+      robot2 = FactoryGirl.create(:no_mrFreeze_robot)
+      robot1.attack(robot2)
+      expect(robot1.health.current).to be == 100
+      expect(robot2.health.current).to be == 30
+      robot2.attack(robot1)
+      expect(robot1.health.current).to be == 30
+      expect(robot2.health.current).to be == 30
     end
 
   end

@@ -38,4 +38,10 @@ FactoryGirl.define do
         recoil 50 
     end
 
+    factory :frozen_gun, class: Weapon do
+        name "Frozen Laser Beam"
+        damage 50
+        freezer true 
+    end
+
 end
