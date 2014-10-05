@@ -97,7 +97,7 @@ RSpec.describe Robot, :type => :model do
       # stub valid_and_heavier_and_technology_weapon?
       robot = FactoryGirl.create(:robot)
       # robot.unstub
-      robot.stub(:valid_and_heavier_weapon?)
+      robot.stub(:valid_and_heavier_and_technology_weapon?)
       expect(robot.calculate_damage).to be > 0 
       # should be a number ... in the future might accept 0
     end
@@ -105,14 +105,14 @@ RSpec.describe Robot, :type => :model do
     it "should use valid_and_heavier_and_technology_weapon? method when it has at least one weapon" do 
       # mock valid_and_heavier_and_technology_weapon?
       robot = FactoryGirl.create(:robot)
-      robot.should_receive(:valid_and_heavier_weapon?)
+      robot.should_receive(:valid_and_heavier_and_technology_weapon?)
       expect(robot.calculate_damage).to be > 0 
     end
 
     it "should use valid_and_heavier_and_technology_weapon? method when it has at least one weapon" do 
       # mock valid_and_heavier_and_technology_weapon?
       robot = FactoryGirl.create(:unarmed_robot)
-      robot.should_not_receive(:valid_and_heavier_weapon?)
+      robot.should_not_receive(:valid_and_heavier_and_technology_weapon?)
       expect(robot.calculate_damage).to be > 0 
     end
 
