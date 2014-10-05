@@ -50,6 +50,11 @@ class CodeName < ActiveRecord::Base
     #     end
     # end
 
+    def instance_by_name(name)
+        CodeName.find_by name: name
+    end
+    
+
     def save!
         if @@instance.nil?
             code_name = CodeName.find_by name: self.name
