@@ -13,9 +13,24 @@
 
   <div class="field">
     <%= f.label :code_name_id %><br>
-    <%= f.number_field :code_name_id %>
+    <%= f.collection_select :code_name_id, CodeName.order(:name),:id,:name, include_blank: 'Create New' %>
   </div>
-  
+
+    <div class="field">
+      <label for="code_name_name">Name</label>
+      <input id="code_name_name" name="code_name_name" type="text" />
+    </div>
+    <div class="field">
+      <label for="code_name_reference">Reference</label>
+      <input id="code_name_reference" name="code_name_reference" type="text" />
+    </div>
+    <div class="field">
+      <label for="code_name_damage">Damage</label>
+      <input id="code_name_damage" name="code_name_damage" type="number" />
+    </div>
+
+    <h3>Health</h3>
+
   <%= render "application/shared/health_form", f: f %>
 
   <%= f.fields_for :robot_weapons do |robot_weapon_form| %>

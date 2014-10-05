@@ -15,7 +15,7 @@ class RobotsController < ApplicationController
   # GET /robots/new
   def new
     @robot = Robot.new()
-    @robot.health = Health.new 
+    @robot.health = Health.new
   end
 
   # GET /robots/1/edit
@@ -26,6 +26,11 @@ class RobotsController < ApplicationController
   # POST /robots.json
   def create
     @robot = Robot.new(robot_params)
+    if @robot.code_name == nil
+      c= CodeName.new(name: params[:code_name_name], info_reference: params[:code_name_reference], damage: params[:code_name_damage])
+      c.save
+      @robot.code_name = c
+    end
     respond_to do |format|
       if @robot.save
         format.html { redirect_to @robot, notice: 'Robot was successfully created.' }
@@ -71,5 +76,6 @@ class RobotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def robot_params
-      params.require(:robot).permit(:code_name_id, health_attributes:[:current,:maximum], robot_weapons_attributes:[:weapon_id,health_attributes:[:current,:maximum]])    end
+      params.require(:robot).permit(:code_name_id, health_attributes:[:current,:maximum], code_name_attributes:[:name, :info_reference, :damage],robot_weapons_attributes:[:weapon_id,health_attributes:[:current,:maximum]])
+    end
 end
