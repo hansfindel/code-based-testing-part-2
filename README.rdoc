@@ -26,3 +26,37 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+--------------------------------------------------------------------------------------
+
+Estimado Tomás 
+
+Pronto se enviará un mail anunciando la tarea. Esta ya se encuentra en el siding en el directorio de Evaluaciones. Las tareas asignadas para ti son:
+
+El modelo es capaz de crear nuevas armas una vez que se le agotan.
+
+Efecto secundario de armas - Nanites (el otro robot empieza a "descomponerse" y pierde "health" cada turno - acomulable)
+
+El arma tiene un efecto de "recoil", es decir, también causa un daño al robot que la utiliza. Este valor está definido en Weapon. 
+
+Probar vistas anidadas en los formularios (se pueden agregar armas en el formulario de robot por ejemplo)
+
+Simular servicio externo (vía HTTP) para inicializar o entregar instancias (Mocks) - Weapons
+
+
+------------------------------------------------------------------------------------------
+
+Estimados, 
+
+En base a consultas de algunos de Uds., prefiero dejar en claro unos detalles.
+
+1.- Actualmente hay algunos tests pendientes y/o fallando con los cambios que se realizaron en la ayudantía. Si a Ud. no le corresponde modificar algo relacionado a esa funcionalidad, puede modificar el test para que quede pendiente y con esto evitar confusiones. 
+
+2.- En la mayoría de las "tasks" a realizar se debe implementar la funcionalidad solicitada como también los tests asociados a esta. Existen algunas "tasks" en que no se pide implementar una nueva feature, sino que solo escribir los tests asociados a una funcionalidad ya existente. 
+
+3.- Las "tasks" asociadas a un comportamiento del ataque solo hay que implementar el código de los modelos/servicios que lo componen. No es necesario desarrollar una vista en que esta modificación sea visible, ya que se puede revisar desde la consola con un objeto ContestSimulator, o bien directamente en los tests. 
+
+Saludos
+
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141005192852) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "can_create_weapon"
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"
@@ -34,6 +35,17 @@ ActiveRecord::Schema.define(version: 20140909235653) do
 
   add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
   add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
+
+  create_table "nanites", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "weapon_id"
+    t.integer  "robot_id"
+    t.integer  "damage"
+  end
+
+  add_index "nanites", ["robot_id"], name: "index_nanites_on_robot_id"
+  add_index "nanites", ["weapon_id"], name: "index_nanites_on_weapon_id"
 
   create_table "robot_weapons", force: true do |t|
     t.integer  "robot_id"
@@ -58,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recoil"
   end
 
 end
