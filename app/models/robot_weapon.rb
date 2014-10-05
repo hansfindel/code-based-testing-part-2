@@ -21,6 +21,8 @@ class RobotWeapon < ActiveRecord::Base
     validates :health, presence: true
     accepts_nested_attributes_for :health
 
+    delegate :min_tech, to: :weapon
+
     after_initialize :check_attrs
 
     def check_attrs

@@ -20,7 +20,9 @@ RSpec.describe Robot, :type => :model do
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6
-      @gun      = FactoryGirl.create(:gun)
+      @robot.code_name = CodeName.new
+      @robot.tech = 100
+      @gun      = FactoryGirl.create(:gun, min_tech: 100)
       
       @gun_i    = @gun.robot_weapons.build 
       @gun_i.health.current   = 1
@@ -30,24 +32,15 @@ RSpec.describe Robot, :type => :model do
       # @damage_g = @gun_i.damage    # 5
     end
     
-    it "should return true if gun is undamaged and has heavier damage" do 
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
-    end
+  
 
-    it "should return false if gun is undamaged but has not a heavier damage" do 
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
-    end
-
-    it "should return same if gun is damaged - w/heavier damage" do 
-      # @gun_i.health.current = 0
-      @gun_i.play_dead
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be false
-    end
-
-    it "should return same if gun is damaged - w/lower damage" do 
-      # @gun_i.health.current = 0
-      @gun_i.play_dead
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
+    it "should return true if robot has min tech" do
+      @gun.min_tech = 100
+      robot = FactoryGirl.create :robot
+      robot.tech = 100
+      expect(robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
+      robot.tech = 101
+      expect(robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
     end
 
   end

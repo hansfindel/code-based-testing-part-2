@@ -7,7 +7,7 @@
 #  damage     :integer
 #  created_at :datetime
 #  updated_at :datetime
-#  min_tech   :integer
+#  min_tech   :integer          default(0)
 #
 
 class Weapon < ActiveRecord::Base

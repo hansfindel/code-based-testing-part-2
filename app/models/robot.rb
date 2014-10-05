@@ -27,7 +27,9 @@ class Robot < ActiveRecord::Base
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
-
+    delegate :tech, to: :code_name
+    delegate :tech=, to: :code_name
+    
     def alive?
         remaining_health > 0
     end
@@ -62,7 +64,8 @@ class Robot < ActiveRecord::Base
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
-        weapon_instance.stable? and max_damage < weapon_instance.damage
+        weapon_instance.stable? and max_damage < weapon_instance.damage and
+            self.tech >= weapon_instance.min_tech
     end
 
     # pending test - then change it to work with an array instead of a hash
