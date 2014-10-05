@@ -50,10 +50,22 @@ class Robot < ActiveRecord::Base
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
+        recoil = 0
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            if valid_and_heavier_weapon?(max_damage, weapon)
+                max_damage = weapon.damage
+                if weapon.recoil
+                    recoil = weapon.recoil
+                end
+            end
         end
-        max_damage
+        return [max_damage, recoil]
+    end
+
+    def attack(contender2)
+        attack_values = self.calculate_damage # contender2.remaining_health
+        self.take_damage attack_values[1]
+        contender2.take_damage attack_values[0]
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
