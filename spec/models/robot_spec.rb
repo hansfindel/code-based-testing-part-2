@@ -50,11 +50,16 @@ RSpec.describe Robot, :type => :model do
       # should be a number ... in the future might accept 0
     end
 
+    it 'should damage itself with recoil' do
+      robot = FactoryGirl.create(:t_800)
+      expect{robot.calculate_damage}.to change{robot.health.current}.by(-2)
+    end
+
     it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
       # mock valid_and_heavier_weapon?
       robot = FactoryGirl.create(:robot)
       robot.should_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
+      expect(robot.calculate_damage).to be > 0
     end
 
     it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
@@ -101,5 +106,7 @@ RSpec.describe Robot, :type => :model do
       expect(wall_e.alive?).to be false
     end
   end
+
+
 
 end
