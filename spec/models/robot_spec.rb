@@ -95,6 +95,42 @@ RSpec.describe Robot, :type => :model do
     end
   end 
 
+  #dlarrain
+  #nanities
+
+  context "nanities" do
+    it "should be 0 on create" do
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot1.set_nanities
+      expect(@robot1.nanities).to be(0)
+    end
+
+    it "should increment nanities in 1 when calling #increment_nanities" do 
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot1.set_nanities
+      @robot1.increment_nanities
+      expect(@robot1.nanities).to be(1)
+    end
+
+    it "should not change calculate_damage if nanities is not active" do
+      @robot1 = FactoryGirl.create(:t_800)
+      @robot2 = FactoryGirl.create(:t_x)
+      @robot1.set_nanities
+      from_2 = @robot2.calculate_damage
+      final_damage = from_2 + @robot1.nanities
+      expect(final_damage).to be (from_2)
+      from_2 = @robot2.calculate_damage
+      @robot1.increment_nanities
+      final_damage = from_2 + @robot1.nanities
+      expect(final_damage).to be (from_2 + 1)
+      from_2 = @robot2.calculate_damage
+      @robot1.increment_nanities
+      final_damage = from_2 + @robot1.nanities
+      expect(final_damage).to be (from_2 + 2)
+    end
+  end
+
+
 
 
   context "#valid_and_heavier_weapon?" do 

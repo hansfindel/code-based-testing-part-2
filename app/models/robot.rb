@@ -100,4 +100,21 @@ class Robot < ActiveRecord::Base
     def freeze?
         @freeze
     end
+
+    #dlarrain
+    #setea nanities en 0, lo que significa que esta desactivado
+    def set_nanities
+        @nanities = 0
+    end
+
+    #aumentamos el valor de nanities
+    def increment_nanities
+        @nanities += 1
+    end
+
+    #dlarrain
+    #retorna el valor de nanities
+    def nanities
+        @nanities
+    end
 end
