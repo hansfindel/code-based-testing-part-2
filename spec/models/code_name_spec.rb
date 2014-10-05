@@ -34,6 +34,23 @@ RSpec.describe CodeName, :type => :model do
       # code_name2 = FactoryGirl.create(:T_X)
       # expect(code_name1.id == code_name2.id).to be true
     end
+
+    context "Max Health" do
+      it "should not create a code_name without max_health" do
+        code_name = CodeName.create(name:"name",info_reference:"/wiki/",damage:5)
+        expect(code_name.id).to be nil
+      end
+
+      it "should not create a code_name with max_health <= 0" do
+        code_name = CodeName.create(name:"name",info_reference:"/wiki/",damage:5,max_health:-1)
+        expect(code_name.id).to be nil
+      end
+
+      it "should create a code_name with a valid max_health" do
+        code_name = CodeName.create(name:"name",info_reference:"/wiki/",damage:5,max_health:10)
+        expect(code_name.id).to be > 0
+      end
+    end
   end
 
   # pending "add some examples to (or delete) #{__FILE__}"
