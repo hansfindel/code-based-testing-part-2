@@ -5,5 +5,5 @@ Robot:
 - Se modificó "take_damage" para que health no sea menor a 0
 - No entendí get_state_message. Si la idea es retornar un string, no tengo
 forma de comprobar que al interior se hizo con con un array o hash.
-Contest Simultaro:
-- Testo únicamente el método self.test y los distinos resultados del encuentro 1vs1
+Contest Simulatar:
+- Testeo el método self.test y los distintos resultados del encuentro 1vs1
