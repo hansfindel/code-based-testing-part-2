@@ -60,15 +60,12 @@ class ContestSimulator
         
         from_1 = contender1.calculate_damage # contender2.remaining_health
 
-
         if contender2.nanities == 0
             #Se activa  con probabilidad 1/3
             if rand(3) == 2
                 contender2.increment_nanities #Esto ocurre al activarse por primera vez
             end
         end
-
-
 
         from_1 += contender2.nanities #en caso de q nanities este desactivado le sumaremos 0
         

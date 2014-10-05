@@ -131,8 +131,6 @@ RSpec.describe Robot, :type => :model do
   end
 
 
-
-
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6

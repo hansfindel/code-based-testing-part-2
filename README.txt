@@ -1,0 +1,1 @@
+Para probar los forms anidados tuve muchos problemas, finalmente encontre una solucion pero que solo funciona con firefox, porque capybara me tiraba error al usar links q funcionan con javascript y para eso tuve que agregar una nueva gema que funciona pero que en el WebDriver usa firefox.
