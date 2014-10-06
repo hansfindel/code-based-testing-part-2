@@ -6,6 +6,8 @@ class Robot < ActiveRecord::Base
     has_many :robot_weapons
     has_many :weapons, through: :robot_weapons
 
+    has_many :nanites
+
     has_one :health, as: :machine 
 
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
@@ -16,6 +18,7 @@ class Robot < ActiveRecord::Base
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
+    delegate :can_create_weapon, to: :code_name
 
     def alive?
         remaining_health > 0
@@ -30,11 +33,20 @@ class Robot < ActiveRecord::Base
         self.health.current -= damage
     end
 
+    def take_damage_from_nanites
+        nanites.each do |nanite|
+            self.health.current -= nanite.damage
+        end
+    end
+
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            if valid_and_heavier_weapon?(max_damage, weapon)
+               take_damage(weapon.recoil)
+               max_damage = weapon.damage 
+            end
         end
         max_damage
     end
@@ -53,6 +65,11 @@ class Robot < ActiveRecord::Base
             "2" => "L", 
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
+    end
+
+    def create_new_weapon(weapon_instance)
+        if can_create_weapon
+            weapons.add(weapon_instance)
     end
 
 end

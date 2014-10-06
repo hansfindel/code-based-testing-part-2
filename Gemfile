@@ -47,3 +47,5 @@ end
 
 
 gem "nested_form"
+
+gem "tzinfo-data"
