@@ -5,6 +5,8 @@ class CreateHealths < ActiveRecord::Migration
       t.integer :maximum
       t.integer :machine_id
       t.string :machine_type
+      t.integer :human_id
+      t.string :human_type
 
       t.timestamps
     end

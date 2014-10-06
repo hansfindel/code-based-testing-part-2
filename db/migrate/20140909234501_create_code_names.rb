@@ -4,6 +4,7 @@ class CreateCodeNames < ActiveRecord::Migration
       t.string :name
       t.string :info_reference
       t.integer :damage
+      t.integer :max_health
 
       t.timestamps
     end

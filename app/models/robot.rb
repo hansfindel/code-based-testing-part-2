@@ -1,3 +1,5 @@
+require 'status'
+
 class Robot < ActiveRecord::Base
     include AutoPresentable 
 
@@ -17,24 +19,64 @@ class Robot < ActiveRecord::Base
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
 
+
+    attr_accessor :status
+
+    def code_name=(codename)
+      super(code_name =(codename))
+      health = codename.get_health
+      health.save!
+      self.health= health
+    end
+
     def alive?
         remaining_health > 0
     end
 
     def remaining_health
-        self.health.current
+      if self.health != nil
+        return self.health.current
+      else
+        return nil
+      end
     end
 
-    def take_damage damage 
+    def maximum_health
+      if self.health != nil
+        return self.health.maximum
+      else
+        return nil
+      end
+    end
+
+    def take_damage (damage, effect = nil)
         # should not get lower than 0
         self.health.current -= damage
+
+      if (effect != nil)
+        self.status= effect
+      end
     end
 
     def calculate_damage(total_health=1)
+      # we emulate skipping turns by making damage equal to 0
+      if self.status == "freeze"
+        self.status = nil
+        return 0
+      end
         # doesn't need to be the highest one
         max_damage = self.damage
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            if valid_and_heavier_weapon?(max_damage, weapon)
+              max_damage = weapon.damage
+              if weapon.effect != nil
+                puts(weapon.effect)
+                effect = StatusEffect.get(weapon.effect)
+                puts(effect)
+                max_damage += effect.modify_damage
+              end
+            end
+
         end
         max_damage
     end

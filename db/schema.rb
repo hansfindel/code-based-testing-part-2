@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141005233715) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
     t.string   "info_reference"
     t.integer  "damage"
+    t.integer  "max_health"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,12 +29,35 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "maximum"
     t.integer  "machine_id"
     t.string   "machine_type"
+    t.integer  "human_id"
+    t.string   "human_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
   add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
+
+  create_table "human_code_names", force: true do |t|
+    t.string   "name"
+    t.string   "info_reference"
+    t.integer  "damage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "human_weapons", force: true do |t|
+    t.integer  "human_id"
+    t.integer  "weapon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "humans", force: true do |t|
+    t.integer  "human_code_name_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "robot_weapons", force: true do |t|
     t.integer  "robot_id"
@@ -56,6 +80,7 @@ ActiveRecord::Schema.define(version: 20140909235653) do
   create_table "weapons", force: true do |t|
     t.string   "name"
     t.integer  "damage"
+    t.string   "effect"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

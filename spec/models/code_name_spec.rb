@@ -1,11 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe CodeName, :type => :model do
-  context "Factories" do   
+  context "Factories" do
+
     before(:each) do 
         @code_name = FactoryGirl.create(:code_name)
     end
-    it ":code_name" do 
+
+    it ":singleton with factory" do
+      a = FactoryGirl.create(:T_800)
+      b = FactoryGirl.create(:T_800)
+
+      expect(a == b).to be true
+
+      a = FactoryGirl.create(:T_X)
+      b = FactoryGirl.create(:T_X)
+
+      expect(a == b).to be true
+
+      a = FactoryGirl.create(:T_1000)
+      b = FactoryGirl.create(:T_1000)
+
+      expect(a == b).to be true
+    end
+
+    it "singleton with instantiation" do
+      a = CodeName.new({name: "T_800", damage: 1, info_reference: "http://www.wikipedia.com/yadayada", max_health:10})
+      a.save!
+      b = CodeName.new({name: "T_800", damage: 1, info_reference: "http://www.wikipedia.com/yadayada", max_health:10})
+
+      expect(a == b).to be true
+    end
+
+=begin
+    it ":code_name" do
       expect(@code_name.id).to be > 0
     end
 
@@ -34,6 +62,10 @@ RSpec.describe CodeName, :type => :model do
       # code_name2 = FactoryGirl.create(:T_X)
       # expect(code_name1.id == code_name2.id).to be true
     end
+=end
+
+
+
   end
 
   # pending "add some examples to (or delete) #{__FILE__}"
