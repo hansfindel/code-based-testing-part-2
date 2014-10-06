@@ -14,4 +14,17 @@ RSpec.describe RobotWeapon, :type => :model do
     end
   end
 
+  context "#use" do
+    it "should return a number" do
+      robot_weapon = RobotWeapon.new
+      expect(robot_weapon.use).to be > 0
+    end
+
+    it "should be smaller than the initial value" do
+      robot_weapon = RobotWeapon.new
+      initial_value = robot_weapon.health.current
+      expect(robot_weapon.use).to be < initial_value 
+    end
+  end
+
 end

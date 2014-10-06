@@ -3,6 +3,7 @@ FactoryGirl.define do
         after(:build) do |roboto, evaluator|
             roboto.code_name = FactoryGirl.create(:code_name)
             gun              = FactoryGirl.create(:gun) # could be affected 
+            roboto.delay     = 5
             roboto.health    = FactoryGirl.build(:health)
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
@@ -13,6 +14,7 @@ FactoryGirl.define do
         after(:build) do |roboto, evaluator|
             roboto.code_name = FactoryGirl.create(:T_800)
             gun              = FactoryGirl.create(:rifle) # could be affected 
+            roboto.delay     = 6
             roboto.health    = FactoryGirl.create(:health_800)
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
@@ -23,6 +25,7 @@ FactoryGirl.define do
         after(:build) do |roboto, evaluator|
             roboto.code_name = FactoryGirl.create(:T_1000)
             gun              = FactoryGirl.create(:machine_gun) # could be affected 
+            roboto.delay     = 10
             roboto.health    = FactoryGirl.build(:health_1000)
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
@@ -37,6 +40,7 @@ FactoryGirl.define do
             machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
             bazuka        = FactoryGirl.create(:bazuka) # could be affected 
             roboto.health = FactoryGirl.build(:health_x)
+            roboto.delay  = 15
             # roboto.weapons = [gun, rifle, machine_gun, bazuka]
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
             attach_to_robot_weapon_with_health_value(roboto, rifle, 15)
@@ -51,6 +55,7 @@ FactoryGirl.define do
             roboto.health    = FactoryGirl.build(:health_1000)
             roboto.code_name = FactoryGirl.create(:code_name)
             gun              = FactoryGirl.create(:gun) # could be affected 
+            roboto.delay     = 10
             roboto.code_name.damage = gun.damage - 1
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
             roboto.save 
@@ -62,6 +67,7 @@ FactoryGirl.define do
             roboto.health    = FactoryGirl.build(:health_1000)
             roboto.code_name = FactoryGirl.create(:code_name)
             gun              = FactoryGirl.create(:gun) # could be affected 
+            roboto.delay     = 10
             roboto.code_name.damage = gun.damage + 1
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
             roboto.save 
@@ -72,6 +78,7 @@ FactoryGirl.define do
     factory :unarmed_robot, class: Robot do 
         after(:build) do |roboto, evaluator|
             roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.delay     = 10
             roboto.code_name = FactoryGirl.create(:code_name)
             roboto.save 
         end

@@ -10,10 +10,10 @@ class ContestSimulator
             puts "Tie"
             raise ImpossibleError 
         elsif contender1.alive?
-            puts "Contender 1"
+            puts "Won Contender 1"
             [contender1]
         elsif contender2.alive?
-            puts "Contender 2"
+            puts "Won Contender 2"
             [contender2]
         else
             puts "Tragic Tie"
@@ -27,17 +27,30 @@ class ContestSimulator
     #   puts "Error: #{e} - #{e.get_message}"
     # end
 
-    private
+    #private
     def self.synchronous_test(contender1, contender2)
+        time = 0
         while contender1.alive? and contender2.alive?
-            attack(contender1, contender2)
-            attack(contender2, contender1)
+            fight(contender1, contender2, time)
+            time = time + 1
         end
     end
 
-    def self.attack(contender1, contender2)
-        from_1 = contender1.calculate_damage # contender2.remaining_health
+    def self.fight(contender1, contender2, time)
+        attack(contender1, contender2) and puts "#{contender1.id} attacks." if attack_time(contender1, time)
+        attack(contender2, contender1) and puts "#{contender2.id} attacks." if attack_time(contender2, time)
+    end
 
+    def self.attack_time(contender,time)
+        time % contender.delay == 0 and time != 0
+    end
+
+
+    def self.attack(contender1, contender2)
+        from_1 = contender1.calculate_damage
         contender2.take_damage from_1
+        contender1.regenerate
+        puts "#{contender2.id} looses #{from_1}, remaining health #{contender2.remaining_health}"
+        puts "#{contender1.id} regenerates, remaining_health #{contender1.remaining_health}"
     end
 end

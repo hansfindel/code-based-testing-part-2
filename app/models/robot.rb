@@ -10,12 +10,13 @@ class Robot < ActiveRecord::Base
 
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
+    validates :delay, numericality: true #, message: "Needs to be a number"
 
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
+    accepts_nested_attributes_for :code_name, :reject_if => :all_blank, :allow_destroy => true
 
-    delegate :damage, to: :code_name
-    delegate :name, to: :code_name
+    delegate :damage,:technology, to: :code_name
 
     def alive?
         remaining_health > 0
@@ -33,14 +34,22 @@ class Robot < ActiveRecord::Base
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
+        max_damage_weapon = nil
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            max_damage = weapon.damage if valid_and_heavier_and_technology_weapon?(max_damage, weapon)
+            max_damage_weapon = weapon
         end
+        max_damage_weapon.use if max_damage_weapon
         max_damage
     end
 
-    def valid_and_heavier_weapon?(max_damage, weapon_instance)
-        weapon_instance.stable? and max_damage < weapon_instance.damage
+    def regenerate
+        new_health = self.health.current + self.health.maximum*1.02
+        self.health.current = [new_health, self.health.maximum].min
+    end
+
+    def valid_and_heavier_and_technology_weapon?(max_damage, weapon_instance)
+        weapon_instance.stable? and max_damage < weapon_instance.damage and weapon_instance.weapon.technology <= technology
     end
 
     # pending test - then change it to work with an array instead of a hash
