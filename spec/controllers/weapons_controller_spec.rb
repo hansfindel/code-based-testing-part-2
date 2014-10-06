@@ -23,13 +23,8 @@ RSpec.describe WeaponsController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Weapon. As you add validations to Weapon, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) { { :name => 'Death Gun', :damage => 30, :recoil => 5, :freezer => true } }
+  let(:invalid_attributes) { skip("Add a hash of attributes valid for your model") }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -156,4 +151,22 @@ RSpec.describe WeaponsController, :type => :controller do
     end
   end
 
+  # Simulate an HTTP service to initialize or get weapon
+
+  context "Tarea 1" do 
+    it "should get and create a gun from HTTP service" do
+      WeaponsController.should_receive(:get_weapon).with(kind_of(String), kind_of(Numeric)).and_return(valid_attributes.to_json)
+      new_attributes = WeaponsController.get_weapon('http://weaponProvider.com', 3)
+      expect {
+          post :create, {:weapon => JSON.parse(new_attributes)}, valid_session
+        }.to change(Weapon, :count).by(1)
+    end 
+
+    it "should initialize a gun in HTTP service" do
+      gun = valid_attributes.to_json
+      WeaponsController.should_receive(:post_weapon).with(kind_of(String)).and_return(true)
+      result = WeaponsController.post_weapon(gun)
+      expect(result).to be true
+    end
+  end
 end

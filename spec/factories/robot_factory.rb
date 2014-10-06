@@ -77,6 +77,78 @@ FactoryGirl.define do
         end
     end
 
+    factory :robot_without_health, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:health_10)
+            roboto.save 
+        end
+    end
+
+    factory :no_recoil_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:no_recoil)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
+    factory :robot_with_health_100_and_code_name_health_10, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:health_10)
+            roboto.save 
+        end
+    end
+
+    factory :mid_recoil_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:mid_recoil)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
+    factory :empty_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:T_1000)
+            roboto.save 
+        end
+    end
+
+    factory :full_recoil_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:full_recoil)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
+    factory :mrFreeze_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:frozen_gun)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
+    factory :no_mrFreeze_robot, class: Robot do 
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:bazuka)
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end
+
 end
 
 # helper 

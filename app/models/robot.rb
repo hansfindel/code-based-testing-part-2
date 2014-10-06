@@ -8,8 +8,11 @@ class Robot < ActiveRecord::Base
 
     has_one :health, as: :machine 
 
+    before_validation :default_values
+
     validates :code_name, presence: true #, message: "Needs to be a registered robot"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
+    
 
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
@@ -17,8 +20,21 @@ class Robot < ActiveRecord::Base
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
 
+    def default_values
+        self.health ||= Health.assing_health(default_health)
+        self.frozen_count ||= 0
+    end
+
     def alive?
         remaining_health > 0
+    end
+
+    def default_health
+        if self.code_name and self.code_name.health
+            self.code_name.health
+        else
+            5
+        end
     end
 
     def remaining_health
@@ -33,10 +49,29 @@ class Robot < ActiveRecord::Base
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
+        recoil = 0
+        freeze = false
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            if valid_and_heavier_weapon?(max_damage, weapon)
+                max_damage = weapon.damage
+                freeze = weapon.freezer
+                if weapon.recoil
+                    recoil = weapon.recoil
+                end
+            end
         end
-        max_damage
+        return [max_damage, recoil, freeze]
+    end
+
+    def attack(contender2)
+        if self.frozen_count == 0
+            attack_values = self.calculate_damage
+            self.take_damage attack_values[1]
+            contender2.take_damage attack_values[0]
+            contender2.calculate_freeze attack_values[2]
+        else
+            self.frozen_count -= 1
+        end
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
@@ -53,6 +88,12 @@ class Robot < ActiveRecord::Base
             "2" => "L", 
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
+    end
+
+    def calculate_freeze(value)
+        if value
+            self.frozen_count += 1
+        end
     end
 
 end

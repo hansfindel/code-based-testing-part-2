@@ -24,4 +24,11 @@ FactoryGirl.define do
         info_reference "http://en.wikipedia.org/wiki/T-X"
     end
 
+    factory :health_10, class: CodeName do
+        name "T-X"
+        damage 15
+        health 10
+        info_reference "http://en.wikipedia.org/wiki/T-X"
+    end
+
 end

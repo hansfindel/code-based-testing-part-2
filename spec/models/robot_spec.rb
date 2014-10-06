@@ -41,12 +41,12 @@ RSpec.describe Robot, :type => :model do
      
   end
   context "#calculate_damage" do 
-    it "should return a number" do 
+    it "should return an array" do 
       # stub valid_and_heavier_weapon?
       robot = FactoryGirl.create(:robot)
       # robot.unstub
       robot.stub(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
+      expect(robot.calculate_damage[0]).to be > 0 
       # should be a number ... in the future might accept 0
     end
 
@@ -54,36 +54,36 @@ RSpec.describe Robot, :type => :model do
       # mock valid_and_heavier_weapon?
       robot = FactoryGirl.create(:robot)
       robot.should_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
+      expect(robot.calculate_damage[0]).to be > 0 
     end
 
     it "should use valid_and_heavier_weapon? method when it has at least one weapon" do 
       # mock valid_and_heavier_weapon?
       robot = FactoryGirl.create(:unarmed_robot)
       robot.should_not_receive(:valid_and_heavier_weapon?)
-      expect(robot.calculate_damage).to be > 0 
+      expect(robot.calculate_damage[0]).to be > 0 
     end
 
     it "should return a number" do 
       robot = FactoryGirl.create(:robot)
-      expect(robot.calculate_damage).to be > 0 
+      expect(robot.calculate_damage[0]).to be > 0 
     end
 
     context "should return a higher number if possible" do 
       it "#should be at least this value" do 
         # currently is the highest one
         robot = FactoryGirl.create(:robot)
-        expect(robot.calculate_damage).to be >= robot.damage
+        expect(robot.calculate_damage[0]).to be >= robot.damage
       end
 
       it "#should be equal if weapon is worse than the machines one" do 
         robot = FactoryGirl.create(:robot_with_bad_weapon)
-        expect(robot.calculate_damage).to be robot.damage
+        expect(robot.calculate_damage[0]).to be robot.damage
       end
 
       it "#should be higher if weapon is better than the machines one" do 
         robot = FactoryGirl.create(:robot_with_slightly_better_weapon)
-        expect(robot.calculate_damage).to be > robot.damage     
+        expect(robot.calculate_damage[0]).to be > robot.damage     
       end
 
     end
@@ -100,6 +100,27 @@ RSpec.describe Robot, :type => :model do
       wall_e.should_receive(:remaining_health).and_return(0)
       expect(wall_e.alive?).to be false
     end
+  end
+
+  context "Tarea 1" do
+    it "should return code_name's health if robot is initialized without health" do
+      robot = FactoryGirl.create(:robot_without_health)
+      expect(robot.health.current).to be robot.default_health
+      expect(robot.health.maximum).to be robot.default_health
+    end
+
+    it "should return robot health if robot is initialized with health" do
+      robot = FactoryGirl.create(:robot_with_health_100_and_code_name_health_10)
+      expect(robot.health.current).to be 100
+      expect(robot.health.maximum).to be 100
+    end
+
+    it "should return robot health equal to 5 if robot is initialized without health and code_name's health" do
+      robot = FactoryGirl.create(:empty_robot)
+      expect(robot.health.current).to be 5
+      expect(robot.health.maximum).to be 5
+    end
+
   end
 
 end

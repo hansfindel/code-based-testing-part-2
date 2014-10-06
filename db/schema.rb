@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141005054608) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "health"
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"
@@ -49,15 +50,23 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "code_name_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "frozen_count"
   end
 
   add_index "robots", ["code_name_id"], name: "index_robots_on_code_name_id"
+
+  create_table "weapon_services", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "weapons", force: true do |t|
     t.string   "name"
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recoil"
+    t.boolean  "freezer"
   end
 
 end
