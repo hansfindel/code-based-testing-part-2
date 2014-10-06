@@ -31,10 +31,14 @@ class ContestSimulator
     def self.synchronous_test(contender1, contender2)
         time = 0
         while contender1.alive? and contender2.alive?
-            attack(contender1, contender2) and puts "#{contender1.id} attacks." if attack_time(contender1,time)
-            attack(contender2, contender1) and puts "#{contender2.id} attacks." if attack_time(contender2,time)
+            fight(contender1, contender2, time)
             time = time + 1
         end
+    end
+
+    def self.fight(contender1, contender2, time)
+        attack(contender1, contender2) and puts "#{contender1.id} attacks." if attack_time(contender1, time)
+        attack(contender2, contender1) and puts "#{contender2.id} attacks." if attack_time(contender2, time)
     end
 
     def self.attack_time(contender,time)
