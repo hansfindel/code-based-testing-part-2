@@ -21,6 +21,9 @@ class RobotWeapon < ActiveRecord::Base
     end
 
     delegate :damage, to: :weapon
+    delegate :usable?, to: :weapon
+    delegate :deteriorate, to: :weapon
+    delegate :nanites_damage, to: :weapon
 
     def stable?
         self.health.current > 0

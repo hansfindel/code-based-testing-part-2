@@ -28,13 +28,15 @@ RSpec.describe CodeName, :type => :model do
       code_name = FactoryGirl.create(:T_X)
       expect(code_name.id).to be > 0
     end
-
-    it "should not create two different code_names for the same (defined) machine" do 
-      # code_name1 = FactoryGirl.create(:T_X)
-      # code_name2 = FactoryGirl.create(:T_X)
-      # expect(code_name1.id == code_name2.id).to be true
-    end
   end
 
+  context "Tarea1" do
+
+    it "should not create two different code_names for the same (defined) machine" do
+      code_name1 = FactoryGirl.create(:T_X)
+      code_name2 = FactoryGirl.create(:T_X)
+      expect(code_name1.id == code_name2.id).to be true
+    end
+  end
   # pending "add some examples to (or delete) #{__FILE__}"
 end

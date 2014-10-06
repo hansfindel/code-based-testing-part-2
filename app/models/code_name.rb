@@ -9,4 +9,20 @@ class CodeName < ActiveRecord::Base
 
     validates :damage, numericality: { greater_than: 0 }
 
+    def save!
+    	if CodeName.where(name: name).any?
+    		copy CodeName.where(name: name).first
+    	else
+    		super
+    	end
+    end
+
+    private
+
+    def copy instance
+    	instance.attributes.each do |attr_name, attr_value|
+    		self[attr_name] = attr_value
+    	end
+    end
+
 end

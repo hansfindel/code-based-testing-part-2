@@ -102,4 +102,17 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "Tarea1" do 
+    let(:robot) { FactoryGirl.create(:robot) }
+    it "should have initial nanites = 0" do 
+      expect(robot.nanites == 0).to be true
+    end
+
+    it "should accumulate nanites damage" do 
+      robot.decompose 2
+      robot.decompose 3
+      expect(robot.nanites == 5).to be true
+    end
+  end
+
 end

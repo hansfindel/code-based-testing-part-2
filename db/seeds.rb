@@ -10,4 +10,3 @@ t800  = CodeName.create(name: "T-800", info_reference: "http://en.wikipedia.org/
 t1000 = CodeName.create(name: "T-1000", info_reference: "http://en.wikipedia.org/wiki/T-1000", damage: 2)
 tx    = CodeName.create(name: "T-X", info_reference: "http://en.wikipedia.org/wiki/T-X", damage: 5)
 
-

@@ -34,13 +34,23 @@ class Robot < ActiveRecord::Base
         # doesn't need to be the highest one
         max_damage = self.damage
         robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+            if valid_and_heavier_weapon?(max_damage, weapon) and weapon.usable?
+                max_damage = weapon.damage 
+                weapon.deteriorate
+            end
         end
         max_damage
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
         weapon_instance.stable? and max_damage < weapon_instance.damage
+    end
+
+    #Habria que modificar el contest_simulator para acceder al otro robot o pasarle de alguna forma los nanites.
+    #Otra forma seria modificar el calculate_damage, para que retorne ambos valores, pero eso invalida varios tests.
+    def decompose nanites_damage
+        self.nanites += nanites_damage
+        take_damage self.nanites
     end
 
     # pending test - then change it to work with an array instead of a hash
