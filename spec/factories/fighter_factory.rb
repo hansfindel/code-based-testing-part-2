@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-    factory :fighter_bruce_lee do
+    factory :fighter_bruce_lee, class: Fighter do
     	strengh 3
 		speed 10
 		combo_rate 0.9
@@ -11,7 +11,7 @@ FactoryGirl.define do
         end
     end
 
-    factory :fighter_goku do
+    factory :fighter_goku, class: Fighter do
     	strengh 300
 		speed 100
 		combo_rate 1

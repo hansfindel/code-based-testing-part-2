@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-    factory :human_bruce_lee do
+    factory :human_bruce_lee, class: Human do
         name "Bruce Lee"
          after(:build) do |human, evaluator|
             human.health    = FactoryGirl.build(:health_super_human)
@@ -8,7 +8,7 @@ FactoryGirl.define do
         end
     end
 
-    factory :human_goku do
+    factory :human_goku, class: Human do
         name "Goku"
          after(:build) do |human, evaluator|
             human.health    = FactoryGirl.build(:health_saya)

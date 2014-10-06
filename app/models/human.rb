@@ -1,6 +1,7 @@
 class Human < ActiveRecord::Base
 
 	has_one :health, as: :being 
+    
 	belongs_to  :person, :polymorphic => true
 
     validates :health, presence: true #, message: "Needs to be initialized with a health status"

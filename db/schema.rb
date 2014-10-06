@@ -41,8 +41,11 @@ ActiveRecord::Schema.define(version: 20141001202329) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "being_id"
+    t.string   "being_type"
   end
 
+  add_index "healths", ["being_id"], name: "index_healths_on_being_id"
+  add_index "healths", ["being_type"], name: "index_healths_on_being_type"
   add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
   add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
 
