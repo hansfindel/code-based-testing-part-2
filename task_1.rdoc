@@ -14,3 +14,14 @@ Task2:
 O sino, cada vez que un robot se enfrentase nuevamente, se resetea su vida.
 - Implementé método team_challenge en ContestSimulator para la batalla entre equipos de robots
 - Los tests se implementaron en el contexto "team vs team" en ContestSimulator_spec
+
+Task3:
+
+- En "calculate_damage" realizo cambio para deterior el arma tras uso.
+- Implementé "take_damage" en robot_weapon.rb para manejar el daño de vida a la arma.
+- El test se encuentra en robot_weapon_spec
+
+Task4:
+
+
+

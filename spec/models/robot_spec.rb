@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do
  
-  context "Factories" do 
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+ # context "Factories" do
+ #   pending "add some examples to (or delete) #{__FILE__}"
+ # end
 
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
@@ -120,16 +120,4 @@ RSpec.describe Robot, :type => :model do
     end
 
   end
-  context "get_instance_state_message" do
-    before(:each) do
-      @robot = FactoryGirl.create(:unarmed_robot);
-    end
-    it "should say HOLA" do
-      expect(@robot.get_instance_state_message).to be 'HOLA'
-    end
-    it "should be an array" do
-
-    end
-  end
-
 end
