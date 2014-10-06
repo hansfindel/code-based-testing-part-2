@@ -47,6 +47,12 @@ RSpec.describe Health, :type => :model do
       expect(health.errors.has_key?(:current)).to be false
     end
 
+    it "should set default current" do
+      health = FactoryGirl.create(:health_current_default)
+      health.valid?
+      expect(health.errors.has_key?(:current)).to be false
+    end
+
     it "should fail if current > maximum" do 
       health = FactoryGirl.create(:health_800)
       health.current = health.maximum + 1

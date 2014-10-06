@@ -20,4 +20,8 @@ FactoryGirl.define do
         maximum 120
     end
 
+    factory :health_current_default, class: Health do
+      maximum 100
+    end
+
 end
