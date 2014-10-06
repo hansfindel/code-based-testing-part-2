@@ -24,6 +24,7 @@ FactoryGirl.define do
             roboto.code_name = FactoryGirl.create(:T_1000)
             gun              = FactoryGirl.create(:machine_gun) # could be affected 
             roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.regenerating_attack = true
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
         end
@@ -42,6 +43,7 @@ FactoryGirl.define do
             attach_to_robot_weapon_with_health_value(roboto, rifle, 15)
             attach_to_robot_weapon_with_health_value(roboto, machine_gun, 20)
             attach_to_robot_weapon_with_health_value(roboto, bazuka, 3)
+            roboto.regenerating_attack = true
             roboto.save 
         end
     end
