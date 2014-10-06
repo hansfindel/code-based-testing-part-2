@@ -25,6 +25,9 @@ class CodeNamesController < ApplicationController
   # POST /code_names.json
   def create
     @code_name = CodeName.new(code_name_params)
+    if (params[:code_name].has_key?(:max_health))
+      @code_name.max_health = params[:code_name][:max_health]
+    end
 
     respond_to do |format|
       if @code_name.save

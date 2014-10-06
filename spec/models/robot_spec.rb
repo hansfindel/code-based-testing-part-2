@@ -6,6 +6,64 @@ RSpec.describe Robot, :type => :model do
     pending "add some examples to (or delete) #{__FILE__}"
   end
 
+  context "Weapons with special effects" do
+    it "burn effect" do
+      robot = FactoryGirl.create(:robot_with_flamethrower)
+      damage = robot.calculate_damage
+      expect(damage).to eq(32)
+    end
+
+    it "freeze effect" do
+      robot = FactoryGirl.create(:t_1000)
+      damage = robot.calculate_damage
+      expect(damage > 0).to be(true)
+
+      robot.status = "freeze"
+      damage = robot.calculate_damage
+      expect(damage == 0).to be(true)
+
+      # After one calculate damage, effect should be over
+      damage = robot.calculate_damage
+      expect(damage > 0).to be(true)
+
+
+    end
+  end
+
+  context "Test default health from code_name" do
+
+
+    it "robots have default health from code name" do
+      robot = FactoryGirl.create(:t_1000)
+      expect(robot.remaining_health).to eq(100)
+      expect(robot.maximum_health).to eq(100)
+    end
+
+    it "instantiated robot with code_name has default health" do
+      robot = Robot.new
+      expect(robot.remaining_health).to be_nil
+
+      robot = Robot.new({code_name: FactoryGirl.create(:T_1000)})
+      expect(robot.remaining_health).to eq(100)
+      expect(robot.maximum_health).to eq(100)
+    end
+
+    it "assigning code_name assigns health" do
+      robot = Robot.new
+      expect(robot.remaining_health).to be_nil
+
+      robot.public_send("code_name=", FactoryGirl.create(:T_1000))
+      expect(robot.remaining_health).to eq(100)
+      expect(robot.maximum_health).to eq(100)
+    end
+
+    it "cannot save robot without health nor codename" do
+      robot = Robot.new
+      check = robot.save
+      expect(check).to be(false)
+    end
+  end
+
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6

@@ -36,6 +36,41 @@ RSpec.describe CodeNamesController, :type => :controller do
   # CodeNamesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+
+  describe "POST codename" do
+    it "can create codename via POST" do
+      mock = {name: "T-1001",
+      damage: 10,
+      info_reference: "http://en.wikipedia.org/wiki/T-1001",
+      max_health: 100}
+
+      expect{ post :create, code_name: mock }.to change(CodeName,:count).by(1)
+    end
+
+    it "invalid params get ommited" do
+      mock = {name: "T-1001",
+              damage: 10,
+              info_reference: "http://en.wikipedia.org/wiki/T-1001"}
+
+      expect{ post :create, code_name: mock }.to change(CodeName,:count).by(0)
+
+      mock = {name: "T-1001"}
+
+      expect{ post :create, code_name: mock }.to change(CodeName,:count).by(0)
+    end
+
+    it "check duplicates get ommited" do
+      mock = {name: "T-1001",
+              damage: 10,
+              info_reference: "http://en.wikipedia.org/wiki/T-1001",
+              max_health: 100}
+
+      expect{ post :create, code_name: mock }.to change(CodeName,:count).by(1)
+      expect{ post :create, code_name: mock }.to change(CodeName,:count).by(0)
+    end
+  end
+
+
   describe "GET index" do
     it "assigns all code_names as @code_names" do
       code_name = CodeName.create! valid_attributes
