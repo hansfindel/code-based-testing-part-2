@@ -81,9 +81,17 @@ end
 
 # helper 
 def attach_to_robot_weapon_with_health_value(robot, weapon, health_value)
-    robot.save 
-    health             = Health.create(current: health_value, maximum: health_value)
-    rw_instance        = RobotWeapon.new(robot_id: robot.id, weapon_id: weapon.id)
-    rw_instance.health = health 
-    rw_instance.save
+    if robot.code_name.name.to_s == "T-1000" && weapon.name == "Bazuka"
+        return "T_1000 can't use bazuka"
+    elsif robot.code_name.name.to_s == "T-800" && weapon.name == "Bazuka"
+        return "T_800 can't use bazuka"
+    elsif robot.code_name.name.to_s == "T-800" && weapon.name == "Machine Gun"
+        return "T_800 can't use machine gun"
+    else
+        robot.save
+        health             = Health.create(current: health_value, maximum: health_value)
+        rw_instance        = RobotWeapon.new(robot_id: robot.id, weapon_id: weapon.id)
+        rw_instance.health = health 
+        rw_instance.save
+    end
 end

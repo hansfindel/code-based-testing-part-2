@@ -15,6 +15,10 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'factory_girl'
+# config.before(:all) do
+#   FactoryGirl.reload
+# end
+
 RSpec.configure do |config|
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
@@ -80,12 +84,11 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.mock_with :rspec do |c|
-    # allow should as  valid expectation
+    # allow should as valid expectation
     c.syntax = [:should, :expect]
   end
 
 end
-
 
 # other way to extend matchers
 RSpec::Matchers.define :be_a_multiple_of do |expected|

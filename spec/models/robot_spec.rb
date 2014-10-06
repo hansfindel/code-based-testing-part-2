@@ -102,4 +102,40 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "#tarea" do
+    it "should regenerate after attack" do
+      robot1 = FactoryGirl.create(:robot)
+      robot2 = FactoryGirl.create(:robot)
+      puts robot2.health.current #empieza con 50
+      ContestSimulator.attack(robot1, robot2)
+      current_health_1 = robot2.health.current
+      puts current_health_1 #luego de recibir ataque queda con 45
+      ContestSimulator.attack(robot2, robot1)
+      current_health_2 = robot2.health.current
+      puts current_health_2 #luego de atacar aumenta a 46
+      expect(current_health_1 < current_health_2).to be true
+    end
+
+    it "T_1000 can't use bazuka" do
+      robot = FactoryGirl.create(:t_1000)
+      bazuka = FactoryGirl.create(:bazuka)
+      ret = attach_to_robot_weapon_with_health_value(robot, bazuka, 70)
+      expect(ret.to_s == "T_1000 can't use bazuka").to be true
+    end
+
+    it "T_800 can't use bazuka" do
+      robot = FactoryGirl.create(:t_800)
+      bazuka = FactoryGirl.create(:bazuka)
+      ret = attach_to_robot_weapon_with_health_value(robot, bazuka, 70)
+      expect(ret.to_s == "T_800 can't use bazuka").to be true
+    end
+
+    it "T_800 can't use machine gun" do
+      robot = FactoryGirl.create(:t_800)
+      machine_gun = FactoryGirl.create(:machine_gun)
+      ret = attach_to_robot_weapon_with_health_value(robot, machine_gun, 20)
+      expect(ret.to_s == "T_800 can't use machine gun").to be true
+    end
+  end
+
 end
