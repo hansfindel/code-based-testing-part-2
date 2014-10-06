@@ -1,28 +1,36 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Tasks
 
-Things you may want to cover:
+Agregar Humanos como luchadores (TimeTraveler aka 'Kyle Reese') 
+	Se generó el modelo, controlador y tests para TimeTraveller
+	Se generó el modelo y tests para TimeTravellerWeapon
+	TimeTraveller funciona como Robot pero no depende de CodeName
+	Timetraveller contiene todos los métodos necesarios para ser una luchador
+	Tests de TimeTraveller verifican que cumple con todas las funcionalidades y restricciones de Robot
 
-* Ruby version
+Health se inicializa con un valor máximo obligatorio y un parámetro current opcional (en caso de omitirse es igual a maximum)
+	Se agrega valor por default current = maximum en app/models/health.check_consistency
+	Tests verifican comportamiento para health_factory :health_no_current donde no se declara current y se espera que sea igual a maximum
 
-* System dependencies
+Economizar municiones (problema de la mochila knap-sack - recalcular en cada turno)
+	Task se asume como ya implementado en calculate_damage
+	Se implementan tests para verificar que si las armas cambian de un turno a otro, se vuelve a optimizar
+	Test checkea para Robots y TimeTravellers en context: calculate_damage
+	El orden del test es eliminar armas de mayor a menor daño
+		bazooka(70), machinegun(20), rifle(10), gun(5), unarmed
 
-* Configuration
+El arma tiene un efecto de "recoil", es decir, también causa un daño al robot que la utiliza. Este valor está definido en Weapon.
+	Se implementa en calculate_damage
+	Se verifica el daño por recoil en tests de Robots y TimeTravellers en context: with recoil
+	Se verifica en código que recoil sea 0 si no es inicializado 
 
-* Database creation
+El arma requiere cierto nivel de tecnología para poder ser utilzado el cuál está especificado en CodeName
+	Se implementa tech_level en Weapons
+	Se implementa tech_level en CodeNames
+	Se implementa metodo check_tech_level en RobotWeapons para verificar usabilidad del arma
+	Tests en RobotWeapons verifican caso en que se puede y en que no se puede utilizar el arma
+	Intencionalmente se utiliza caso límite: 
+		CodeName.tech_level = 10 >= Weapon.tech_level = 10
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Código fue revisado y testeado antes de ser subido. Al minuto de ser enviado todos los tests son aprovados y el sistema es consistente. Cualquier test no completo o bug era parte del repositorio antes de ser trabajado y esta fuera del scope de los tasks asignados.

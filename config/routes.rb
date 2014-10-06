@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :time_travellers
+
   get 'welcome/index'
 
   resources :weapons

@@ -9,4 +9,6 @@ class CodeName < ActiveRecord::Base
 
     validates :damage, numericality: { greater_than: 0 }
 
+    validates :tech_level, numericality: { greater_than_or_equal_to: 0 }
+
 end

@@ -1,10 +1,10 @@
-class RobotWeapon < ActiveRecord::Base
-    belongs_to :robot 
+class TimeTravellerWeapon < ActiveRecord::Base
+	belongs_to :time_traveller 
     belongs_to :weapon 
 
     has_one :health, as: :healthy 
 
-    validates :robot, presence: true
+    validates :time_traveller, presence: true
     validates :weapon, presence: true
 
     validates :health, presence: true
@@ -22,16 +22,6 @@ class RobotWeapon < ActiveRecord::Base
 
     delegate :damage, to: :weapon
     delegate :recoil, to: :weapon
-
-    validate :check_tech_level
-
-    def check_tech_level
-        if robot and weapon
-            if robot.tech_level < weapon.tech_level
-                errors.add(:weapon, "Weapon's tech level is to high for this robot to use.")
-            end
-        end
-    end
 
     def stable?
         self.health.current > 0

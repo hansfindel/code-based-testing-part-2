@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141001203651) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tech_level",     default: 0
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"
@@ -26,14 +27,14 @@ ActiveRecord::Schema.define(version: 20140909235653) do
   create_table "healths", force: true do |t|
     t.integer  "current"
     t.integer  "maximum"
-    t.integer  "machine_id"
-    t.string   "machine_type"
+    t.integer  "healthy_id"
+    t.string   "healthy_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
-  add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
+  add_index "healths", ["healthy_id"], name: "index_healths_on_healthy_id"
+  add_index "healths", ["healthy_type"], name: "index_healths_on_healthy_type"
 
   create_table "robot_weapons", force: true do |t|
     t.integer  "robot_id"
@@ -53,11 +54,30 @@ ActiveRecord::Schema.define(version: 20140909235653) do
 
   add_index "robots", ["code_name_id"], name: "index_robots_on_code_name_id"
 
+  create_table "time_traveller_weapons", force: true do |t|
+    t.integer  "time_traveller_id"
+    t.integer  "weapon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "time_traveller_weapons", ["time_traveller_id"], name: "index_time_traveller_weapons_on_time_traveller_id"
+  add_index "time_traveller_weapons", ["weapon_id"], name: "index_time_traveller_weapons_on_weapon_id"
+
+  create_table "time_travellers", force: true do |t|
+    t.string   "name"
+    t.integer  "damage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "weapons", force: true do |t|
     t.string   "name"
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recoil",     default: 0
+    t.integer  "tech_level", default: 0
   end
 
 end

@@ -1,22 +1,14 @@
-class Robot < ActiveRecord::Base
-    include AutoPresentable 
-
-    belongs_to :code_name 
-
-    has_many :robot_weapons
-    has_many :weapons, through: :robot_weapons
+class TimeTraveller < ActiveRecord::Base
+	has_many :time_traveller_weapons
+	has_many :weapons, through: :time_traveller_weapons
 
     has_one :health, as: :healthy 
 
-    validates :code_name, presence: true #, message: "Needs to be a registered robot"
+    validates :name, presence: true #, message: "Needs to be a registered human"
     validates :health, presence: true #, message: "Needs to be initialized with a health status"
 
     accepts_nested_attributes_for :health
-    accepts_nested_attributes_for :robot_weapons
-
-    delegate :damage, to: :code_name
-    delegate :name, to: :code_name
-    delegate :tech_level, to: :code_name
+    accepts_nested_attributes_for :time_traveller_weapons
 
     def alive?
         remaining_health > 0
@@ -35,13 +27,13 @@ class Robot < ActiveRecord::Base
         # doesn't need to be the highest one
         max_damage = self.damage
         max_recoil = 0
-        robot_weapons.each do |weapon|
+        time_traveller_weapons.each do |weapon|
             if valid_and_heavier_weapon?(max_damage, weapon)
                 max_damage = weapon.damage
                 max_recoil = weapon.recoil
             end
         end
-        #Takes damage for weapons recoil
+        #Takes damage from weapons recoil
         take_damage max_recoil
         max_damage
     end
@@ -61,5 +53,4 @@ class Robot < ActiveRecord::Base
             "3" => "A"
         }[ ((@status+=1)-1).to_s ]
     end
-
 end
