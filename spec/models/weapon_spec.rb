@@ -39,7 +39,7 @@ RSpec.describe Weapon, :type => :model do
       expect(gun1.id != gun2.id).to be true
     end
 
-    it "should not receive damage and do damage" do 
+    it "should not receive damage from recoil and do damage" do 
       robot1 = FactoryGirl.create(:no_recoil_robot)
       robot2 = FactoryGirl.create(:full_recoil_robot)
       robot1.attack(robot2)
@@ -47,7 +47,7 @@ RSpec.describe Weapon, :type => :model do
       expect(robot2.health.current).to be == 0
     end
 
-    it "should not receive damage and do default damage" do 
+    it "should not receive damage from recoil and do default damage" do 
       robot1 = FactoryGirl.create(:full_recoil_robot)
       robot2 = FactoryGirl.create(:no_recoil_robot)
       robot1.attack(robot2)
@@ -55,7 +55,7 @@ RSpec.describe Weapon, :type => :model do
       expect(robot2.health.current).to be == 95
     end
 
-    it "should receive damage and do damage" do 
+    it "should receive damage from recoil and do damage" do 
       robot1 = FactoryGirl.create(:mid_recoil_robot)
       robot2 = FactoryGirl.create(:full_recoil_robot)
       robot1.attack(robot2)
@@ -84,7 +84,5 @@ RSpec.describe Weapon, :type => :model do
       expect(robot1.health.current).to be == 30
       expect(robot2.health.current).to be == 30
     end
-
   end
-
 end
