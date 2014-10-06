@@ -1,0 +1,9 @@
+CHECK 1- Actualizar el modelo Weapon para que la Factory funcione como un singleton por el atributo name 
+
+CHECK 2- Habilidad especial de un robot - El modelo se regenera después de atacar (por ejemplo el t_1000 y el t_x)
+
+3- Economizar municiones (problema de la mochila knap-sack - recalcular en cada turno)
+
+4- El modelo de robot tiene una velocidad de ataque (ya no se atacan simultáneamente - simulación basada en eventos)
+
+5- Las armas pueden tener efectos secundarios - Freeze (el otro robot se salta su próximo ataque)

@@ -19,5 +19,9 @@ FactoryGirl.define do
         name "Bazuka"
         damage 70
     end
+    factory :mega_bazuka, class: Weapon do
+        name "Mega Bazuka"
+        damage 100
+    end    
 
 end

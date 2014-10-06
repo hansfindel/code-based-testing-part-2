@@ -13,5 +13,11 @@ class Health < ActiveRecord::Base
           errors.add(:current, "can't be larger than maximum")
         end
     end
+    def recharge
+       self.current = self.current < self.maximum ? self.current+1 : self.maximum
+    end
+    def to_s
+        "Current: " + current.to_s + " Maximum: "+ maximum.to_s
+    end
 
 end

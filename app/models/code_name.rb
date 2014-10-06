@@ -9,4 +9,7 @@ class CodeName < ActiveRecord::Base
 
     validates :damage, numericality: { greater_than: 0 }
 
+    def to_s
+    	self.name
+    end
 end
