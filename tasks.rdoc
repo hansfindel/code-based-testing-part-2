@@ -38,4 +38,9 @@ Task5:
 - Tuve q sacar la validación robot_id de robot_weapon
 - Modifiqué strong parameters para que pueda aceptar un arreglo de la colleción robot_weapons
 - Agregué el test con capybara a views/robots/new
+- No logré correr el test correctamente (estuve como 4 hrs). Al parecer, como el 'Add a Weapon' maneja javascript,
+capybara no lo espera y ejecuta lo demás. Por lo tanto, los expect, relacionados a weapon, son falsos.
+Estuve leyendo, y esto se podría solucionar con selenium, mediante firefox.
+- En la página todo funciona bien, logré crear las weapons de forma anidadas al hacer diversos cambios en: robot_controller,
+pasando las ids necesarias y haciendo ciertos cambios en las páginas. Por lo que, el test al final fue más directo en la página.
 
