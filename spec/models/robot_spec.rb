@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do
  
-  context "Factories" do 
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+ # context "Factories" do
+ #   pending "add some examples to (or delete) #{__FILE__}"
+ # end
 
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
@@ -18,7 +18,6 @@ RSpec.describe Robot, :type => :model do
       # @damage_t = @robot.damage    # 6
       # @damage_g = @gun_i.damage    # 5
     end
-    
     it "should return true if gun is undamaged and has heavier damage" do 
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
     end
@@ -102,4 +101,22 @@ RSpec.describe Robot, :type => :model do
     end
   end
 
+  context "take damage" do
+    before(:each) do
+      @robot = FactoryGirl.create(:unarmed_robot);
+    end
+    it "should take 5 damage" do
+      damage = 5
+      current_health = @robot.health.current
+      @robot.take_damage(damage)
+      expect(@robot.health.current).to be (current_health - damage)
+    end
+
+    it "should not get under 0 health by taking damage" do
+      current_health = @robot.health.current
+      @robot.take_damage(current_health + 1)
+      expect(@robot.health.current).to be 0
+    end
+
+  end
 end

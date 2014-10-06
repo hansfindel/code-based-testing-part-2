@@ -4,7 +4,7 @@ class RobotWeapon < ActiveRecord::Base
 
     has_one :health, as: :machine 
 
-    validates :robot, presence: true
+    #validates :robot, presence: true
     validates :weapon, presence: true
 
     validates :health, presence: true
@@ -29,5 +29,15 @@ class RobotWeapon < ActiveRecord::Base
     def play_dead
         @old_health = health.current if @old_health.blank? or health.current > 0
         health.current = 0
+    end
+
+    def take_damage(damage=1)
+      update_health = self.health.current - damage
+      if update_health > 0
+        self.health.current = update_health
+      else
+        self.health.current = 0
+      end
+      self.save
     end
 end

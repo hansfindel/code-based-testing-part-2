@@ -21,8 +21,7 @@
   <%= f.fields_for :robot_weapons do |robot_weapon_form| %>
     <%= render "application/shared/robot_weapon_form", f: robot_weapon_form %>
   <% end %>
-  <p><%= f.link_to_add "Add a Weapon", :robot_weapons %></p>
-
+  <p><%= f.link_to_add "Add a Weapon", :robot_weapons, href: '#' %></p>
 
   <div class="actions">
     <%= f.submit %>

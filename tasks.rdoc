@@ -1,0 +1,46 @@
+Taks 1:
+
+Robot:
+- Se agregaron los test para validar "take_damage"
+- Se modificó "take_damage" para que health no sea menor a 0
+- No entendí get_state_message. Si la idea es retornar un string, no tengo
+forma de comprobar que al interior se hizo con con un array o hash.
+Contest Simulatar:
+- Testeo el método self.test y los distintos resultados del encuentro 1vs1
+
+Task2:
+
+- Tuve que cambiar el método take_damage para que se guarde.
+O sino, cada vez que un robot se enfrentase nuevamente, se resetea su vida.
+- Implementé método team_challenge en ContestSimulator para la batalla entre equipos de robots
+- Los tests se implementaron en el contexto "team vs team" en ContestSimulator_spec
+
+Task3:
+
+- En "calculate_damage" realizo cambio para deterior el arma tras uso.
+- Implementé "take_damage" en robot_weapon.rb para manejar el daño de vida a la arma.
+- El test se encuentra en robot_weapon_spec
+
+Task4:
+
+- Implementé asynchronous_test, el cual maneja la batalla entre 2 robots por tiempo.
+Attack_velocity, corresponde al tiempo que se demora el robot en lanzar un ataque (en segundos).
+Por lo tanto, un robot con menor attack_velocity, pegará más seguido.
+- Los test están en contest_simulator_spec
+- Si se quiere una batalla por teams, basta con reemplazar synchronous_test por asynchronous_test
+- Para obtener el resultado de la batalla, se puede llamar a get_result de la misma forma de siempre.
+
+Task5:
+
+- Tuve q agregar atributo href al 'Add a Weapon' para que capybaralo reconociese.
+- Tuve q modificar los strong parameters de Robot para aceptar health current y max.
+- Agregué las armas a la vista show de robot
+- Tuve q sacar la validación robot_id de robot_weapon
+- Modifiqué strong parameters para que pueda aceptar un arreglo de la colleción robot_weapons
+- Agregué el test con capybara a views/robots/new
+- No logré correr el test correctamente (estuve como 4 hrs). Al parecer, como el 'Add a Weapon' maneja javascript,
+capybara no lo espera y ejecuta lo demás. Por lo tanto, los expect, relacionados a weapon, son falsos.
+Estuve leyendo, y esto se podría solucionar con selenium, mediante firefox.
+- En la página todo funciona bien, logré crear las weapons de forma anidadas al hacer diversos cambios en: robot_controller,
+pasando las ids necesarias y haciendo ciertos cambios en las páginas. Por lo que, el test al final fue más directo en la página.
+
