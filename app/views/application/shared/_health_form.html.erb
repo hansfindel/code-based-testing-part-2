@@ -1,0 +1,10 @@
+<%= f.fields_for :health do |h| %>
+	<div class="field">
+		<%= h.label :current %><br>
+		<%= h.number_field :current, min: 0 %>
+	</div>
+	<div class="field">
+		<%= h.label :maximum %><br>
+		<%= h.number_field :maximum, min: 0 %>
+	</div>
+<% end %>

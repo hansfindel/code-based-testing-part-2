@@ -1,0 +1,8 @@
+<div class="field_container">
+	Weapon: 
+	<div class="field">
+		<%= f.label :weapon_id, "Weapon Name" %><br>
+		<%= f.select :weapon_id, options_from_collection_for_select(Weapon.all, "id", "name") %>
+	</div>
+	<%= render "application/shared/health_form", f: f %>
+</div>
