@@ -156,4 +156,20 @@ RSpec.describe CodeNamesController, :type => :controller do
     end
   end
 
+  context "Tarea1" do
+    let(:params) { { name: "T-X", info_reference: "http://en.wikipedia.org/wiki/T-X", damage: 15 } }
+    it "should create and return a CodeName from HTTP service" do
+      CodeNamesController.should_receive(:getCodeName).with(kind_of(String), kind_of(String), kind_of(Numeric)).and_return(params.to_json)
+      other_params = CodeNamesController.getCodeName('T-X Service', 'http://wiki.info', 10)
+      expect { post :create, { code_name: JSON.parse(other_params) }, valid_session }.to change(CodeName, :count).by(1)
+    end
+
+    it "should initialize a CodeName" do
+      codename = params.to_json
+      CodeNamesController.should_receive(:postCodeName).with(kind_of(String)).and_return(true)
+      response = CodeNamesController.postCodeName(codename)
+      expect(response).to be true
+    end
+  end
+
 end
