@@ -72,14 +72,15 @@ class ContestSimulator
     end
 
     def self.asynchronous_test(contender1, contender2)
-      start_time = Time.now
+      current_time = Time.now
       accum_time = 0
 
       while contender1.alive? and contender2.alive?
-        if Time.now - start_time > 1000
+        if (Time.now - current_time) > 1
           accum_time += 1
           contender1.attack_velocity -= 1
           contender2.attack_velocity -= 1
+          current_time = Time.now
           puts "Time: #{accum_time}"
         end
         if contender1.attack_velocity == 0

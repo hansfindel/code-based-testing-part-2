@@ -23,5 +23,11 @@ Task3:
 
 Task4:
 
+- Implementé asynchronous_test, el cual maneja la batalla entre 2 robots por tiempo.
+Attack_velocity, corresponde al tiempo que se demora el robot en lanzar un ataque (en segundos).
+Por lo tanto, un robot con menor attack_velocity, pegará más seguido.
+- Los test están en contest_simulator_spec
+- Si se quiere una batalla por teams, basta con reemplazar synchronous_test por asynchronous_test
+- Para obtener el resultado de la batalla, se puede llamar a get_result de la misma forma de siempre.
 
 
