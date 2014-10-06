@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141001202329) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "tech"
+    t.integer  "tech",           default: 0
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 20141001202329) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "recoil"
-    t.integer  "tech_need"
+    t.integer  "recoil",     default: 0
+    t.integer  "tech_need",  default: 1
   end
 
 end

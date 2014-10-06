@@ -129,15 +129,28 @@ RSpec.describe Robot, :type => :model do
   end
 
   context "#alive?" do 
-    let(:wall_e) { Robot.new }
+    let(:wall_e) { FactoryGirl.create(:t_800)  }
     it "should return true if healthy" do 
-      wall_e.should_receive(:remaining_health).and_return(1)
+      wall_e.health.current = 1
       expect(wall_e.alive?).to be true
     end
 
     it "should return false if not healthy" do 
-      wall_e.should_receive(:remaining_health).and_return(0)
+      wall_e.take_damage wall_e.remaining_health
       expect(wall_e.alive?).to be false
+    end
+  end
+
+  context "#Fight" do 
+    let(:t_800) { FactoryGirl.create(:t_800) }
+    it "should atack" do 
+      expect(t_800.calculate_damage).to be > 0
+    end
+
+    it "should receive damage" do 
+      health = t_800.remaining_health
+      t_800.take_damage 1
+      expect(t_800.remaining_health).to be  health - 1
     end
   end
 

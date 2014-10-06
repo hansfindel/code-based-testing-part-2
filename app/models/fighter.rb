@@ -9,8 +9,8 @@ class Fighter < ActiveRecord::Base
 
     accepts_nested_attributes_for :human
 
-	def calculate_damage(args)
+	def calculate_damage(args = {})
     	# doesn't need to be the highest one
-    	self.streng*self.speed + self.ki*self.combo
+    	self.strengh*self.speed + self.ki*self.combo_rate
     end 
 end

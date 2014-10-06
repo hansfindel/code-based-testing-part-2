@@ -1,4 +1,5 @@
 class Robot < ActiveRecord::Base
+    include HealthManager 
     include AutoPresentable 
 
     belongs_to :code_name 
@@ -18,18 +19,6 @@ class Robot < ActiveRecord::Base
     delegate :name, to: :code_name
     delegate :tech, to: :code_name
 
-    def alive?
-        remaining_health > 0
-    end
-
-    def remaining_health
-        self.health.current
-    end
-
-    def take_damage damage 
-        # should not get lower than 0
-        self.health.take_damage damage
-    end
 
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
