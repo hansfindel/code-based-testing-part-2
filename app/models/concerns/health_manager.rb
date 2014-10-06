@@ -1,7 +1,6 @@
 module HealthManager
     extend ActiveSupport::Concern
     included do 
-        puts "robot concer"
         # has_many ...
     end
 

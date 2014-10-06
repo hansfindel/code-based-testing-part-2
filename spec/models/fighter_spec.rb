@@ -4,7 +4,7 @@ RSpec.describe Fighter, :type => :model do
 
 
   context "#alive?" do 
-    let(:bruce) { FactoryGirl.create(:human_bruce_lee) }
+    let(:bruce) { FactoryGirl.create(:fighter_bruce_lee) }
     it "should return true if healthy" do 
       expect(bruce.alive?).to be true
     end
