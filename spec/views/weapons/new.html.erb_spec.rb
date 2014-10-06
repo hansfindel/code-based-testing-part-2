@@ -21,4 +21,12 @@ RSpec.describe "weapons/new", :type => :view do
 
     end
   end
+
+  it "marks weapons tab" do
+    visit new_weapon_path
+    find('#robots-tab')[:class].should_not include('active')
+    find('#home-tab')[:class].should_not include('active')
+    find('#weapons-tab')[:class].should include('active')
+    find('#code_names-tab')[:class].should_not include('active')
+  end
 end

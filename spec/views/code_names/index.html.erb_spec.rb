@@ -24,4 +24,12 @@ RSpec.describe "code_names/index", :type => :view do
     assert_select "tr>td", :text => "Name1".to_s, :count => 1
     assert_select "tr>td", :text => "Info Reference/wiki/".to_s, :count => 2
   end
+
+  it "marks code_names tab" do
+    visit code_names_path
+    find('#robots-tab')[:class].should_not include('active')
+    find('#home-tab')[:class].should_not include('active')
+    find('#weapons-tab')[:class].should_not include('active')
+    find('#code_names-tab')[:class].should include('active')
+  end
 end

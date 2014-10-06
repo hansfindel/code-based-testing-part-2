@@ -36,4 +36,12 @@ RSpec.describe "robots/new", :type => :view do
       expect(page).to have_css "#code_name_link" 
     end
   end
+
+  it "marks robot tab" do
+    visit new_robot_path
+    find('#robots-tab')[:class].should include('active')
+    find('#home-tab')[:class].should_not include('active')
+    find('#weapons-tab')[:class].should_not include('active')
+    find('#code_names-tab')[:class].should_not include('active')
+  end
 end

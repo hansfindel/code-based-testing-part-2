@@ -38,4 +38,12 @@ RSpec.describe "code_names/new", :type => :view do
     expect(page).to have_content "Listing code_names"
   end
 
+  it "marks code_names tab" do
+    visit new_code_name_path
+    find('#robots-tab')[:class].should_not include('active')
+    find('#home-tab')[:class].should_not include('active')
+    find('#weapons-tab')[:class].should_not include('active')
+    find('#code_names-tab')[:class].should include('active')
+  end
+
 end
