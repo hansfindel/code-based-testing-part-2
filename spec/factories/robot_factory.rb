@@ -4,6 +4,7 @@ FactoryGirl.define do
             roboto.code_name = FactoryGirl.create(:code_name)
             gun              = FactoryGirl.create(:gun) # could be affected 
             roboto.health    = FactoryGirl.build(:health)
+            roboto.attack_speed = 0
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
         end
@@ -14,6 +15,7 @@ FactoryGirl.define do
             roboto.code_name = FactoryGirl.create(:T_800)
             gun              = FactoryGirl.create(:rifle) # could be affected 
             roboto.health    = FactoryGirl.create(:health_800)
+            roboto.attack_speed = 0
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
         end
@@ -24,6 +26,7 @@ FactoryGirl.define do
             roboto.code_name = FactoryGirl.create(:T_1000)
             gun              = FactoryGirl.create(:machine_gun) # could be affected 
             roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.attack_speed = 0
             roboto.save 
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
         end
@@ -37,6 +40,7 @@ FactoryGirl.define do
             machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
             bazuka        = FactoryGirl.create(:bazuka) # could be affected 
             roboto.health = FactoryGirl.build(:health_x)
+            roboto.attack_speed = 0
             # roboto.weapons = [gun, rifle, machine_gun, bazuka]
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
             attach_to_robot_weapon_with_health_value(roboto, rifle, 15)
@@ -45,10 +49,62 @@ FactoryGirl.define do
             roboto.save 
         end
     end
+    factory :damaged_t_x, class: Robot do
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:T_X)
+            gun           = FactoryGirl.create(:gun) # could be affected 
+            rifle         = FactoryGirl.create(:rifle) # could be affected 
+            machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
+            bazuka        = FactoryGirl.create(:bazuka) # could be affected 
+            roboto.health = FactoryGirl.build(:damaged_health_x)
+            roboto.attack_speed = 0
+            # roboto.weapons = [gun, rifle, machine_gun, bazuka]
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            attach_to_robot_weapon_with_health_value(roboto, rifle, 15)
+            attach_to_robot_weapon_with_health_value(roboto, machine_gun, 20)
+            attach_to_robot_weapon_with_health_value(roboto, bazuka, 3)
+            roboto.save 
+        end
+    end    
+    factory :mega_bazuka_robot, class: Robot do
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:T_X)
+            gun           = FactoryGirl.create(:gun) # could be affected 
+            rifle         = FactoryGirl.create(:rifle) # could be affected 
+            machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
+            bazuka        = FactoryGirl.create(:mega_bazuka) # could be affected 
+            roboto.health = FactoryGirl.build(:damaged_health_x)
+            roboto.attack_speed = 0
+            # roboto.weapons = [gun, rifle, machine_gun, bazuka]
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            attach_to_robot_weapon_with_health_value(roboto, rifle, 15)
+            attach_to_robot_weapon_with_health_value(roboto, machine_gun, 20)
+            attach_to_robot_weapon_with_health_value(roboto, bazuka, 3)
+            roboto.save 
+        end
+    end        
+    factory :slow_robot, class: Robot do
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:T_X)
+            gun           = FactoryGirl.create(:gun) # could be affected 
+            rifle         = FactoryGirl.create(:rifle) # could be affected 
+            machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
+            bazuka        = FactoryGirl.create(:mega_bazuka) # could be affected 
+            roboto.health = FactoryGirl.build(:damaged_health_x)
+            roboto.attack_speed = 3
+            # roboto.weapons = [gun, rifle, machine_gun, bazuka]
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            attach_to_robot_weapon_with_health_value(roboto, rifle, 15)
+            attach_to_robot_weapon_with_health_value(roboto, machine_gun, 20)
+            attach_to_robot_weapon_with_health_value(roboto, bazuka, 3)
+            roboto.save 
+        end
+    end        
 
     factory :robot_with_slightly_better_weapon, class: Robot do 
         after(:build) do |roboto, evaluator|
             roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.attack_speed = 0
             roboto.code_name = FactoryGirl.create(:code_name)
             gun              = FactoryGirl.create(:gun) # could be affected 
             roboto.code_name.damage = gun.damage - 1
@@ -60,6 +116,7 @@ FactoryGirl.define do
     factory :robot_with_bad_weapon, class: Robot do 
         after(:build) do |roboto, evaluator|
             roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.attack_speed = 0
             roboto.code_name = FactoryGirl.create(:code_name)
             gun              = FactoryGirl.create(:gun) # could be affected 
             roboto.code_name.damage = gun.damage + 1
@@ -68,10 +125,22 @@ FactoryGirl.define do
             roboto.code_name.save
         end
     end
+    factory :ice_man, class: Robot do
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)            
+            roboto.code_name = FactoryGirl.create(:T_X)
+            gun           = FactoryGirl.create(:ice_cannon)
+            roboto.attack_speed = 0
+            # roboto.weapons = [gun, rifle, machine_gun, bazuka]
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end   
 
     factory :unarmed_robot, class: Robot do 
         after(:build) do |roboto, evaluator|
             roboto.health    = FactoryGirl.build(:health_1000)
+            roboto.attack_speed = 0
             roboto.code_name = FactoryGirl.create(:code_name)
             roboto.save 
         end

@@ -19,5 +19,9 @@ FactoryGirl.define do
         current 120
         maximum 120
     end
+    factory :damaged_health_x, class: Health do
+        current 100
+        maximum 120
+    end    
 
 end

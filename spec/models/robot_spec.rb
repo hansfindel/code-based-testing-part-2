@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Robot, :type => :model do
  
   context "Factories" do 
-    pending "add some examples to (or delete) #{__FILE__}"
+    #pending "add some examples to (or delete) #{__FILE__}"
   end
 
   context "#valid_and_heavier_weapon?" do 
@@ -101,5 +101,83 @@ RSpec.describe Robot, :type => :model do
       expect(wall_e.alive?).to be false
     end
   end
+  context "#recharges" do 
+    it "should recharge when it attacks" do
+      r1 = FactoryGirl.create(:damaged_t_x)
+      r2 = FactoryGirl.create(:t_1000)
+      # begin
+        health = r1.remaining_health
+        ContestSimulator.attack r1, r2
+        expect(r1.remaining_health).to be > health
+        # ContestSimulator.get_result r1, r2
+        # rescue Exception => e
+        #   puts "Error: #{e} - #{e.to_s}"
+        # end
+    end
+    it "should not recharge if full" do
+      r1 = FactoryGirl.create(:t_x)
+      r2 = FactoryGirl.create(:t_1000)
+      # begin
+        health = r1.remaining_health
+        ContestSimulator.attack r1, r2
+        expect(r1.remaining_health).to be  health
+        # ContestSimulator.get_result r1, r2
+        # rescue Exception => e
+        #   puts "Error: #{e} - #{e.to_s}"
+        # end
+    end
+  end
+
+  context "knap-sack" do
+    it "should kill if possible" do
+      r1 = FactoryGirl.create(:mega_bazuka_robot)
+      r2 = FactoryGirl.create(:unarmed_robot)
+      ContestSimulator.attack r1,r2
+      expect(r2.remaining_health).to be 0
+    end
+    it "should use the least deadliest weapon if it can kill" do 
+      r1 = FactoryGirl.create(:mega_bazuka_robot)
+      r2 = FactoryGirl.create(:unarmed_robot)
+      r2.health.current = 10
+      ContestSimulator.attack r1,r2
+      puts r2.remaining_health
+      expect(r2.remaining_health).to be > 10 - r1.weapons.last.damage
+    end
+  end
+
+  context "attack speed" do
+    it "should have an attack speed" do
+    r1 = FactoryGirl.create(:slow_robot)
+    expect(r1.attack_speed).to be >= 0
+    end
+    it "should not be negative" do
+      r1 = FactoryGirl.create(:slow_robot)
+      r1.attack_speed = -5
+      r1.save!
+    expect(r1.attack_speed).to be >= 0
+    end
+    it "should not attack if the counter is not 0" do 
+      r1 = FactoryGirl.create(:slow_robot)
+      r2 = FactoryGirl.create(:unarmed_robot)
+      health = r2.remaining_health
+      expect(r2.remaining_health).to be health
+    end
+  end
+
+  context "freeze" do
+    it "should freeze the enemy" do
+      r1 = FactoryGirl.create(:ice_man)
+      r2 = FactoryGirl.create(:unarmed_robot) 
+      ContestSimulator.attack r1,r2
+      expect(r2.is_frozen).to be true     
+    end
+    it "should only freeze the enemy if the weapon freezes" do 
+      r1 = FactoryGirl.create(:mega_bazuka_robot)
+      r2 = FactoryGirl.create(:unarmed_robot) 
+      ContestSimulator.attack r1,r2
+      expect(r2.is_frozen).to be false
+    end
+  end
+
 
 end

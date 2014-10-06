@@ -19,5 +19,14 @@ FactoryGirl.define do
         name "Bazuka"
         damage 70
     end
+    factory :mega_bazuka, class: Weapon do
+        name "Mega Bazuka"
+        damage 100
+    end
+    factory :ice_cannon, class: Weapon do
+        name "Ice Cannon"
+        damage 50
+        secondary_effect "freeze"
+    end
 
 end

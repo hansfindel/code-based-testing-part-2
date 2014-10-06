@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141006061443) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "code_name_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "attack_speed", default: 0
+    t.boolean  "is_frozen",    default: false
   end
 
   add_index "robots", ["code_name_id"], name: "index_robots_on_code_name_id"
@@ -58,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "secondary_effect"
   end
 
 end

@@ -9,7 +9,14 @@ class Weapon < ActiveRecord::Base
     # validate :get_instance_by_name 
 
     def get_instance_by_name
-    	# return the existing object if any, otherwise return true
+    	Weapon.find_by_name(self.name)
     end
-
+	def save!
+		weapon=get_instance_by_name
+		if weapon.present?
+			self.id=weapon.id
+		else
+			super
+		end
+	end
 end
