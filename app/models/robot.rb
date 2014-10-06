@@ -13,6 +13,7 @@ class Robot < ActiveRecord::Base
 
     accepts_nested_attributes_for :health
     accepts_nested_attributes_for :robot_weapons
+    accepts_nested_attributes_for :code_name
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
@@ -31,13 +32,22 @@ class Robot < ActiveRecord::Base
     end
 
     def calculate_damage(total_health=1)
-        # doesn't need to be the highest one
-        max_damage = self.damage
-        robot_weapons.each do |weapon|
-            max_damage = weapon.damage if valid_and_heavier_weapon?(max_damage, weapon)
+      # doesn't need to be the highest one
+      max_damage = self.damage
+      max_weapon=nil
+      robot_weapons.each do |weapon|
+        if valid_and_heavier_weapon?(max_damage, weapon)
+          max_damage = weapon.damage
+          max_weapon = weapon
         end
-        max_damage
+      end
+      if max_weapon!=nil
+        self.take_damage(max_weapon.recoil)
+      end
+
+      max_damage
     end
+
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
         weapon_instance.stable? and max_damage < weapon_instance.damage
