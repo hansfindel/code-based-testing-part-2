@@ -41,7 +41,6 @@ RSpec.describe ContestSimulator, :type => :model do
   context "during a contest" do
     describe "in fight of one round" do
       it "should call calculate_damage exactly one time per each contender" do
-         #There is some kind of bug because it always receive (expected + 1) calls to attack
         @robot3= FactoryGirl.create(:robot)
         @robot4= FactoryGirl.create(:robot)
         base_health=40
@@ -70,12 +69,35 @@ RSpec.describe ContestSimulator, :type => :model do
     end
   end
   context "Tournaments" do
-    it "should call regenerate_after_attack exactly one time per each contender" do
-      @robot1.health.current=1
-      @robot2.health.current=1
+    before(:each) do
       @robot3= FactoryGirl.create(:robot)
       @robot4= FactoryGirl.create(:robot)
-      ContestSimulator.test([@robot1,@robot2],[@robot3,@robot4])
+      @robot1.health.current=1
+      @robot2.health.current=1
+    end
+    it "should return the team 2 winner" do
+      expect(ContestSimulator.test([@robot1,@robot2],[@robot3,@robot4])). to include(@robot3,@robot4)
+    end
+
+    it "should return the team 1 winner" do
+      @team1=[@robot3,@robot4]
+      @team2=[@robot1,@robot2]
+      expect(ContestSimulator.test(@team1,@team2)). to include(@robot3,@robot4)
+    end
+
+    it "should remove destroyed robots from teams" do
+      @team1=[@robot1,@robot2]
+      @team2=[@robot3,@robot4]
+      ContestSimulator.test(@team1,@team2)
+      expect(@team1.count). to be 0
+    end
+
+    it "should allow tragic ties in teams" do
+      @team1=[@robot1]
+      @team2=[@robot2]
+      expect(ContestSimulator.test(@team1,@team2)).to be nil
+      expect(@team1.count).to be 0
+      expect(@team2.count).to be 0
     end
 
   end

@@ -28,10 +28,10 @@ class ContestSimulator
         end
         if robot1.count>0
           puts "Team 1 won"
-            [robot1]
+            robot1
         elsif robot2.count>0
           puts "Team 2 won"
-            [robot2]
+            robot2
         end
       end
 
