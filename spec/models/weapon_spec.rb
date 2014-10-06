@@ -24,11 +24,12 @@ RSpec.describe Weapon, :type => :model do
       expect(gun.id).to be > 0
     end
 
-    it "should not create two different instances for the same (defined) Weapon", focus: true do
+    it "should not save two different instances for the same name (defined) Weapon", focus: true do
       FactoryGirl.create(:bazuka)
       FactoryGirl.create(:bazuka)
       expect(Weapon.where(name: 'Bazuka').count).to be(1)
     end
+
   end
 
 end

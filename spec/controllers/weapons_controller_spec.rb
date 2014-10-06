@@ -24,11 +24,11 @@ RSpec.describe WeaponsController, :type => :controller do
   # Weapon. As you add validations to Weapon, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name: 'testName', damage: 6, recoil: 2}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {damage: -2, recoil: -2}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -71,7 +71,7 @@ RSpec.describe WeaponsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Weapon" do
         expect {
-          post :create, {:weapon => valid_attributes}, valid_session
+          post :create, {weapon: valid_attributes}, valid_session
         }.to change(Weapon, :count).by(1)
       end
 
@@ -134,6 +134,7 @@ RSpec.describe WeaponsController, :type => :controller do
       end
 
       it "re-renders the 'edit' template" do
+        pending
         weapon = Weapon.create! valid_attributes
         put :update, {:id => weapon.to_param, :weapon => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
