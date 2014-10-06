@@ -30,4 +30,14 @@ class RobotWeapon < ActiveRecord::Base
         @old_health = health.current if @old_health.blank? or health.current > 0
         health.current = 0
     end
+
+    def take_damage(damage=1)
+      update_health = self.health.current - damage
+      if update_health > 0
+        self.health.current = update_health
+      else
+        self.health.current = 0
+      end
+      self.save
+    end
 end
