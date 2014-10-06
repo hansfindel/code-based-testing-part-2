@@ -55,4 +55,10 @@ class Robot < ActiveRecord::Base
         }[ ((@status+=1)-1).to_s ]
     end
 
+    def regen
+        if self.health.current < self.health.maximum
+            self.health.current += 1
+        end
+    end
+
 end

@@ -56,4 +56,16 @@ RSpec.describe Health, :type => :model do
     end
   end
 
+  context "#tarea" do
+    it "should fail if there's no maximum" do 
+      health = Health.create()
+      expect(health.errors.has_key?(:maximum)).to be true
+    end
+
+    it "current = maximum if there's no current" do 
+      health = Health.create(maximum: 50)
+      expect(health.current == health.maximum).to be true
+    end
+  end
+
 end
