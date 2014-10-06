@@ -4,7 +4,7 @@ class RobotWeapon < ActiveRecord::Base
 
     has_one :health, as: :machine 
 
-    validates :robot, presence: true
+    #validates :robot, presence: true
     validates :weapon, presence: true
 
     validates :health, presence: true

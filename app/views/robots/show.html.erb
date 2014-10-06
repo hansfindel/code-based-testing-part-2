@@ -1,9 +1,36 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Code name:</strong>
-  <%= @robot.code_name_id %>
-</p>
+<div>
+    <p>
+      <strong>Code name:</strong>
+      <%= @robot.code_name_id %>
+    </p>
+    <p>
+      <strong>Current Health:</strong>
+      <%= @robot.health.current %>
+    </p>
+    <p>
+      <strong>Max Health:</strong>
+      <%= @robot.health.maximum %>
+    </p>
+  <p>
+    <strong>Weapons Count:</strong>
+    <%= @robot.weapons.count %>  </p>
+</div>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Damage</th>
+  </tr>
+  <% @robot.weapons.each do |weapon| %>
+      <tr>
+        <td><%= weapon.name %></td>
+        <td><%= weapon.damage %></td>
+      </tr>
+  <% end %>
+</table>
+
 
 <%= link_to 'Edit', edit_robot_path(@robot) %> |
 <%= link_to 'Back', robots_path %>
