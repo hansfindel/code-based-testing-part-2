@@ -125,6 +125,17 @@ FactoryGirl.define do
             roboto.code_name.save
         end
     end
+    factory :ice_man, class: Robot do
+        after(:build) do |roboto, evaluator|
+            roboto.health    = FactoryGirl.build(:health_1000)            
+            roboto.code_name = FactoryGirl.create(:T_X)
+            gun           = FactoryGirl.create(:ice_cannon)
+            roboto.attack_speed = 0
+            # roboto.weapons = [gun, rifle, machine_gun, bazuka]
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+            roboto.save 
+        end
+    end   
 
     factory :unarmed_robot, class: Robot do 
         after(:build) do |roboto, evaluator|

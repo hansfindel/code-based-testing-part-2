@@ -39,8 +39,10 @@ class ContestSimulator
         if contender1.attack_speed > 0
             contender1.update_attribute(:attack_speed,contender1.attack_speed-1)
             return
+        elsif contender1.is_frozen
+            contender1.update_attribute(:is_frozen,false)
         else
-            from_1 = contender1.calculate_damage contender2.remaining_health # contender2.remaining_health
+            from_1 = contender1.attack(contender2) # contender2.remaining_health
             contender2.take_damage from_1
         end
     end

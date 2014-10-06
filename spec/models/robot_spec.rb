@@ -156,14 +156,28 @@ RSpec.describe Robot, :type => :model do
       r1.save!
     expect(r1.attack_speed).to be >= 0
     end
-    it "should not attack at first turn" do 
-      r1 = FactoryGirl.create(:mega_bazuka_robot)
+    it "should not attack if the counter is not 0" do 
+      r1 = FactoryGirl.create(:slow_robot)
       r2 = FactoryGirl.create(:unarmed_robot)
-      r2.health.current = 10
-      ContestSimulator.attack r1,r2
-      puts r2.remaining_health
-      expect(r2.remaining_health).to be > 10 - r1.weapons.last.damage
+      health = r2.remaining_health
+      expect(r2.remaining_health).to be health
     end
   end
+
+  context "freeze" do
+    it "should freeze the enemy" do
+      r1 = FactoryGirl.create(:ice_man)
+      r2 = FactoryGirl.create(:unarmed_robot) 
+      ContestSimulator.attack r1,r2
+      expect(r2.is_frozen).to be true     
+    end
+    it "should only freeze the enemy if the weapon freezes" do 
+      r1 = FactoryGirl.create(:mega_bazuka_robot)
+      r2 = FactoryGirl.create(:unarmed_robot) 
+      ContestSimulator.attack r1,r2
+      expect(r2.is_frozen).to be false
+    end
+  end
+
 
 end
