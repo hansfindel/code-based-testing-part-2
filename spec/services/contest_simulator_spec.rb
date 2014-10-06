@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ContestSimulator do
-	before(:each) do 
-        @r_fast = FactoryGirl.create(:robot) #delay = 5
-        @r_slow = FactoryGirl.create(:t_x) #delay = 15
+	before(:all) do 
+        @r_fast = Robot.find(1) || FactoryGirl.create(:robot) #delay = 5
+        @r_slow = Robot.find(2) || FactoryGirl.create(:t_x) #delay = 15
     end
 
 	context "fight time" do
@@ -25,7 +25,7 @@ RSpec.describe ContestSimulator do
 			expect(@r_fast.remaining_health).to be < r_fast_initial if @r_slow.delay.eql? time
 		end
 
-		
+
 
 	end
 end
