@@ -12,7 +12,29 @@ RSpec.describe "robots/new", :type => :view do
 
     assert_select "form[action=?][method=?]", robots_path, "post" do
 
-      assert_select "input#robot_code_name_id[name=?]", "robot[code_name_id]"
+      assert_select "select#robot_code_name_id[name=?]", "robot[code_name_id]"
+      assert_select "a#code_name_link"
     end
   end
+
+  feature "dynamic form" do
+    scenario 'User clicked code_name_link', js:true do
+      visit new_robot_path
+      find("#code_name_link").click
+      expect(page).to have_css "#select_codename_link"
+      expect(page).to have_css "#code_name_fields_form"
+      expect(page).to have_selector('#code_name_id_select', visible: false)
+    end
+
+    scenario 'User clicked code_name_link and select_codename_link', js:true do
+      visit new_robot_path
+      find("#code_name_link").click
+      find("#select_codename_link").click
+      expect(page).to have_selector('#code_name_id_select', visible: true)
+      expect(page).not_to have_css "#select_codename_link"
+      expect(page).not_to have_css "#code_name_fields_form"
+      expect(page).to have_css "#code_name_link" 
+    end
+  end
+
 end

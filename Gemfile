@@ -43,7 +43,8 @@ group :development, :test do
   gem 'factory_girl'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
 
-
+gem 'selenium-webdriver'
 gem "nested_form"
