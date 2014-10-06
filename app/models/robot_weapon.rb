@@ -1,4 +1,6 @@
 class RobotWeapon < ActiveRecord::Base
+    include HealthManager 
+
     belongs_to :robot 
     belongs_to :weapon 
 
@@ -22,12 +24,12 @@ class RobotWeapon < ActiveRecord::Base
 
     delegate :damage, to: :weapon
 
-    def stable?
-        self.health.current > 0
+    def recoil
+        self.weapon.recoil
+    end
+    
+    def can_use?
+        self.robot.tech >= self.weapon.tech_need
     end
 
-    def play_dead
-        @old_health = health.current if @old_health.blank? or health.current > 0
-        health.current = 0
-    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909235653) do
+ActiveRecord::Schema.define(version: 20141001202329) do
 
   create_table "code_names", force: true do |t|
     t.string   "name"
@@ -19,9 +19,19 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tech",           default: 0
   end
 
   add_index "code_names", ["name"], name: "index_code_names_on_name"
+
+  create_table "fighters", force: true do |t|
+    t.integer  "strengh",    default: 1
+    t.integer  "speed",      default: 1
+    t.float    "combo_rate", default: 0.1
+    t.integer  "ki",         default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "healths", force: true do |t|
     t.integer  "current"
@@ -30,10 +40,22 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.string   "machine_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "being_id"
+    t.string   "being_type"
   end
 
+  add_index "healths", ["being_id"], name: "index_healths_on_being_id"
+  add_index "healths", ["being_type"], name: "index_healths_on_being_type"
   add_index "healths", ["machine_id"], name: "index_healths_on_machine_id"
   add_index "healths", ["machine_type"], name: "index_healths_on_machine_type"
+
+  create_table "human", force: true do |t|
+    t.string   "name"
+    t.integer  "person_id"
+    t.string   "person_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "robot_weapons", force: true do |t|
     t.integer  "robot_id"
@@ -58,6 +80,8 @@ ActiveRecord::Schema.define(version: 20140909235653) do
     t.integer  "damage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recoil",     default: 0
+    t.integer  "tech_need",  default: 1
   end
 
 end
