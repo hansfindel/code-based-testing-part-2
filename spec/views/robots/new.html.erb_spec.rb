@@ -36,5 +36,4 @@ RSpec.describe "robots/new", :type => :view do
       expect(page).to have_css "#code_name_link" 
     end
   end
-
 end
