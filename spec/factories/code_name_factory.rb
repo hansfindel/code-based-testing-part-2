@@ -3,7 +3,7 @@ FactoryGirl.define do
     factory :code_name do
         name
         damage 5
-        info_reference "wiki"
+        info_reference "/wiki/"
         max_health 50
     end
 
@@ -31,7 +31,7 @@ FactoryGirl.define do
     factory :default_code, class: CodeName do
         name "default_code"
         damage 5
-        info_reference "wiki"
+        info_reference "/wiki/"
         max_health 100
     end
 

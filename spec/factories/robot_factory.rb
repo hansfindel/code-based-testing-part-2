@@ -77,6 +77,14 @@ FactoryGirl.define do
         end
     end
 
+    factory :default_robot, class: Robot do
+        after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:default_code)
+            roboto.health    = FactoryGirl.build(:default_health)
+            roboto.save 
+        end
+    end
+
 end
 
 # helper 

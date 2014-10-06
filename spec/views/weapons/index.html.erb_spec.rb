@@ -5,11 +5,13 @@ RSpec.describe "weapons/index", :type => :view do
     assign(:weapons, [
       Weapon.create!(
         :name => "Name",
-        :damage => 1
+        :damage => 1,
+        :recoil_damage => 2
       ),
       Weapon.create!(
         :name => "Name",
-        :damage => 1
+        :damage => 1,
+        :recoil_damage => 2
       )
     ])
   end
