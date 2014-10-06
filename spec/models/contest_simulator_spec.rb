@@ -69,5 +69,16 @@ RSpec.describe ContestSimulator, :type => :model do
       expect(@robot2.health.current). to be < current
     end
   end
+  context "Tournaments" do
+    it "should call regenerate_after_attack exactly one time per each contender" do
+      @robot1.health.current=1
+      @robot2.health.current=1
+      @robot3= FactoryGirl.create(:robot)
+      @robot4= FactoryGirl.create(:robot)
+      ContestSimulator.test([@robot1,@robot2],[@robot3,@robot4])
+    end
+
+  end
+
 
 end

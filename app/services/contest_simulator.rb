@@ -1,8 +1,40 @@
 class ContestSimulator
 
-    def self.test(contender1, contender2)
-        synchronous_test contender1, contender2
-        get_result       contender1, contender2
+    def self.test(robot1, robot2)
+      if robot1.instance_of?(Robot) && robot2.instance_of?(Robot)
+        synchronous_test robot1, robot2
+        get_result       robot1, robot2
+      elsif robot1.instance_of?(Array) && robot2.instance_of?(Array)
+        while robot1.count>0 && robot2.count>0
+          contender1=robot1[0]
+          contender2=robot2[0]
+          synchronous_test contender1, contender2
+          if contender1.alive? and contender2.alive?
+            raise ImpossibleError
+          elsif contender1.alive?
+            robot2.delete_at(0)
+            puts "Contender 1 won"
+            [contender1]
+          elsif contender2.alive?
+            robot1.delete_at(0)
+            puts "Contender 2 won"
+            [contender2]
+          else
+            robot1.delete_at(0)
+            robot2.delete_at(0)
+            puts "Tragic Tie"
+            []
+          end
+        end
+        if robot1.count>0
+          puts "Team 1 won"
+            [robot1]
+        elsif robot2.count>0
+          puts "Team 2 won"
+            [robot2]
+        end
+      end
+
     end
     
     def self.get_result(contender1, contender2)
