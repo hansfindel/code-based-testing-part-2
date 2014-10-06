@@ -4,7 +4,8 @@ RSpec.describe "weapons/edit", :type => :view do
   before(:each) do
     @weapon = assign(:weapon, Weapon.create!(
       :name => "MyString",
-      :damage => 1
+      :damage => 1,
+      :recoil_damage => 10
     ))
   end
 

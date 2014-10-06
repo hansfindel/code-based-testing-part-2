@@ -4,7 +4,9 @@ RSpec.describe "code_names/edit", :type => :view do
   before(:each) do
     @code_name = assign(:code_name, CodeName.create!(
       :name => "MyString",
-      :info_reference => "MyString"
+      :info_reference => "MyString/wiki/",
+      :damage => 10,
+      :max_health => 10
     ))
   end
 

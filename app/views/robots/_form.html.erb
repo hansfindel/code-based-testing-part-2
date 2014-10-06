@@ -11,13 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :code_name_id %><br>
-    <%= f.number_field :code_name_id %>
+  <div class="field", id="code_name_id_select">
+    <%= f.label :code_name_id, "Code Name" %><br>
+    <%= f.select :code_name_id, options_from_collection_for_select(CodeName.all, "id", "name") %>
   </div>
-  
-  <%= render "application/shared/health_form", f: f %>
 
+  <%= f.fields_for :code_name do |code_name_form| %>
+    <%= render "application/shared/code_name_form", f: code_name_form %>
+  <% end %>
+  <p><%= f.link_to_add "Add a Code Name", :code_name, id:"code_name_link" %></p>
+  
   <%= f.fields_for :robot_weapons do |robot_weapon_form| %>
     <%= render "application/shared/robot_weapon_form", f: robot_weapon_form %>
   <% end %>
