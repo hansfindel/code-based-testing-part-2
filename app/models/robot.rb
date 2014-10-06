@@ -17,6 +17,10 @@ class Robot < ActiveRecord::Base
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
 
+    # resetea la velocidad de ataque después de atacar
+    def reset_velocity
+      self.attack_velocity = self.max_attack_velocity
+    end
     def alive?
         remaining_health > 0
     end

@@ -69,6 +69,27 @@ class ContestSimulator
         from_1 = contender1.calculate_damage # contender2.remaining_health
 
         contender2.take_damage from_1
-      puts "damage: #{from_1} to: #{contender2.health.current}"
+    end
+
+    def self.asynchronous_test(contender1, contender2)
+      start_time = Time.now
+      accum_time = 0
+
+      while contender1.alive? and contender2.alive?
+        if Time.now - start_time > 1000
+          accum_time += 1
+          contender1.attack_velocity -= 1
+          contender2.attack_velocity -= 1
+          puts "Time: #{accum_time}"
+        end
+        if contender1.attack_velocity == 0
+          attack(contender1, contender2)
+          contender1.reset_velocity
+        end
+        if contender2.attack_velocity == 0
+          attack(contender2, contender1)
+          contender2.reset_velocity
+        end
+      end
     end
 end

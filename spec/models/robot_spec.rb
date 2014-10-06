@@ -18,7 +18,6 @@ RSpec.describe Robot, :type => :model do
       # @damage_t = @robot.damage    # 6
       # @damage_g = @gun_i.damage    # 5
     end
-    
     it "should return true if gun is undamaged and has heavier damage" do 
       expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
     end
