@@ -43,7 +43,7 @@ class Robot < ActiveRecord::Base
     end
 
     def regenerate
-        new_health = remaining_health*1.01
+        new_health = self.health.current + self.health.maximum*1.02
         self.health.current = [new_health, self.health.maximum].min
     end
 

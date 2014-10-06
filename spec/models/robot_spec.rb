@@ -78,7 +78,7 @@ RSpec.describe Robot, :type => :model do
     end
     it "should be equal to maximum when it's initially a bit lower" do
       @r1.take_damage 1
-      expect(@r1.regenerate).to be @r1.health.maximum
+      expect(@r1.regenerate).to eq(@r1.health.maximum)
     end
     it "shouldn't be more than maximum when it's initially much lower" do
       @r1.take_damage 90
