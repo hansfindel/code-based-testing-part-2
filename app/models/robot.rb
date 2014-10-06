@@ -34,6 +34,7 @@ class Robot < ActiveRecord::Base
         else
           self.health.current = 0
         end
+      self.save
     end
 
     def calculate_damage(total_health=1)

@@ -7,3 +7,10 @@ Robot:
 forma de comprobar que al interior se hizo con con un array o hash.
 Contest Simulatar:
 - Testeo el método self.test y los distintos resultados del encuentro 1vs1
+
+Task2:
+
+- Tuve que cambiar el método take_damage para que se guarde.
+O sino, cada vez que un robot se enfrentase nuevamente, se resetea su vida.
+- Implementé método team_challenge en ContestSimulator para la batalla entre equipos de robots
+- Los tests se implementaron en el contexto "team vs team" en ContestSimulator_spec

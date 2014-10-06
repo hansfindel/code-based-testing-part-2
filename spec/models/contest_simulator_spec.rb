@@ -26,4 +26,26 @@ require 'rails_helper'
         expect(result).to include @r2
       end
     end
+    context "team vs team simultaneous attack (team_challenge)" do
+      before(:each) do
+        @team1 = [FactoryGirl.create(:robot), FactoryGirl.create(:robot)]
+        @team2 = [FactoryGirl.create(:robot), FactoryGirl.create(:robot)]
+        @team3 = [FactoryGirl.create(:robot), FactoryGirl.create(:t_800)]
+        @team4 = []
+        @team5 = []
+      end
+
+      it "should lose team with NO robots" do
+        expect(ContestSimulator.team_challenge(@team1, @team4)).equal? "Team1"
+      end
+      it "should be a Tie if both teams have NO robots" do
+        expect(ContestSimulator.team_challenge(@team4, @team5)).equal? "Tie"
+      end
+      it "should be TIE if both teams have same strength" do
+        expect(ContestSimulator.team_challenge(@team1, @team2)).equal? "Tie"
+      end
+      it "should win the stronger team" do
+        expect(ContestSimulator.team_challenge(@team1, @team3)).equal? "Team2"
+      end
+    end
   end
