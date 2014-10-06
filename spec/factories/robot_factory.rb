@@ -57,6 +57,28 @@ FactoryGirl.define do
             roboto.code_name.save
         end
     end
+
+    factory :robot_with_ice_sword, class: Robot do
+       after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:code_name)
+            sword              = FactoryGirl.create(:ice_sword)
+            roboto.health    = FactoryGirl.build(:health)
+            roboto.save 
+            attach_to_robot_weapon_with_health_value(roboto, sword, 10)
+        end 
+    end
+
+    factory :frozen_robot, class: Robot do
+       after(:build) do |roboto, evaluator|
+            roboto.code_name = FactoryGirl.create(:code_name)
+            gun              = FactoryGirl.create(:gun)
+            roboto.health    = FactoryGirl.build(:health)
+            roboto.status    = 'Frozen'
+            roboto.save 
+            attach_to_robot_weapon_with_health_value(roboto, gun, 10)
+        end         
+    end
+
     factory :robot_with_bad_weapon, class: Robot do 
         after(:build) do |roboto, evaluator|
             roboto.health    = FactoryGirl.build(:health_1000)

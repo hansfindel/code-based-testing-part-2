@@ -87,6 +87,52 @@ RSpec.describe Robot, :type => :model do
       end
 
     end
+
+    context "Robot it's under a status" do
+      it "Shouldn't do damage if frozen" do 
+        r1 = FactoryGirl.create(:frozen_robot)
+        r2 = FactoryGirl.create(:robot)
+
+        initial_health = r2.remaining_health
+
+        # Hago que el robot con la espada ataque al otro
+        begin
+          ContestSimulator.attack r1, r2
+        rescue Exception => e
+          puts "Error: #{e} - #{e.get_message}"
+        end
+
+        expect(r2.remaining_health == initial_health).to be true
+      end
+
+      it "Frozen should last only one turn" do
+        r1 = FactoryGirl.create(:frozen_robot)
+        r2 = FactoryGirl.create(:robot)
+
+        initial_health = r2.remaining_health
+
+        # Hago que el robot con la espada ataque al otro
+        begin
+          ContestSimulator.attack r1, r2
+        rescue Exception => e
+          puts "Error: #{e} - #{e.get_message}"
+        end
+
+        expect(r2.remaining_health == initial_health).to be true
+
+        # Vuelve a atacar el mismo robot, ya no debería esta congelado
+        begin
+          ContestSimulator.attack r1, r2
+          puts r1.status
+        rescue Exception => e
+          puts "Error: #{e} - #{e.get_message}"
+        end
+
+        expect(r2.remaining_health < initial_health).to be true        
+      end
+
+    end
+
   end
 
   context "#alive?" do 
