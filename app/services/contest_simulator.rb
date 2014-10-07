@@ -5,6 +5,38 @@ class ContestSimulator
         get_result       contender1, contender2
     end
     
+    def self.test_multiple(team1, team2)
+        while team1.length > 0 and team2.length > 0
+            contender1 = team1.first
+            contender2 = team2.first
+            synchronous_test contender1, contender2
+            if contender1.alive?
+                team2.shift
+            else
+                team1.shift
+            end
+        end
+
+        get_multiple_result(team1, team2)
+        
+    end
+
+    def self.get_multiple_result(team1, team2)
+        if team1.length == 0 and team2.length == 0
+            puts "Tragic Tie"           
+            []
+        elsif team1.length > 0 and team2.length == 0
+            puts "Team 1 wins!"
+            team1
+        elsif team1.length == 0 and team2.length > 0
+            puts "Team 2 wins!"
+            team2
+        else
+            puts "Tie"
+            raise ImpossibleError
+        end
+    end
+
     def self.get_result(contender1, contender2)
         if contender1.alive? and contender2.alive?
             puts "Tie"
