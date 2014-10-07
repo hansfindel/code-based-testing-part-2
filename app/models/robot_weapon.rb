@@ -24,6 +24,7 @@ class RobotWeapon < ActiveRecord::Base
     delegate :min_tech, to: :weapon
 
     after_initialize :check_attrs
+   
 
     def check_attrs
         unless self.health

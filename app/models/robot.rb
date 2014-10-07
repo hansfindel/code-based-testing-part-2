@@ -30,6 +30,14 @@ class Robot < ActiveRecord::Base
     delegate :tech, to: :code_name
     delegate :tech=, to: :code_name
     
+    before_validation :assign_weapons
+
+    def assign_weapons
+        self.robot_weapons.each do |weapon|
+            weapon.robot = self
+        end
+    end
+
     def alive?
         remaining_health > 0
     end

@@ -26,6 +26,7 @@ class RobotsController < ApplicationController
   # POST /robots.json
   def create
     @robot = Robot.new(robot_params)
+    binding.pry
     respond_to do |format|
       if @robot.save
         format.html { redirect_to @robot, notice: 'Robot was successfully created.' }
@@ -71,6 +72,8 @@ class RobotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def robot_params
-      params.require(:robot).permit(:code_name_id)
+      params.require(:robot).permit(:code_name_id, { :health_attributes => [ :current, :maximum ] }).tap do |whitelisted|
+        whitelisted[:robot_weapons_attributes] = params[:robot][:robot_weapons_attributes]
+      end
     end
 end
