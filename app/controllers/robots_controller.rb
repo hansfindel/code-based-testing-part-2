@@ -15,6 +15,7 @@ class RobotsController < ApplicationController
   # GET /robots/new
   def new
     @robot = Robot.new()
+    @robot.robot_weapons << RobotWeapon.new(weapon_id: 2, robot: @robot, health: Health.new(current: 3, maximum: 10))
     @robot.health = Health.new 
   end
 
@@ -26,7 +27,6 @@ class RobotsController < ApplicationController
   # POST /robots.json
   def create
     @robot = Robot.new(robot_params)
-    binding.pry
     respond_to do |format|
       if @robot.save
         format.html { redirect_to @robot, notice: 'Robot was successfully created.' }
