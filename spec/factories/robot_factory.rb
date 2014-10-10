@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: robots
+#
+#  id                :integer          not null, primary key
+#  code_name_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  regeneration_rate :integer          default(0), not null
+#
+
 FactoryGirl.define do
     factory :robot do
         after(:build) do |roboto, evaluator|
@@ -15,6 +26,7 @@ FactoryGirl.define do
             gun              = FactoryGirl.create(:rifle) # could be affected 
             roboto.health    = FactoryGirl.create(:health_800)
             roboto.save 
+            roboto.regeneration_rate = 20
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
         end
     end
@@ -37,6 +49,7 @@ FactoryGirl.define do
             machine_gun   = FactoryGirl.create(:machine_gun) # could be affected 
             bazuka        = FactoryGirl.create(:bazuka) # could be affected 
             roboto.health = FactoryGirl.build(:health_x)
+            roboto.regeneration_rate = 40
             # roboto.weapons = [gun, rifle, machine_gun, bazuka]
             attach_to_robot_weapon_with_health_value(roboto, gun, 10)
             attach_to_robot_weapon_with_health_value(roboto, rifle, 15)

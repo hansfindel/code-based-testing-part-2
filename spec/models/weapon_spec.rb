@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: weapons
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  damage     :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  min_tech   :integer          default(0)
+#
+
 require 'rails_helper'
 
 RSpec.describe Weapon, :type => :model do
@@ -29,6 +41,17 @@ RSpec.describe Weapon, :type => :model do
       gun2 = FactoryGirl.create(:bazuka)
       # expect(gun1.id == gun2.id).to be true
     end
+
+    it "should have a min_tech value" do
+      gun = FactoryGirl.create(:gun)
+      expect(gun.min_tech).not_to be(nil)
+    end
+
+    it "should have a min_tech value greater than or equal to 0" do
+      gun = FactoryGirl.create(:gun)
+      expect(gun.min_tech).to be >= 0
+    end
+
   end
 
 end

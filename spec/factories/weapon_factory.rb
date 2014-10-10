@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: weapons
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  damage     :integer
+#  created_at :datetime
+#  updated_at :datetime
+#  min_tech   :integer          default(0)
+#
+
 FactoryGirl.define do
 
     factory :gun, class: Weapon do

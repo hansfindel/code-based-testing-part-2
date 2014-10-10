@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: robot_weapons
+#
+#  id         :integer          not null, primary key
+#  robot_id   :integer
+#  weapon_id  :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class RobotWeapon < ActiveRecord::Base
     belongs_to :robot 
     belongs_to :weapon 
@@ -10,7 +21,10 @@ class RobotWeapon < ActiveRecord::Base
     validates :health, presence: true
     accepts_nested_attributes_for :health
 
+    delegate :min_tech, to: :weapon
+
     after_initialize :check_attrs
+   
 
     def check_attrs
         unless self.health

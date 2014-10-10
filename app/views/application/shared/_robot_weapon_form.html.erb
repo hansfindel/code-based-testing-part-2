@@ -2,7 +2,7 @@
 	Weapon: 
 	<div class="field">
 		<%= f.label :weapon_id, "Weapon Name" %><br>
-		<%= f.select :weapon_id, options_from_collection_for_select(Weapon.all, "id", "name") %>
+		<%= f.select :weapon_id, options_from_collection_for_select(Weapon.all, "id", "name", selected: f.object.weapon_id) %>
 	</div>
 	<%= render "application/shared/health_form", f: f %>
 </div>

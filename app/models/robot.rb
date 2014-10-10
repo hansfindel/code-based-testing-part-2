@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: robots
+#
+#  id                :integer          not null, primary key
+#  code_name_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  regeneration_rate :integer          default(0), not null
+#
+
 class Robot < ActiveRecord::Base
     include AutoPresentable 
 
@@ -16,6 +27,16 @@ class Robot < ActiveRecord::Base
 
     delegate :damage, to: :code_name
     delegate :name, to: :code_name
+    delegate :tech, to: :code_name
+    delegate :tech=, to: :code_name
+    
+    before_validation :assign_weapons
+
+    def assign_weapons
+        self.robot_weapons.each do |weapon|
+            weapon.robot = self
+        end
+    end
 
     def alive?
         remaining_health > 0
@@ -30,6 +51,17 @@ class Robot < ActiveRecord::Base
         self.health.current -= damage
     end
 
+    def regenerate
+        self.health.current =
+        [ self.health.maximum, self.health.current + self.regeneration_rate ].min
+    end
+
+    def attack(enemy)
+        damage = calculate_damage
+        enemy.take_damage damage
+        self.regenerate
+    end
+
     def calculate_damage(total_health=1)
         # doesn't need to be the highest one
         max_damage = self.damage
@@ -40,7 +72,8 @@ class Robot < ActiveRecord::Base
     end
 
     def valid_and_heavier_weapon?(max_damage, weapon_instance)
-        weapon_instance.stable? and max_damage < weapon_instance.damage
+        weapon_instance.stable? and max_damage < weapon_instance.damage and
+            self.tech >= weapon_instance.min_tech
     end
 
     # pending test - then change it to work with an array instead of a hash

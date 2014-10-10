@@ -1,7 +1,18 @@
+# == Schema Information
+#
+# Table name: robots
+#
+#  id                :integer          not null, primary key
+#  code_name_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  regeneration_rate :integer          default(0), not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Robot, :type => :model do
- 
+
   context "Factories" do 
     pending "add some examples to (or delete) #{__FILE__}"
   end
@@ -9,7 +20,9 @@ RSpec.describe Robot, :type => :model do
   context "#valid_and_heavier_weapon?" do 
     before(:all) do 
       @robot    = Robot.new # damage: 6
-      @gun      = FactoryGirl.create(:gun)
+      @robot.code_name = CodeName.new
+      @robot.tech = 100
+      @gun      = FactoryGirl.create(:gun, min_tech: 100)
       
       @gun_i    = @gun.robot_weapons.build 
       @gun_i.health.current   = 1
@@ -19,26 +32,17 @@ RSpec.describe Robot, :type => :model do
       # @damage_g = @gun_i.damage    # 5
     end
     
-    it "should return true if gun is undamaged and has heavier damage" do 
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
+  
+
+    it "should return true if robot has min tech" do
+      @gun.min_tech = 100
+      robot = FactoryGirl.create :robot
+      robot.tech = 100
+      expect(robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
+      robot.tech = 101
+      expect(robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be true
     end
 
-    it "should return false if gun is undamaged but has not a heavier damage" do 
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
-    end
-
-    it "should return same if gun is damaged - w/heavier damage" do 
-      # @gun_i.health.current = 0
-      @gun_i.play_dead
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage - 1, @gun_i)).to be false
-    end
-
-    it "should return same if gun is damaged - w/lower damage" do 
-      # @gun_i.health.current = 0
-      @gun_i.play_dead
-      expect(@robot.valid_and_heavier_weapon?(@gun_i.damage + 1, @gun_i)).to be false
-    end
-     
   end
   context "#calculate_damage" do 
     it "should return a number" do 
@@ -99,6 +103,28 @@ RSpec.describe Robot, :type => :model do
     it "should return false if not healthy" do 
       wall_e.should_receive(:remaining_health).and_return(0)
       expect(wall_e.alive?).to be false
+    end
+  end
+
+  context "Attacking" do
+    let(:t_800) { FactoryGirl.create :t_800 }
+    let(:t_x) { FactoryGirl.create :t_x }
+
+    it "should have a regeneration_rate greater >= 0" do
+      robot = FactoryGirl.create :robot
+      expect(robot.regeneration_rate).to_not be(nil)
+      expect(robot.regeneration_rate).to be >= 0
+    end
+
+    it "should regenerate after attacking" do
+      t_x.health.current = 10
+      t_x.attack(t_800)
+      expect(t_x.health.current).to eq(10 + t_x.regeneration_rate)
+    end
+
+    it "should not regenerate more than its maximum health" do
+      t_x.attack(t_800)
+      expect(t_x.health.current).to eq(t_x.health.maximum)
     end
   end
 
